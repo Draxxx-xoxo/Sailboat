@@ -20,7 +20,7 @@ client.on('message', async message => {
 				
 	if (message.content ===  mainprefix + 'ping'){
 		message.channel.send('Loading data').then (async (msg) =>{
-		msg.edit(`🏓Latency is ${msg.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(discordclient.ws.ping)}ms`);
+		msg.edit(`🏓Latency is ${msg.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
 		});
 		}
 		else if (message.content === `prefix`){

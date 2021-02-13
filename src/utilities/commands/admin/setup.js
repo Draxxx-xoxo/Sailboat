@@ -32,9 +32,16 @@ discordclient.once('ready', () => {
 
         const inf_query = `
         
-         CREATE TABLE IF NOT EXISTS guild."`+ message.guild.id+`" (Report_ID bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 100000000 CACHE 1 ),Discord_ID bigint, Discord_Tag text, Infractions text, Moderator_ID bigint, Moderator_Tag text, Reason text)
+         CREATE TABLE IF NOT EXISTS guild."`+ message.guild.id+`" (Report_ID bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 100000000 CACHE 1 ),Discord_ID bigint, Discord_Tag text, Infractions text, Moderator_ID bigint, Moderator_Tag text, Reason text, Timestamp bigint)
         `
 
+        const mute_query = `
+        INSERT INTO guild_settings.mute_role(server_id)
+        SELECT * FROM (SELECT 734281219839230022) AS tmp
+        WHERE NOT EXISTS (
+        SELECT server_id FROM guild_settings.mute_role WHERE server_id = '734281219839230022'
+        ) LIMIT 1;
+        `
         /*const prefix_query = `
         INSERT INTO guild_settings.prefix(server_id, prefix)
         SELECT * FROM (SELECT ${message.guild.id}, 'w!') AS tmp
@@ -46,6 +53,7 @@ discordclient.once('ready', () => {
 
     client.query(inf_query)
     //client.query(prefix_query)
+    client.query(mute_query)
 
         .then(res => {
           message.channel.send("Setup has been completed")
