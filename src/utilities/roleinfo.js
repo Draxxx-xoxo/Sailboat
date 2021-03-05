@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { roleinfo, token } = require('../../../config.json');
+const { roleinfo, token } = require('../../config.json');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 

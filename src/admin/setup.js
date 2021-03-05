@@ -36,10 +36,10 @@ discordclient.once('ready', () => {
         `
 
         const mute_query = `
-        INSERT INTO guild_settings.mute_role(server_id)
-        SELECT * FROM (SELECT 734281219839230022) AS tmp
+        INSERT INTO guild_settings.mute_role(server_id, mute_role_id)
+        SELECT * FROM (SELECT ${message.guild.id}, 1) AS tmp
         WHERE NOT EXISTS (
-        SELECT server_id FROM guild_settings.mute_role WHERE server_id = '734281219839230022'
+        SELECT server_id FROM guild_settings.mute_role WHERE server_id = '${message.guild.id}'
         ) LIMIT 1;
         `
         /*const prefix_query = `

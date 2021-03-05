@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { mainprefix, token } = require('../../../config.json');
+const { mainprefix, token } = require('../../config.json');
 const client = new Discord.Client();
 const fetch = require('node-fetch');
 client.commands = new Discord.Collection();

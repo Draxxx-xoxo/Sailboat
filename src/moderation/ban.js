@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { mainprefix, token, pgkey } = require('../../../../config.json');
+const { mainprefix, token, pgkey } = require('../../config.json');
 const {Client} = require('pg')
 
 const discordclient = new Discord.Client();

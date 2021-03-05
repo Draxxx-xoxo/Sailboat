@@ -1,1 +1,1 @@
-const joke = require('./commands/joke')
+const joke = require('./joke')

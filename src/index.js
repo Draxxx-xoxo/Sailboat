@@ -7,7 +7,8 @@ const {Client} = require('pg');
 const discordclient = new Discord.Client();
 discordclient.commands = new Discord.Collection();
 
-const utilities = require('./utilities/utilites');
+const utilities = require('./utilities/index');
+const moderation = require('./moderation/index');
 
 
 
