@@ -6,7 +6,7 @@ const { version, author } = require("discord.js");
 require("moment-duration-format");
 
 const BOTversion = "2.1.0";
-const { mainprefix, token } = require('../../../config.json');
+const { mainprefix, token } = require('../../config.json');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
