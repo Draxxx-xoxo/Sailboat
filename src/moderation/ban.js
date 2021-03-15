@@ -59,9 +59,9 @@ discordclient.on('message', async message => {
             const timestamp = Date.now()
             const query = `
                     
-            INSERT INTO guild."`+ message.guild.id +`"(
-                discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, timestamp)
-                VALUES (${ban_member.id}, '${ban_member.username}#${ban_member.discriminator}', 'ban', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp});
+            INSERT INTO guild.Infractions(
+                discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, timestamp, server_id)
+                VALUES (${ban_member.id}, '${ban_member.username}#${ban_member.discriminator}', 'ban', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id});
             
             `
 

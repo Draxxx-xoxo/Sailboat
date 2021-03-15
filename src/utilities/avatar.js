@@ -1,30 +1,49 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { mainprefix, token } = require('../../config.json');
+const { mainprefix, token, pgkey } = require('../../config.json');
+const {Client} = require('pg')
+const functions = require('../common_functions')
 
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
+const discordclient = new Discord.Client();
+discordclient.commands = new Discord.Collection();
 
-client.once('ready', () => {
-	console.log('Ready!');
 
-	client.user.setActivity(`Watching EVEE`)
+
+discordclient.once('ready', () => {
+	console.log('Avatar!');
+
+	discordclient.user.setActivity(`Watching EVEE`)
 });
 
 
-client.on('message', message => {
-if (message.content.startsWith(`${mainprefix}avatar`)) {
-
-    var user = message.mentions.users.first() || message.member.user
-    const member = message.guild.members.cache.get(user.id)
-
-    const avatar_embed = new Discord.MessageEmbed()
-    .setTitle(`${user.username} Avatar`)
-    .setImage(user.displayAvatarURL());
-
-    message.channel.send(avatar_embed)
-}
-});
+discordclient.on('message', async message => {
 
 
-client.login(process.env.token);
+    const client = new Client({
+        connectionString: pgkey,
+            ssl: {
+            rejectUnauthorized: false
+            }
+        });      
+
+    client.connect()
+    
+    const prefix = await functions.getPreix(message.guild.id, client)
+
+    if (message.content.startsWith( prefix + `avatar`)) {
+
+        var user = message.mentions.users.first() || message.member.user
+        const member = message.guild.members.cache.get(user.id)
+
+        const avatar_embed = new Discord.MessageEmbed()
+        .setTitle(`${user.username} Avatar`)
+        .setImage(user.displayAvatarURL());
+
+        message.channel.send(avatar_embed)
+
+        client.end()
+        }
+    });
+
+
+discordclient.login(process.env.token);

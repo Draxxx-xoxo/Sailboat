@@ -53,9 +53,9 @@ discordclient.once('ready', () => {
             const timestamp = Date.now()
             const query = `
         
-            INSERT INTO guild."`+ message.guild.id +`"(
-                discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, timestamp)
-                VALUES (${warn_member.id}, '${warn_member.username}#${warn_member.discriminator}', 'warn', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp});
+            INSERT INTO guild.Infractions(
+                discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, timestamp, server_id)
+                VALUES (${warn_member.id}, '${warn_member.username}#${warn_member.discriminator}', 'warn', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id});
             
             `
             const embed = new Discord.MessageEmbed()

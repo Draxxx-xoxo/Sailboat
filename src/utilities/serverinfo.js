@@ -1,20 +1,35 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { mainprefix, token } = require('../../config.json');
+const { mainprefix, token, pgkey } = require('../../config.json');
+const {Client} = require('pg')
+const functions = require('../common_functions')
+
+const discordclient = new Discord.Client();
+discordclient.commands = new Discord.Collection();
 
 
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
 
-client.once('ready', () => {
+discordclient.once('ready', () => {
 	console.log('Serverinfo Ready');
 
-	client.user.setActivity(`Watching EVEE`)
+	discordclient.user.setActivity(`Watching EVEE`)
 });
 
 
-client.on('message', message => {
-if (message.content.startsWith(`${mainprefix}serverinfo`)) {
+discordclient.on('message', message => {
+
+    const client = new Client({
+        connectionString: pgkey,
+            ssl: {
+            rejectUnauthorized: false
+            }
+        });      
+
+    client.connect()
+
+const prefix = await functions.getPreix(message.guild.id, client)
+
+if (message.content.startsWith(`${prefix}serverinfo`)) {
 
     var user = message.mentions.users.first() || message.member.user
     const member = message.guild.members.cache.get(user.id)
@@ -35,9 +50,10 @@ if (message.content.startsWith(`${mainprefix}serverinfo`)) {
     )
 
     message.channel.send(serverinfo_embed)
+    client.end()
 }
 });
 
 
 
-client.login(process.env.token);
+discordclient.login(process.env.token);
