@@ -16,7 +16,7 @@ discordclient.once('ready', () => {
 });
 
 
-discordclient.on('message', message => {
+discordclient.on('message', async message => {
 
     const client = new Client({
         connectionString: pgkey,
