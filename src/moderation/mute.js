@@ -2,7 +2,8 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const { mainprefix, token, pgkey } = require('../../config.json');
 const {Client} = require('pg');
-const { send } = require('process');
+const functions = require('../common_functions')
+const yaml = require('js-yaml')
 
 const discordclient = new Discord.Client();
 discordclient.commands = new Discord.Collection();
@@ -17,8 +18,6 @@ discordclient.once('ready', () => {
 
 discordclient.on('message', async message => {
 
-
-
     const client = new Client({
         connectionString: pgkey,
             ssl: {
@@ -26,14 +25,15 @@ discordclient.on('message', async message => {
             }
         });      
 
+    await client.connect()
+
+    const prefix = functions.getPreix(fs, yaml)
 
 
-    if(message.content.startsWith(`${mainprefix}mute_setup`)){
+    if(message.content.startsWith(`${prefix}mute_setup`)){
         if(message.member.hasPermission("MANAGE_GUILD")){
-            const args = message.content.slice((mainprefix + 'mute_setup').length).trim().split(' ');
+            const args = message.content.slice((prefix + 'mute_setup').length).trim().split(' ');
             let role = message.guild.roles.cache.get(args[0]) || message.guild.roles.cache.find(r => r.name === args.join(" ")) || message.mentions.roles.first()
-
-            client.connect();
 
             if(!args){
                 return message.channel.send('Please input a role ID')
@@ -49,7 +49,6 @@ discordclient.on('message', async message => {
             await client.query(query);
             message.channel.send(`Mute Role has been updated to ${args}`)
             
-            client.end()
         }
         else{
             message.channel.send('Unable to update muted role. Please try agian')
@@ -57,7 +56,7 @@ discordclient.on('message', async message => {
     }
 	
 				
-    else if (message.content.startsWith(`${mainprefix}mute`)) {
+    else if (message.content.startsWith(`${prefix}mute`)) {
          
         if(message.member.hasPermission("MANAGE_MESSAGES")){
           
@@ -65,7 +64,7 @@ discordclient.on('message', async message => {
                 client.connect();
                     
                 
-                let cont = message.content.slice((mainprefix + `mute `).length).split(" ")
+                let cont = message.content.slice((prefix + `mute `).length).split(" ")
                 var member_id = message.mentions.users.first()
                 var member_id = message.mentions.users.first()|| cont.slice(0,1).toString()
                 let reason_ = cont.slice(1).join(" ").toString()
@@ -142,7 +141,7 @@ discordclient.on('message', async message => {
         
         } 
     }
-    else if (message.content.startsWith(`${mainprefix}unmute`)) {
+    else if (message.content.startsWith(`${prefix}unmute`)) {
          
         if(message.member.hasPermission("MANAGE_MESSAGES")){
           
@@ -150,7 +149,7 @@ discordclient.on('message', async message => {
                 client.connect();
                     
                 
-                let cont = message.content.slice((mainprefix + `unmute `).length).split(" ")
+                let cont = message.content.slice((prefix + `unmute `).length).split(" ")
                 var member_id = message.mentions.users.first()
                 var member_id = message.mentions.users.first()|| cont.slice(0,1).toString()
                 let reason_ = cont.slice(1).join(" ").toString()
@@ -213,6 +212,7 @@ discordclient.on('message', async message => {
         } 
     }
     
+    client.end()
 	});
 
 

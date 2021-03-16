@@ -2,6 +2,8 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const { mainprefix, token, pgkey } = require('../../config.json');
 const {Client} = require('pg')
+const functions = require('../common_functions')
+const yaml = require('js-yaml')
 
 const discordclient = new Discord.Client();
 discordclient.commands = new Discord.Collection();
@@ -14,23 +16,22 @@ discordclient.once('ready', () => {
 
   discordclient.on('message', async message => {
 
-    if (message.content.startsWith(`${mainprefix}warn`)) {
+    const prefix = functions.getPreix(fs, yaml) 
+
+    if (message.content.startsWith(`${prefix}warn`)) {
          
         if(message.member.hasPermission("MANAGE_MESSAGES")){
 
-
             const client = new Client({
                 connectionString: pgkey,
-                ssl: {
-                  rejectUnauthorized: false
-                }
-            });
-            
-            // opening connection
-            await client.connect();
+                    ssl: {
+                    rejectUnauthorized: false
+                    }
+                });      
         
-       
-            let cont = message.content.slice((mainprefix + `warn `).length).split(" ")
+            await client.connect()
+
+            let cont = message.content.slice((prefix + `warn `).length).split(" ")
             var member_id = message.mentions.users.first()
             var member_id = message.mentions.users.first()|| cont.slice(0,1).toString()
             let reason_ = cont.slice(1).join(" ").toString()
@@ -72,10 +73,11 @@ discordclient.once('ready', () => {
 
               discordclient.users.cache.get(member_guild.user.id).send(embed);
             }
-            client.end();
+            client.end()
     }
     
     } 
+
 })
 
 

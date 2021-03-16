@@ -2,6 +2,8 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const { mainprefix, token, pgkey } = require('../../config.json');
 const {Client} = require('pg')
+const functions = require('../common_functions')
+const yaml = require('js-yaml')
 
 const discordclient = new Discord.Client();
 discordclient.commands = new Discord.Collection();
@@ -15,23 +17,26 @@ discordclient.once('ready', () => {
 
 
 discordclient.on('message', async message => {
+
+    const client = new Client({
+        connectionString: pgkey,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    });
+
+    await client.connect();
+
+    const prefix = functions.getPreix(fs, yaml)
 	
 				
-    if (message.content.startsWith(`${mainprefix}kick`)) {
+    if (message.content.startsWith(`${prefix}kick`)) {
          
         if(message.member.hasPermission("KICK_MEMBERS")){
         
-            const client = new Client({
-                connectionString: pgkey,
-                    ssl: {
-                    rejectUnauthorized: false
-                    }
-                });      
-                        // opening connection
-                client.connect();
-                    
+
                 
-                let cont = message.content.slice((mainprefix + `kick `).length).split(" ")
+                let cont = message.content.slice((prefix + `kick `).length).split(" ")
                 var member_id = message.mentions.users.first()
                 var member_id = message.mentions.users.first()|| cont.slice(0,1).toString()
                 let reason_ = cont.slice(1).join(" ").toString()
@@ -90,6 +95,8 @@ discordclient.on('message', async message => {
             client.end();
         }
     }
+
+    client.end()
 	});
 
 

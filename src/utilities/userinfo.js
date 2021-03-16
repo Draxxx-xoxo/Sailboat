@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const { mainprefix, token, pgkey } = require('../../config.json');
 const {Client} = require('pg')
 const functions = require('../common_functions')
+const yaml = require('js-yaml')
 
 const discordclient = new Discord.Client();
 discordclient.commands = new Discord.Collection();
@@ -16,17 +17,7 @@ discordclient.once('ready', () => {
 
 discordclient.on('message', async message => {
 
-
-    const client = new Client({
-        connectionString: pgkey,
-            ssl: {
-            rejectUnauthorized: false
-            }
-        });      
-
-    client.connect()
-
-    const prefix = await functions.getPreix(message.guild.id, client)
+    const prefix = await functions.getPreix(fs, yaml)
 
     if (message.content.startsWith(`${prefix}userinfo`)) {
 
@@ -45,8 +36,6 @@ discordclient.on('message', async message => {
     )
 
     message.channel.send(userinfo_embed)
-
-    client.end()
     }
 });
 

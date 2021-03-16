@@ -2,7 +2,8 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const { mainprefix, token, pgkey } = require('../../config.json');
 const {Client} = require('pg');
-const { send } = require('process');
+const functions = require('../common_functions')
+const yaml = require('js-yaml')
 
 const discordclient = new Discord.Client();
 discordclient.commands = new Discord.Collection();
@@ -17,20 +18,24 @@ discordclient.once('ready', () => {
 
 discordclient.on('message', async message => {
 
-
-    const client = new Client({
-        connectionString: pgkey,
-            ssl: {
-            rejectUnauthorized: false
-            }
-        });      
+    const prefix = functions.getPreix(fs, yaml) 
 
     let messageArray = message.content.split(" ");
     let args = messageArray.slice(1);
     let msg = messageArray[0];
 
-     if(msg === mainprefix + 'tempmute'){
+     if(msg === prefix + 'tempmute'){
         if(message.member.hasPermission('MANAGE_MESSAGES')) {
+
+            const client = new Client({
+                connectionString: pgkey,
+                    ssl: {
+                    rejectUnauthorized: false
+                    }
+                });      
+        
+            await client.connect()
+
             var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
             if(!member) return message.reply('Please Provide a Member to TempMute.')
 
@@ -50,8 +55,6 @@ discordclient.on('message', async message => {
                 VALUES (${member.user.id}, '${member.user.username}#${member.user.discriminator}', 'mute', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id});
             
             `
-
-            await client.connect()
 
             var res = await client.query(select_query).catch(console.error)
 
@@ -88,9 +91,7 @@ discordclient.on('message', async message => {
                 member.roles.remove(role_id);
                 message.channel.send(`${member.user.tag} has been unmuted.`)
             },time);
-
-            client.end()
-
+        client.end()
         } 
         }
     });
