@@ -3,5 +3,5 @@
     "bot_token":"",
     "purge_command":"w!clean",
     "roleinfo":"roleinfo",
-    "pgkey":"postgres://necnkbxqwpxgqq:bc96fe1036b7ff7731fe895e36a54e9b4077f93d7c8fba940991d6a5254b43e9@ec2-54-211-238-131.compute-1.amazonaws.com:5432/dac2kov2isapsf"
+    "pgkey":""
 }
