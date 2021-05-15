@@ -1,5 +1,6 @@
 {
-    "mainprefix":"w!",
+    "guildID": "734281219839230022",
+    "prefix":"w!",
     "bot_token":"",
     "purge_command":"w!clean",
     "roleinfo":"roleinfo",
