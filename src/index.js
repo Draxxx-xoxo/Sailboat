@@ -1,24 +1,81 @@
-require('dotenv').config()
+require('dotenv').config(); 
 const fs = require('fs');
 const Discord = require('discord.js');
-const { mainprefix, token, pgkey } = require('../config.json');
-const {Client} = require('pg');
-const functions = require('./common_functions')
+const { prefix, pgkey} = require('../config.json');
+const discordClient = new Discord.Client();
 
-const discordclient = new Discord.Client();
-discordclient.commands = new Discord.Collection();
-
-const utilities = require('./utilities/index');
-const moderation = require('./moderation/index');
-const admin = require('./admin')
+discordClient.commands = new Discord.Collection();
 
 
+var commandFolders = fs.readdirSync("./src/commands");
 
-discordclient.once('ready', () => {
-	console.log('Index.js!');
+for (const folder of commandFolders) {
+	const commandFiles = fs.readdirSync(`./src/commands/${folder}`).filter(file => file.endsWith('.js'));
+	for (const file of commandFiles) {
+		const command = require(`./commands/${folder}/${file}`);
+		discordClient.commands.set(command.name, command);
+	}
+}
 
-	discordclient.user.setActivity(`Watching EVEE`)
+
+discordClient.once('ready', async () => {
+		console.log(
+			
+				`[!] Username: ${discordClient.user.username}` +
+				`\n[!] ID: ${discordClient.user.id}` +
+				`\n[!] Guild Count: ${discordClient.guilds.cache.size}` + 
+				`\n[!] Commands: ${discordClient.commands.size}` +
+				`\n[!] Bot is online`
+
+		)
 });
 
 
-discordclient.login(process.env.token);
+discordClient.on('message', message => {
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+	const args = message.content.slice(prefix.length).trim().split(/ +/);
+	const commandName = args.shift().toLowerCase();
+
+	const command = discordClient.commands.get(commandName)
+		|| discordClient.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+	if (!command) return;
+
+	if (command.guildOnly && message.channel.type === 'dm') {
+		return message.reply('I can\'t execute that command inside DMs!');
+	}
+
+	if (command.permissions) {
+		const authorPerms = message.channel.permissionsFor(message.author);
+		if (!authorPerms || !authorPerms.has(command.permissions)) {
+			return message.reply('You cannot use the ' + command.name + ' command');
+		}
+	}
+
+	if(command.user){
+		if(command.user[0] != message.author.id && command.user[1] != message.author.id ){
+			return
+		}
+	}
+	
+	if (command.args && !args.length) {
+		let reply = `You didn't provide any arguments, ${message.author}!`;
+
+		if (command.usage) {
+			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+		}
+
+		return message.channel.send(reply);
+	}
+
+	try {
+		command.execute(message, args, discordClient);
+	} catch (error) {
+		console.error(error);
+		message.reply('there was an error trying to execute that command!');
+	}
+});
+
+discordClient.login(process.env.token);
+
