@@ -1,6 +1,0 @@
-const avatar = require('./avatar')
-const user_info = require('./userinfo')
-const server_info = require('./serverinfo')
-const ping = require('./ping')
-const roleinfo = require('./roleinfo')
-const botinfo = require('./botinfo')

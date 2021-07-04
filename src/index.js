@@ -1,8 +1,10 @@
 require('dotenv').config(); 
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, pgkey} = require('../config.json');
+const {pgkey} = require('../config.json');
 const discordClient = new Discord.Client();
+const functions = require('./common_functions')
+const yaml = require('js-yaml');
 
 discordClient.commands = new Discord.Collection();
 
@@ -31,7 +33,10 @@ discordClient.once('ready', async () => {
 });
 
 
-discordClient.on('message', message => {
+discordClient.on('message',async message => {
+
+	const prefix = await functions.getPreix(message)
+
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);

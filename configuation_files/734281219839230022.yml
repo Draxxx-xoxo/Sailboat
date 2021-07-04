@@ -1,0 +1,12 @@
+guild_settings:
+  prefix: ';'
+
+
+levels:
+  roles:
+    746939938393817098: 100
+
+
+mute_settings:
+  role: '740175943829815307' 
+  
