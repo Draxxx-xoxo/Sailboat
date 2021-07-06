@@ -1,7 +1,7 @@
 const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js')
-const functions = require('../../common_functions')
+const functions = require('../.././handlers/common_functions')
 
 module.exports = {
 	name: "tempmute",
@@ -18,7 +18,12 @@ module.exports = {
         await client.connect()
 
         var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
-        if(!member) return message.reply('Please Provide a Member to TempMute.')
+        if(!member){ 
+            message.reply('Please Provide a Member to TempMute.')
+        }
+        else if (member == message.member){
+            return message.channel.send('You cannot tempmute youself :person_facepalming:')
+        }
 
         let time = args[1];
         let reason_ = args.slice(2).join(" ").toString()
@@ -33,7 +38,7 @@ module.exports = {
     
         INSERT INTO guild.Infractions(
             discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, timestamp, server_id)
-            VALUES (${member.user.id}, '${member.user.username}#${member.user.discriminator}', 'mute', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id});
+            VALUES (${member.user.id}, '${member.user.username}#${member.user.discriminator}', 'tempmute', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id});
         
         `
 

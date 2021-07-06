@@ -3,7 +3,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const {pgkey} = require('../config.json');
 const discordClient = new Discord.Client();
-const functions = require('./common_functions')
+const functions = require('./handlers/common_functions')
 const yaml = require('js-yaml');
 
 discordClient.commands = new Discord.Collection();

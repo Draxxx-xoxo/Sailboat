@@ -13,31 +13,24 @@ module.exports = {
             return message.channel.send('Why are you mentioning a role? <:blob_ping:807930234410237963>')
         }
 
-        var member_id = message.mentions.users.first().id || args[0]
+        var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
 
-        //Dumb not working
-        if(!member_id){
+        //Dumb not 
+        if(!member){
             return message.channel.send('Please mention a user or input a user ID')
         };
 
 
         let reason_ = args.slice(1).join(" ").toString();
-        let user = message.guild.members.cache.get(member_id);
 
         const embed = new MessageEmbed()
         .setTitle(`You have been banned in ${message.guild.name}`)
         .setDescription(`Reason\n` + '```' + reason_ + '```')
 
 
-        if(!user){
-            return message.channel.send(`Invaild User || Unable to ban member`);
-        }
-        else if (message.mentions.users.first() == message.member.user){
+        if (member.id == message.member.id){
             return message.channel.send('You cannot ban youself :person_facepalming:');
         }
-        else if (member_id == message.member.user.id){
-            return message.channel.send('You cannot ban yourself :person_facepalming:');
-        };
 
         const client = new Client({
             connectionString: pgkey,
@@ -48,18 +41,17 @@ module.exports = {
     
         await client.connect();
    
-        const ban_member = user.user
         const moderator_id = message.member.user
         const timestamp = Date.now()
         const query = `
         INSERT INTO guild.Infractions(
             discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, timestamp, server_id)
-            VALUES (${ban_member.id}, '${ban_member.username}#${ban_member.discriminator}', 'ban', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id});
+            VALUES (${user.id}, '${user.username}#${user.discriminator}', 'ban', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id});
         
         `
 
 
-        user.ban({reason: reason_})
+        member.ban({reason: reason_})
         
         await client.query(query);
 
@@ -69,7 +61,7 @@ module.exports = {
             msg.delete({ timeout: 3000 })
           })
         
-          discordclient.users.cache.get(user.user.id).send(embed);
+          discordclient.users.cache.get(member.id).send(embed);
     client.end();  
 	},
 };

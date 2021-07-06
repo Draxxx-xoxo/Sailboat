@@ -1,7 +1,7 @@
 const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js')
-const functions = require('../../common_functions')
+const functions = require('../.././handlers/common_functions')
 
 module.exports = {
 	name: "mute",
@@ -14,27 +14,18 @@ module.exports = {
             return message.channel.send('Why are you mentioning a role? <:blob_ping:807930234410237963>')
         }
 
-        var member_id = message.mentions.users.first().id || args[0]
+        var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
 
         //Dumb not working
-        if(!member_id){
+        if(!member){
             return message.channel.send('Please mention a user or input a user ID')
         };
 
         let reason_ = args.slice(1).join(" ").toString();
-        let user = message.guild.members.cache.get(message.mentions.users.first().id || args[0]);
-                
-    
-    
-        if(!user){
-            return message.channel.send(`Invaild User || Unable to ban member`);
-        }
-        else if (message.mentions.users.first() == message.member.user){
+        
+        if (member.id == message.member.id){
             return message.channel.send('You cannot mute youself :person_facepalming:')
         }
-        else if (member_id == message.member.user.id){
-            return message.channel.send('You cannot mute yourself :person_facepalming:')
-        };
         
         const client = new Client({
             connectionString: pgkey,
@@ -45,20 +36,16 @@ module.exports = {
     
         await client.connect()
         
-        const mute_member = user.user
         const moderator_id = message.member.user
         const timestamp = Date.now()
         const query = `
         
         INSERT INTO guild.Infractions(
             discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, timestamp, server_id)
-            VALUES (${mute_member.id}, '${mute_member.username}#${mute_member.discriminator}', 'mute', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id});
+            VALUES (${member.id}, '${member.username}#${member.discriminator}', 'mute', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id});
             
         `
-            
-            
-            
-            
+        
             var role_id = await functions.muteRole(message);
                 
             if(!role_id){
@@ -66,7 +53,7 @@ module.exports = {
             }
                 
                 
-            if(user.roles.cache.has(role_id)){
+            if(member.roles.cache.has(role_id)){
                 return message.channel.send('That person has already been muted')
             }
                 
@@ -74,14 +61,14 @@ module.exports = {
             .setTitle(`You have been muted in ${message.guild.name}`)
             .setDescription(`**Reason**\n` + reason_ )
                 
-            user.roles.add(role_id)
+            member.roles.add(role_id)
             await client.query(query);
                 
-            message.channel.send(`${member_id} has been muted :ok_hand: User has been notified`)
+            message.channel.send(`${member.id} has been muted :ok_hand: User has been notified`)
             .then(msg => {
                 msg.delete({ timeout: 3000 })
             })    
-            discordclient.users.cache.get(user.user.id).send(embed);
+            discordclient.users.cache.get(member.user.id).send(embed);
 
             await client.end();
             
