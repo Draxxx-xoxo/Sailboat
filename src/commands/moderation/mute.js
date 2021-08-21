@@ -2,6 +2,7 @@ const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js')
 const functions = require('../.././handlers/common_functions')
+const Log = require('../../handlers/logging')
 
 module.exports = {
 	name: "mute",
@@ -69,6 +70,11 @@ module.exports = {
                 msg.delete({ timeout: 3000 })
             })    
             discordclient.users.cache.get(member.user.id).send(embed);
+
+            Log.Send(
+                discordclient,
+                `${moderator_id.username}#${moderator_id.discriminator} muted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_}`
+            );
 
             await client.end();
             

@@ -9,8 +9,7 @@ module.exports = {
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, discordclient) => {
 
-        let cont = message.content.slice((mainprefix + `inf search `).length).split(" ")
-        let member_id = cont.slice(0,1).toString()
+        const member_id = args[0]
   
         const client = new Client({
             connectionString: pgkey,
@@ -19,11 +18,10 @@ module.exports = {
                 }
         });
               
-              // opening connection
+        // opening connection
         await client.connect();
-          
          
-        const query = `SELECT * FROM guild."${message.guild.id}" WHERE discord_id = ${member_id} ORDER BY report_id DESC  `
+        const query = `SELECT * FROM guild.infractions WHERE discord_id = ${member_id} AND server_id = ${message.guild.id} ORDER BY report_id DESC  `
   
         var res = await client.query(query).catch(console.error)
   
@@ -31,7 +29,9 @@ module.exports = {
             var reason = row.reason || '(no reason)'
             var report_id = row.report_id || ''
           
-            const inf_search = 
+            const inf_search = new MessageEmbed()
+            .setTitle(report_id)
+            .setDescription(reason)
   
             message.channel.send(inf_search);
         }

@@ -2,6 +2,7 @@ const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js')
 const functions = require('../.././handlers/common_functions')
+const Log = require('../../handlers/logging');
 
 module.exports = {
 	name: "tempmute",
@@ -42,10 +43,10 @@ module.exports = {
         
         `
 
-        var res = await client.query(select_query).catch(console.error)
+       
 
-        for (let row of res.rows) {
-        var role_id = row.mute_role_id
+
+        var role_id = await functions.muteRole(message);
 
         let role = message.guild.roles.cache.find(role => role.id === role_id);
 
@@ -65,20 +66,31 @@ module.exports = {
         .setDescription(`**Reason**\n` + reason_ )
 
 
+
+        
         message.channel.send(`${member.user.tag} has been warned :ok_hand: User has been notified`)
         .then(msg => {
             msg.delete({ timeout: 3000 })
-          })
+        })
+            
+        discordclient.users.cache.get(member.id).send(embed)
 
-          discordclient.users.cache.get(member.id).send(embed);
-        }
+        Log.Send(
+			discordclient,
+	        `${moderator_id.username}#${moderator_id.discriminator} tempmuted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_}`
+        );
 
         setTimeout( function() {
             member.roles.remove(role_id);
             message.channel.send(`${member.user.tag} has been unmuted.`)
+            Log.Send(
+                discordclient,
+                `${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + `has been unmuted`
+            );
+    
         },time);
 
-        client.end()
+        await client.end()
             
         } 
     };

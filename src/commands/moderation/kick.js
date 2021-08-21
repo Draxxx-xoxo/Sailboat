@@ -1,6 +1,7 @@
 const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
-const {MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js');
+const Log = require('../../handlers/logging');
 
 module.exports = {
 	name: "kick",
@@ -59,6 +60,11 @@ module.exports = {
             })
                 
         discordclient.users.cache.get(member.id).send(embed);
+
+        Log.Send(
+            discordclient,
+            `${moderator_id.username}#${moderator_id.discriminator} muted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_}`
+        );
             
         client.end();
         }

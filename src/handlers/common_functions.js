@@ -11,4 +11,9 @@ module.exports = {
         const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
         return doc.mute_settings.role
     },
+
+    async censorWords(message) {
+        const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
+        return doc.plugins.censor.censor_words
+    },
 }

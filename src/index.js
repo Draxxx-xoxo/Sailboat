@@ -3,6 +3,8 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const {pgkey} = require('../config.json');
 const discordClient = new Discord.Client();
+require('discord-buttons')(discordClient);
+const { MessageButton, MessageActionRow } = require('discord-buttons');
 const functions = require('./handlers/common_functions')
 const yaml = require('js-yaml');
 
@@ -81,6 +83,7 @@ discordClient.on('message',async message => {
 		message.reply('there was an error trying to execute that command!');
 	}
 });
+
 
 discordClient.login(process.env.token);
 
