@@ -21,7 +21,7 @@ module.exports = {
             return message.channel.send('Please mention a user or input a user ID')
         };
         
-        let reason_ = args.slice(1).join(" ").toString();
+        let reason_ = args.slice(1).join(" ").toString() ;
         
         if (member.id == message.member.id){
             return message.channel.send('You cannot kick youself :person_facepalming:');
@@ -63,7 +63,7 @@ module.exports = {
 
         Log.Send(
             discordclient,
-            `${moderator_id.username}#${moderator_id.discriminator} muted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_}`
+            `${moderator_id.username}#${moderator_id.discriminator} muted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`
         );
             
         client.end();

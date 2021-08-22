@@ -77,7 +77,7 @@ module.exports = {
 
         Log.Send(
 			discordclient,
-	        `${moderator_id.username}#${moderator_id.discriminator} tempmuted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_}`
+	        `${moderator_id.username}#${moderator_id.discriminator} tempmuted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`
         );
 
         setTimeout( function() {
