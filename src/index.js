@@ -7,6 +7,7 @@ require('discord-buttons')(discordClient);
 const { MessageButton, MessageActionRow } = require('discord-buttons');
 const functions = require('./handlers/common_functions')
 const yaml = require('js-yaml');
+const Log = require('./handlers/logging');
 
 discordClient.commands = new Discord.Collection();
 
@@ -78,6 +79,11 @@ discordClient.on('message',async message => {
 
 	try {
 		command.execute(message, args, discordClient);
+		Log.Send(
+			discordClient,
+			`${message.member.user.tag} used the command` + '`' + prefix + command.name + '`' + ` in <#${message.channel.id}>`
+			)
+		
 	} catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');

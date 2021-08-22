@@ -9,7 +9,7 @@ module.exports = {
 
     async muteRole(message) {
         const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
-        return doc.mute_settings.role
+        return doc.plugins.mute_settings.role
     },
 
     async censorWords(message) {

@@ -9,7 +9,7 @@ module.exports = {
 		var minute = date.getMinutes();
 
 		discordclient.channels.cache
-			.get(doc.logging.channel)
+			.get(doc.plugins.logging.channel)
 			.send(`\`\`[${hour}:${minute}]\`\` ${log}`);
 	},
 };
