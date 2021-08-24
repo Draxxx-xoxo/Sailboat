@@ -81,13 +81,16 @@ discordClient.on('message',async message => {
 		command.execute(message, args, discordClient);
 		Log.Send(
 			discordClient,
-			`${message.member.user.tag} used the command` + '`' + prefix + command.name + '`' + ` in <#${message.channel.id}>`
+			`${message.member.user.tag} used the command` + '`' + prefix + command.name + '`' + ` in <#${message.channel.id}>`,
+			message
 			)
 		
 	} catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
 	}
+
+	
 });
 
 

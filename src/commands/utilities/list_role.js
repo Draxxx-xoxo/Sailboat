@@ -1,3 +1,5 @@
+const {MessageEmbed} = require('discord.js');
+
 module.exports = {
 	name: "list_role",
 	category: "botinfo",
@@ -9,7 +11,12 @@ module.exports = {
         if(!role) return message.channel.send('Please mention or input a valid role.');
 
         const list_role = message.guild.roles.cache.get(`${role.id}`).members.map(m=>m.user.tag + ' `' + m.user.id + '`').join('\n')
+
+		const embed = new MessageEmbed()
+		.setTitle('Members who have ' + role.name + '')
+		.setDescription(list_role)
+		
         
-        message.channel.send(list_role)
+        message.channel.send(embed)
 	},
 };
