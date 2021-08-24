@@ -1,0 +1,15 @@
+guild_settings:
+  prefix: '-'
+
+
+levels:
+  roles:
+
+
+plugins:
+  mute_settings:
+    role: '' 
+
+  logging:
+    channel: '878581749393784832'
+  
