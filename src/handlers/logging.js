@@ -1,9 +1,12 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
-const doc = yaml.load(fs.readFileSync(`./configuation_files/734281219839230022.yml`, 'utf8'));
+const Discord = require('discord.js');
+const {message} = new Discord.Client();
 
 module.exports = {
-	Send: (discordclient, log) => {
+	Send: (discordclient, log, message) => {
+		const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
+
 		var date = new Date();
 		var hour = date.getHours();
 		var minute = date.getMinutes();

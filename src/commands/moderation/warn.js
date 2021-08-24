@@ -61,7 +61,8 @@ module.exports = {
 
         Log.Send(
 			discordclient,
-			`${moderator_id.username}#${moderator_id.discriminator} warned ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`
+			`${moderator_id.username}#${moderator_id.discriminator} warned ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`,
+            message
 		);
         await client.end();
     },

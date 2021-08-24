@@ -77,7 +77,8 @@ module.exports = {
 
         Log.Send(
 			discordclient,
-	        `${moderator_id.username}#${moderator_id.discriminator} tempmuted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`
+	        `${moderator_id.username}#${moderator_id.discriminator} tempmuted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`,
+            message
         );
 
         setTimeout( function() {
@@ -85,7 +86,8 @@ module.exports = {
             message.channel.send(`${member.user.tag} has been unmuted.`)
             Log.Send(
                 discordclient,
-                `${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + `has been unmuted`
+                `${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + `has been unmuted`,
+                message
             );
     
         },time);
