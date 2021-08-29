@@ -13,8 +13,9 @@ module.exports = {
         const list_role = message.guild.roles.cache.get(`${role.id}`).members.map(m=>m.user.tag + ' `' + m.user.id + '`').join('\n')
 
 		const embed = new MessageEmbed()
-		.setTitle('Members who have ' + role.name + '')
+		.setTitle('Members who have ' + role.name)
 		.setDescription(list_role)
+		.setFooter(message.guild.roles.cache.get(`${role.id}`).members.map(m=>m).length + ' Members with the role')
 		
         
         message.channel.send(embed)
