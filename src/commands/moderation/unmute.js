@@ -65,7 +65,7 @@ module.exports = {
         Log.Send(
 			discordclient,
 			`${moderator_id.username}#${moderator_id.discriminator} unmuted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.id}` + '`',
-            message
+            message.guild.id
 		);
                 
         await client.end()        

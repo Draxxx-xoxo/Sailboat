@@ -78,7 +78,7 @@ module.exports = {
         Log.Send(
 			discordclient,
 	        `${moderator_id.username}#${moderator_id.discriminator} tempmuted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`,
-            message
+            message.guild.id
         );
 
         setTimeout( function() {
@@ -87,7 +87,7 @@ module.exports = {
             Log.Send(
                 discordclient,
                 `${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + `has been unmuted`,
-                message
+                message.guild.id
             );
     
         },time);

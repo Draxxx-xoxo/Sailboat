@@ -4,8 +4,8 @@ const Discord = require('discord.js');
 const {message} = new Discord.Client();
 
 module.exports = {
-	Send: (discordclient, log, message) => {
-		const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
+	Send: (discordclient, log, guildid) => {
+		const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
 
 		var date = new Date();
 		var hour = date.getHours();
