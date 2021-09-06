@@ -5,7 +5,7 @@ module.exports = {
 	category: "botinfo",
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, client) => {
-        let role = message.guild.roles.cache.get(args[0]) || message.guild.roles.cache.find(r => r.name === args.join(" ")) || message.mentions.roles.first()
+        let role = message.guild.roles.cache.get(args[0]) || message.guild.roles.cache.find(r => r.name === args.join(" ") || message.mentions.roles.first())
 
         {
         
