@@ -24,3 +24,8 @@ plugins:
     whitelist_words: ['sure','cool']
     link_filter: true
     invite_filter: true  
+
+  welcome_channel:
+    channel: ''
+    join_message: 'Welcome Message Insert lol'
+    leave_message: 'Leave Message Insert lol'

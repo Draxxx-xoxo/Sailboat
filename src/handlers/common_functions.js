@@ -16,4 +16,19 @@ module.exports = {
         const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
         return doc.plugins.censor.censor_words
     },
+
+    async welcomechannel(guildid) {
+        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        return doc.plugins.welcome_channel.channel
+    },
+
+    async join_message(guildid) {
+        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        return doc.plugins.welcome_channel.join_message
+    },
+
+    async leave_message(guildid) {
+        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        return doc.plugins.welcome_channel.leave_message
+    },
 }
