@@ -79,11 +79,13 @@ discordClient.on('message',async message => {
 
 	try {
 		command.execute(message, args, discordClient);
+		if(await functions.command_logging(message.guild.id) == true){
 		Log.Send(
 			discordClient,
 			`${message.member.user.tag} used the command` + '`' + prefix + command.name + '`' + ` in <#${message.channel.id}>`,
 			message.guild.id
 			)
+		}
 		
 	} catch (error) {
 		console.error(error);
