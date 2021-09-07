@@ -33,4 +33,19 @@ discordClient.on('guildMemberAdd', async (member) => {
 
   })
 
+discordClient.on('channelCreate', async (channel) => {
+    const guildid = channel.guild.id
+    Log.Send(discordClient,
+        `Text channel` + '`' + `${channel.name}` + '`' + `was created`,
+        guildid
+    )
+  })
+
+discordClient.on('channelDelete', async (channel) => {
+    const guildid = channel.guild.id
+    Log.Send(discordClient,
+        `Text channel` + '`' + `${channel.name}` + '`' + `was deleted`,
+        guildid
+    )
+  })
 discordClient.login(process.env.token);
