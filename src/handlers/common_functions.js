@@ -31,4 +31,9 @@ module.exports = {
         const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
         return doc.plugins.welcome_channel.leave_message
     },
+
+    async command_logging(guildid) {
+        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        return doc.plugins.logging.command_logging
+    },
 }
