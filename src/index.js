@@ -93,5 +93,12 @@ discordClient.on('message',async message => {
 	}
 });
 
+
+discordClient.on("clickMenu", async menu => {
+
+	if(menu.values[0]== "menuid"){
+		await menu.reply.send('This is content replied!')
+	}
+})
 discordClient.login(process.env.token);
 
