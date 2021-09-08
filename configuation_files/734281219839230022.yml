@@ -19,6 +19,7 @@ plugins:
   logging:
     channel: '861610169788268544'
     command_logging: false
+    infractions_logging: false
 
   censor:
     censor_words: ['ew','no']

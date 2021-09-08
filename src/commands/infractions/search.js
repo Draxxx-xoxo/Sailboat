@@ -1,10 +1,12 @@
 const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js')
+const disbut = require("discord-buttons");
 
 module.exports = {
 	name: "inf_search",
 	category: "botinfo",
+    aliases:['infraction search','infraction_search', 'inf search'],
     permissions:["MANAGE_GUILD","ADMINISTRATOR"],
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, discordclient) => {
@@ -21,37 +23,93 @@ module.exports = {
         // opening connection
         await client.connect();
          
-        const query = `SELECT * FROM guild.infractions WHERE discord_id = ${member.user.id} AND server_id = ${message.guild.id} ORDER BY report_id DESC LIMIT 5 `
+        const query = `SELECT * FROM guild.infractions WHERE discord_id = ${member.user.id} AND server_id = ${message.guild.id} ORDER BY report_id DESC`
+        const totalquery = `SELECT * FROM guild.infractions WHERE discord_id = ${member.user.id} AND server_id = ${message.guild.id} ORDER BY report_id`
   
         var res = (await client.query(query).catch(console.error)).rows
+        var rowcount = (await client.query(query).catch(console.error)).rowCount
+        var totalrowcount = (await client.query(totalquery).catch(console.error)).rowCount
 
 
+        var report_id_arrary = [];
+        var infractions_arrary = [];
+        var reason_arrary = [];
 
-        var top5view = (
-            `
-            ID ${res[0].report_id} (${res[0].infractions}): ${res[0].reason || 'No Reason'}
-            ID ${res[1].report_id} (${res[1].infractions}): ${res[1].reason || 'No Reason'}
-            ID ${res[2].report_id} (${res[2].infractions}): ${res[2].reason || 'No Reason'}
-            ID ${res[3].report_id} (${res[3].infractions}): ${res[3].reason || 'No Reason'}
-            ID ${res[4].report_id} (${res[4].infractions}): ${res[4].reason || 'No Reason'}
-            `
+
+        for (let i = 0; i < rowcount; i++) {
+            var report_id = report_id_arrary.push(res[i].report_id)
+            var infractions = infractions_arrary.push(res[i].infractions)
+            var reason = reason_arrary.push(res[i].reason)
+        }
+
+        if(rowcount === 0){
+            message.channel.send('This user does not have any infractions for this server')
+            return
+        }
+
+        var report_arrary = [];
+
+        for(let i = 0; i < rowcount; i++){
+            var report = report_arrary.push(`#${report_id_arrary[i]} (${infractions_arrary[i]}): ${reason_arrary[i] || 'No Reason'}`)
+        }
+
+
+        var options = [];
+
+
+        for(let i = 0; i < rowcount; i++){
+
+            switch (infractions_arrary[i]) {
+                case 'warn':
+                  emoji = "⚠️";
+                  break;
+                case 'ban':
+                  emoji = "🚫";
+                  break;
+                case 'tempmute':
+                   emoji = "🔕"
+                  break;
+                case 'mute':
+                  emoji = "🔕";
+                  break;
+                case 'kick':
+                  emoji = "🦵🏼";
+                  break;
+              }
+            
+            let option = options.push(
+            new disbut.MessageMenuOption()
+            .setLabel('#' + report_id_arrary[i])
+            .setEmoji(emoji)
+            .setValue('infraction' + report_id_arrary[i])
+            .setDescription(infractions_arrary[i])
             )
-            //ID 48 (Ban): Reason
+        
+
+        }
+
+        
+
+        var select = new disbut.MessageMenu()
+        .setID('customid')
+        .setPlaceholder('Click me! :D')
+        .setMaxValues(1)
+        .setMinValues(1)
+        .addOptions(options)
+
+
 
         var inf_search = new MessageEmbed()
             .setAuthor(`Infractions Overview for ${member.user.username}`, member.user.displayAvatarURL())
+            .setDescription('Use `!inf {infraction_no}` to see more information about an individual infraction')
             .setThumbnail(member.user.displayAvatarURL())
             .addFields(
-                { name: "Top 5 Infractions", value: top5view},
-                { name: 'Total Infractions', value: res.rowCount, inline: true },
+                { name: "Infractions", value: report_arrary.join('\n'), inline: false},
+                { name: 'Total Infractions', value: totalrowcount, inline: true },
                 { name: `Joined ${message.member.guild.name}`, value: new Date (member.joinedTimestamp).toLocaleString(), inline: true },
             )
+        message.channel.send(inf_search, select);        
         
-
-        
-        message.channel.send(inf_search);
-  
-              
         client.end();
     }
 };  

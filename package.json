@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start-dev": "nodemon ./src/index.js",
+    "event-logging": "nodemon ./src/events/logging_events",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
