@@ -73,22 +73,28 @@ module.exports = {
             msg.delete({ timeout: 3000 })
         })
             
-        discordclient.users.cache.get(member.id).send(embed)
+        discordclient.users.cache.get(member.id).send(embed).catch(error);
 
-        Log.Send(
-			discordclient,
-	        `${moderator_id.username}#${moderator_id.discriminator} tempmuted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`,
-            message.guild.id
-        );
+
+        if(await functions.command_logging(message.guild.id) ==  true){
+            Log.Send(
+			    discordclient,
+	            `${moderator_id.username}#${moderator_id.discriminator} tempmuted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`,
+                message.guild.id
+            );
+        }
 
         setTimeout( function() {
             member.roles.remove(role_id);
             message.channel.send(`${member.user.tag} has been unmuted.`)
-            Log.Send(
-                discordclient,
-                `${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + `has been unmuted`,
-                message.guild.id
-            );
+
+
+                Log.Send(
+                    discordclient,
+                    `${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + `has been unmuted`,
+                    message.guild.id
+                );
+            
     
         },time);
 

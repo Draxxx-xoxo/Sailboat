@@ -2,6 +2,7 @@ const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js');
 const Log = require('../../handlers/logging');
+const {command_logging} = require('../../handlers/common_functions');
 
 module.exports = {
 	name: "kick",
@@ -59,13 +60,15 @@ module.exports = {
             msg.delete({ timeout: 3000 })
             })
                 
-        discordclient.users.cache.get(member.id).send(embed);
+        discordclient.users.cache.get(member.id).send(embed).catch(error);
 
-        Log.Send(
-            discordclient,
-            `${moderator_id.username}#${moderator_id.discriminator} muted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`, 
-            message.guild.id
-        );
+        if(await command_logging(message.guild.id) ==  true){
+            Log.Send(
+                discordclient,
+                `${moderator_id.username}#${moderator_id.discriminator} muted ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`, 
+                message.guild.id
+            );
+        }
             
         client.end();
         }

@@ -2,6 +2,7 @@ const {Client} = require('pg');
 const {pgkey, prefix} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js')
 const Log = require("../../handlers/logging");
+const {command_logging} = require('../../handlers/common_functions');
 
 module.exports = {
 	name: "warn",
@@ -57,13 +58,15 @@ module.exports = {
             msg.delete({ timeout: 3000 })
           });
 
-        discordclient.users.cache.get(member.user.id).send(embed);
+        discordclient.users.cache.get(member.user.id).send(embed).catch(error);
 
-        Log.Send(
-			discordclient,
-			`${moderator_id.username}#${moderator_id.discriminator} warned ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`,
-            message.guild.id
-		);
+        if(await command_logging(message.guild.id) ==  true){
+            Log.Send(
+			    discordclient,
+			    `${moderator_id.username}#${moderator_id.discriminator} warned ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`,
+                message.guild.id
+		    );
+        }
         await client.end();
     },
 };
