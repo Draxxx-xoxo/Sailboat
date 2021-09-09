@@ -16,7 +16,7 @@ plugins:
     role: '740175943829815307' 
 
   logging:
-    channel: '861610169788268544'
+    channel: '770619914217193492'
 
   censor:
     censor_words: ['ew','no']

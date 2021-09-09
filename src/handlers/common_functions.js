@@ -17,6 +17,17 @@ module.exports = {
         return doc.plugins.censor.censor_words
     },
 
+    async censorIgnoreUser(message) {
+        const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
+        return doc.plugins.censor.ignore_users
+    },
+
+    async censorIgnoreChannel(message) {
+        const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
+        return doc.plugins.censor.ignore_channels
+    },
+
+
     async welcomechannel(guildid) {
         const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
         return doc.plugins.welcome_channel.channel

@@ -58,7 +58,9 @@ module.exports = {
             msg.delete({ timeout: 3000 })
           });
 
-        discordclient.users.cache.get(member.user.id).send(embed).catch(error);
+
+        discordclient.users.cache.get(member.user.id).send(embed).catch(() => message.reply("Can't send DM to your user!"));
+
 
         if(await command_logging(message.guild.id) ==  true){
             Log.Send(

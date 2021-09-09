@@ -18,3 +18,5 @@ plugins:
     whitelist_words: ['sure','cool']
     link_filter: true
     invite_filter: true  
+
+    

@@ -26,6 +26,8 @@ plugins:
     whitelist_words: ['sure','cool']
     link_filter: true
     invite_filter: true  
+    ignore_channels: ['756704090532348054']
+    ignore_users: ['']
 
   welcome_channel:
     channel: ''
