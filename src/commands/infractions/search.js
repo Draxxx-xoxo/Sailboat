@@ -2,6 +2,7 @@ const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js')
 const disbut = require("discord-buttons");
+const functions = require('../../handlers/common_functions')
 
 module.exports = {
 	name: "inf_search",
@@ -88,8 +89,6 @@ module.exports = {
 
         }
 
-        
-
         var select = new disbut.MessageMenu()
         .setID('customid')
         .setPlaceholder('Click me! :D')
@@ -97,11 +96,11 @@ module.exports = {
         .setMinValues(1)
         .addOptions(options)
 
-
+        var prefix = await functions.getPreix(message)
 
         var inf_search = new MessageEmbed()
             .setAuthor(`Infractions Overview for ${member.user.username}`, member.user.displayAvatarURL())
-            .setDescription('Use `!inf {infraction_no}` to see more information about an individual infraction')
+            .setDescription('Use `' + prefix + 'inf {infraction_no}` to see more information about an individual infraction')
             .setThumbnail(member.user.displayAvatarURL())
             .addFields(
                 { name: "Infractions", value: report_arrary.join('\n'), inline: false},

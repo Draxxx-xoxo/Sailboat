@@ -95,9 +95,13 @@ discordClient.on('message',async message => {
 
 
 discordClient.on("clickMenu", async menu => {
+	
+	const message_menu = require('./commands/infractions/message_menu') 
 
-	if(menu.values[0]== "menuid"){
-		await menu.reply.send('This is content replied!')
+	try{
+		message_menu.execute(menu, discordClient)
+	} catch (error) {
+		console.log(error);
 	}
 })
 discordClient.login(process.env.token);
