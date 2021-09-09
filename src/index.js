@@ -35,7 +35,7 @@ discordClient.once('ready', async () => {
 		)
 });
 
-
+//COMMANDS
 discordClient.on('message',async message => {
 
 	const prefix = await functions.getPreix(message)
@@ -94,6 +94,7 @@ discordClient.on('message',async message => {
 });
 
 
+//MENU OPTIONS
 discordClient.on("clickMenu", async menu => {
 	
 	const message_menu = require('./commands/infractions/message_menu') 
@@ -104,5 +105,21 @@ discordClient.on("clickMenu", async menu => {
 		console.log(error);
 	}
 })
+
+
+//AUTOMOD
+discordClient.on('message', async message => {
+	const censor = require('./auto_mod/censor')
+
+	if(message.author.bot) return;
+
+	try{
+		censor.execute(message, discordClient)
+	} catch (error) {
+		console.log(error);
+	}
+
+});
+
 discordClient.login(process.env.token);
 

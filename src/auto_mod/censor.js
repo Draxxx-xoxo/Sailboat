@@ -8,13 +8,24 @@ module.exports = {
 	module:'Censor',
     permissions:[],
 	description: "",
-	execute: async (message, args, discordclient) => {
+	execute: async (message, discordclient) => {
 
-		for (let i = 0; i < functions.censorWords(message).length; i++) { 
-		  }
+	if(await functions.censorWords(message)) return
 
-		  if (message.content == functions.censorWords[0](message)){
-		  console.log(functions.censorWords(message).length)
-		  }
-    }
+	var censorArray = await functions.censorWords(message);
+
+
+	for (let i = 0; i < censorArray.length; i++) { 
+		if(message.content.includes(censorArray[i])){
+			message.delete();
+
+			Log.Send(
+				discordclient, 
+				`censored message by ${message.member.user.tag} in ${message.channel.id} found blacklist word ${censorArray[i]}` + '```' + message.content + '```', 
+				message.guild.id
+				)
+
+		}
+	}
+	}
 };

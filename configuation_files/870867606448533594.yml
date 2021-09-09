@@ -13,3 +13,8 @@ plugins:
   logging:
     channel: '878581749393784832'
   
+  censor:
+    censor_words: ['']
+    whitelist_words: ['sure','cool']
+    link_filter: true
+    invite_filter: true  
