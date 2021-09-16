@@ -14,9 +14,11 @@ plugins:
     channel: '878581749393784832'
   
   censor:
-    censor_words: ['']
+    censor_words: ['ew','no']
     whitelist_words: ['sure','cool']
     link_filter: true
     invite_filter: true  
+    ignore_channels: ['']
+    ignore_users: ['']
 
     
