@@ -2,7 +2,6 @@ guild_settings:
   prefix: ';'
   nickname: 'boohoo'
 
-
 plugins:
   levels:
     roles:
@@ -12,20 +11,20 @@ plugins:
       746770833984323676: 20
       774118155387011074: 0
 
-
   mute_settings:
-    role: '740175943829815307' 
+    role: '740175943829815307'
 
   logging:
     channel: '861610169788268544'
     command_logging: false
     infractions_logging: false
+    report_logging: true
 
   censor:
-    censor_words: ['ew','no']
-    whitelist_words: ['sure','cool']
+    censor_words: ['ew', 'no']
+    whitelist_words: ['sure', 'cool']
     link_filter: true
-    invite_filter: true  
+    invite_filter: true
     ignore_channels: ['756704090532348054']
     ignore_users: ['']
 
@@ -33,3 +32,7 @@ plugins:
     channel: ''
     join_message: 'Welcome Message Insert lol'
     leave_message: 'Leave Message Insert lol'
+
+  reports:
+    report_user: true
+    logging_channel: '861610169788268544'
