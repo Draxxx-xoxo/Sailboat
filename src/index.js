@@ -11,7 +11,6 @@ const Log = require('./handlers/logging');
 discordClient.commands = new Discord.Collection();
 
 
-
 var commandFolders = fs.readdirSync("./src/commands");
 
 for (const folder of commandFolders) {
@@ -36,9 +35,9 @@ discordClient.once('ready', async () => {
 });
 
 //COMMANDS
-discordClient.on('message',async message => {
+discordClient.on('message', async message => {
 
-	const prefix = await functions.getPreix(message)
+	const prefix = await functions.getPreix(message.guild.id)
 
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -94,7 +93,18 @@ discordClient.on('message',async message => {
 });
 
 
-//MENU OPTIONS
+//Buttons
+discordClient.on("clickButton", async button => {
+	
+	const report_buttons = require('./commands/report/report_buttons') 
+
+	try{
+		report_buttons.execute(button, discordClient)
+	} catch (error) {
+		console.log(error);
+	}
+})
+
 discordClient.on("clickMenu", async menu => {
 	
 	const message_menu = require('./commands/infractions/message_menu') 
@@ -118,7 +128,7 @@ discordClient.on('message', async message => {
 	} catch (error) {
 		console.log(error);
 	}
-
+	
 });
 
 discordClient.login(process.env.token);
