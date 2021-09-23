@@ -13,6 +13,8 @@ module.exports = {
 	execute: async (message, args, discordclient) => {
 
         var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0])); 
+
+        if(!member) return
   
         const client = new Client({
             connectionString: pgkey,
@@ -76,7 +78,10 @@ module.exports = {
                 case 'kick':
                   emoji = "🦵🏼";
                   break;
-              }
+                default:
+                  emoji = "⚠️";
+                  break;
+              };
             
             let option = options.push(
             new disbut.MessageMenuOption()
@@ -96,7 +101,7 @@ module.exports = {
         .setMinValues(1)
         .addOptions(options)
 
-        var prefix = await functions.getPreix(message)
+        var prefix = await functions.getPreix(message.guild.id)
 
         var inf_search = new MessageEmbed()
             .setAuthor(`Infractions Overview for ${member.user.username}`, member.user.displayAvatarURL())
