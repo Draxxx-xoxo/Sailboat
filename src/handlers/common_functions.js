@@ -8,8 +8,8 @@ module.exports = {
         return doc
     },
 
-    async getPreix(message) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
+    async getPreix(guildid) {
+        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
         return doc.guild_settings.prefix
     },
 
@@ -56,5 +56,17 @@ module.exports = {
     async command_logging(guildid) {
         const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
         return doc.plugins.logging.infractions_logging
+    },
+    async report_pugin(guildid) {
+        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        return doc.plugins.reports.report_user
+    },
+    async report_logging(guildid) {
+        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        return doc.plugins.logging.report_logging
+    },
+    async report_logging_channel(guildid) {
+        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        return doc.plugins.reports.logging_channel
     },
 }
