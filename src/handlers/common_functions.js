@@ -69,4 +69,14 @@ module.exports = {
         const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
         return doc.plugins.reports.logging_channel
     },
+
+    async infractionQ(member, moderator_id, reason_, message, timestamp, infraction) {
+        const query = `
+        INSERT INTO guild.Infractions(
+            discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, timestamp, server_id)
+            VALUES (${member.user.id}, '${member.user.username}#${member.user.discriminator}', '${infraction}', ${moderator_id.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id}); 
+        `
+
+        return query
+    },
 }

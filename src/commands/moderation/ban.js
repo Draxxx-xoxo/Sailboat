@@ -2,7 +2,7 @@ const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js');
 const Log = require('../../handlers/logging');
-const {command_logging} = require('../../handlers/common_functions');
+const {command_logging, infractionQ} = require('../../handlers/common_functions');
 
 
 module.exports = {
@@ -46,12 +46,7 @@ module.exports = {
    
         const moderator_id = message.member.user
         const timestamp = Date.now()
-        const query = `
-        INSERT INTO guild.Infractions(
-            discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, timestamp, server_id)
-            VALUES (${user.id}, '${user.username}#${user.discriminator}', 'ban', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id});
-        
-        `
+        const query = await infractionQ(member, moderator_id, reason_, message, timestamp, 'ban')
 
 
         member.ban({reason: reason_})

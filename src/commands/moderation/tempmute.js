@@ -35,13 +35,7 @@ module.exports = {
 
         const moderator_id = message.member.user
         const timestamp = Date.now()
-        const query = `
-    
-        INSERT INTO guild.Infractions(
-            discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, timestamp, server_id)
-            VALUES (${member.user.id}, '${member.user.username}#${member.user.discriminator}', 'tempmute', ${message.author.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id});
-        
-        `
+        const query = await functions.infractionQ(member, moderator_id, reason_, message, timestamp, 'tempmute')
 
        
 
