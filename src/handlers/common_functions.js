@@ -79,4 +79,15 @@ module.exports = {
 
         return query
     },
+
+    async reportupdate(report_id, button, status){
+        const query = `
+        UPDATE guild.reports
+        SET status = '${status}'
+        WHERE "report_id" = ${report_id} AND "server_id" = ${button.guild.id}
+        RETURNING *
+        `
+        return query
+    }
+    
 }

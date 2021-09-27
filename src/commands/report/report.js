@@ -4,11 +4,14 @@ const {MessageEmbed} = require('discord.js');
 const Log = require('../../handlers/logging');
 const {MessageButton} = require("discord-buttons");
 const {command_logging, report_pugin, report_logging, report_logging_channel} = require('../../handlers/common_functions');
+const {reportbuttons} = require('../../handlers/common_buttons')
+const deny = require('./report_buttons/deny')
+const {reportlog} = require('../../handlers/common_embeds');
 
 
 module.exports = {
 	name: "report",
-	category: "botinfo",
+	category: "",
     permissions:[""],
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, discordclient) => {
@@ -77,41 +80,13 @@ module.exports = {
             
             const reportchannel = await report_logging_channel(message.guild.id);
 
-            const embed = new MessageEmbed()
-            .setTitle('Report #' + res.report_id)
-            .addFields(
-                {name: 'User', value: res.reported_user_tag + '\n`' + res.reported_user_id + '`', inline: true},
-                {name: 'Reporter', value: res.reporter_tag + '\n`' + res.reporter_id + '`', inline: true},
-                {name: 'Reason', value: res.reason}
-            );
+            const report_buttons = await reportbuttons(false)
 
-            let warn = new MessageButton()
-            .setLabel('Warn')
-            .setStyle('blurple')
-            .setID('warn');
+            const embed = await reportlog(res,'🟡')
 
-            let mute = new MessageButton()
-            .setLabel('Mute')
-            .setStyle('blurple')
-            .setID('mute');
-
-            let kick = new MessageButton()
-            .setLabel('Kick')
-            .setStyle('blurple')
-            .setID('Kick');
-
-            let ban = new MessageButton()
-            .setLabel('Ban')
-            .setStyle('blurple')
-            .setID('ban');
-
-            let deny = new MessageButton()
-            .setLabel('Deny')
-            .setStyle('blurple')
-            .setID('deny');
             
             message.guild.channels.cache.get(reportchannel).send({
-                buttons: [warn,mute,kick,ban,deny],
+                buttons: report_buttons,
                 embed: embed
                 }); 
         }

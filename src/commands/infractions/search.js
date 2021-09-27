@@ -60,7 +60,7 @@ module.exports = {
         var options = [];
 
 
-        for(let i = 0; i < rowcount; i++){
+        for(let i = 0; i < 25; i++){
 
             switch (infractions_arrary[i]) {
                 case 'warn':
@@ -112,7 +112,7 @@ module.exports = {
                 { name: 'Total Infractions', value: totalrowcount, inline: true },
                 { name: `Joined ${message.member.guild.name}`, value: new Date (member.joinedTimestamp).toLocaleString(), inline: true },
             )
-        message.channel.send(inf_search, select);        
+        message.channel.send(inf_search, select);
         
         client.end();
     }
