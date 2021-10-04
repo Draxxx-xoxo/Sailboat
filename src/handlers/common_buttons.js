@@ -19,7 +19,7 @@ module.exports = {
         .setLabel('Kick')
         .setDisabled(disabled)
         .setStyle('blurple')
-        .setID('Kick');
+        .setID('kick');
 
         let ban = new MessageButton()
         .setLabel('Ban')

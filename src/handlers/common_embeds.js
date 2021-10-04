@@ -7,7 +7,8 @@ module.exports = {
         .addFields(
             {name: 'User', value: res.reported_user_tag + '\n`' + res.reported_user_id + '`', inline: true},
             {name: 'Reporter', value: res.reporter_tag + '\n`' + res.reporter_id + '`', inline: true},
-            {name: 'Reason', value: res.reason}
+            {name: '\u200b', value: '\u200b', inline: true},
+            {name: 'Reason', value: res.reason, inline: true},
         )
         .setFooter('Status: ' + res.status + ' ' + emoji)
         
