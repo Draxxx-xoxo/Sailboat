@@ -5,7 +5,7 @@ const Log = require('../../handlers/logging');
 const {MessageButton} = require("discord-buttons");
 const {command_logging, report_pugin, report_logging, report_logging_channel} = require('../../handlers/common_functions');
 const {reportbuttons} = require('../../handlers/common_buttons')
-const deny = require('./report_buttons/deny')
+const deny = require('./report_buttons/moderation')
 const {reportlog} = require('../../handlers/common_embeds');
 
 
@@ -38,7 +38,7 @@ module.exports = {
         let reason_ = args.slice(1).join(" ").toString();
 
         if (member.id == message.member.id){
-            message.channel.send('You cannot ban youself :person_facepalming:')
+            message.channel.send('You cannot report youself :person_facepalming:')
             .then(msg => {
                 msg.delete({ timeout: 3000 })
             });    
