@@ -59,8 +59,9 @@ module.exports = {
 
         var options = [];
 
+        if(rowcount >= 25) var rowcount = 25
 
-        for(let i = 0; i < 25; i++){
+        for(let i = 0; i < rowcount; i++){
 
             switch (infractions_arrary[i]) {
                 case 'warn':
