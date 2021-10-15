@@ -7,8 +7,8 @@ const functions = require('../../handlers/common_functions')
 module.exports = {
 	name: "inf_search",
 	category: "botinfo",
-    aliases:['infraction search','infraction_search', 'inf search'],
-    permissions:["MANAGE_GUILD","ADMINISTRATOR"],
+  aliases:['infraction search','infraction_search', 'inf search'],
+  permissions:["MANAGE_GUILD","ADMINISTRATOR"],
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, discordclient) => {
 

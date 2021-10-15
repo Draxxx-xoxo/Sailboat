@@ -88,6 +88,10 @@ module.exports = {
         RETURNING *
         `
         return query
+    },
+
+    async rolelevel(guildid) {
+        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        return doc.plugins.level
     }
-    
 }
