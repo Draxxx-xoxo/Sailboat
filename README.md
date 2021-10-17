@@ -5,6 +5,7 @@
 - Infractions
 - Reporting
 - Utility Commands
+- Logging (Still in Development)
 
 Bot is currently still in development. Lots of the functions is still in beta or unstable.
 
