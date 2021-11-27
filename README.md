@@ -23,7 +23,7 @@ Bot's database is Postgresql
 - Run `cd backend` in your termainal 
 - Create an `.env` file with your bot token under `token=YOUR_BOT_TOKEN`
 - Create a `config.json` and add your `pgkey`
-- Lastly run npm i to install all the node modules
+- Lastly run `npm i` to install all the node modules
 - Run `node .`
 
 ## Dashboard
