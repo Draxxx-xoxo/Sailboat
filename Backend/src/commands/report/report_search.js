@@ -56,7 +56,8 @@ module.exports = {
 		const redirect_link = 'https://discord.com/channels/734281219839230022/861610169788268544/'
 
 		for(let i = 0; i < res.rowCount; i++){
-            var report = report_arrary.push(`[#${report_id_arrary[i]}](${redirect_link}${message_id_arrary[i]}): ${reason_arrary[i] || 'No Reason'}` + ' `Status: ' + status_arrary[i] + '`')
+           //var report = report_arrary.push(`[#${report_id_arrary[i]}](${redirect_link}${message_id_arrary[i]}): ${reason_arrary[i] || 'No Reason'}` + ' `Status: ' + status_arrary[i] + '`')
+           var report = report_arrary.push(`[#${report_id_arrary[i]}]: ${reason_arrary[i] || 'No Reason'}` + ' `Status: ' + status_arrary[i] + '`')
         }
 
 		var report_search = new MessageEmbed()
