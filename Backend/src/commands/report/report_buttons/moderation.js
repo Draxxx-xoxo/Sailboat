@@ -136,7 +136,7 @@ module.exports = {
 
         await client.query(query);
 
-        var role_id = await functions.muteRole(message);
+        var role_id = await functions.muteRole(button);
 
         if(!role_id){
             return button.reply.send({content: 'Please add a mute role', ephemeral: true})
@@ -147,7 +147,7 @@ module.exports = {
 
         const report_log = await (await reportlog(updateres, '🟢')).addField('Infraction', 'Mute', true)
 
-        member.role.add(role_id)
+        member.roles.add(role_id)
 
         const embed = new MessageEmbed()
         .setTitle(`You have been Muted in ${button.guild.name}`)

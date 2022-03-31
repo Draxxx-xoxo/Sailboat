@@ -51,7 +51,7 @@ module.exports = {
             await moderation.ban(button, report_id, client, member, report_buttons, reason_, discordclient)
         }
         if (button.id == 'mute'){
-            await moderation.ban(button, report_id, client, member, report_buttons, reason_, discordclient)
+            await moderation.mute(button, report_id, client, member, report_buttons, reason_, discordclient)
         }
         client.end();
         
