@@ -2,11 +2,12 @@ const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js')
 const disbut = require("discord-buttons");
+const {destroyinf} = require('../../handlers/common_buttons')
 
 module.exports = {
 	name: "inf_destroy",
 	category: "botinfo",
-    aliases:['infraction_destroy'],
+    aliases:['infraction_destroy', 'inf_destroy'],
     permissions:["MANAGE_GUILD","ADMINISTRATOR"],
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, discordclient) => {
@@ -19,6 +20,10 @@ module.exports = {
                 rejectUnauthorized: false
             }
         });
+
+        if(!inf_id){
+            return message.channel.send('Please enter a infraction to delete')
+        }
               
         // opening connection
         await client.connect();
@@ -27,7 +32,7 @@ module.exports = {
        
         const res = (await client.query(query).catch(console.error)).rows[0]
 
-        const timestamp = `${res.timestamp}`
+        const timestamp = `${res.timestamp}` || ''
 
         var date = new Date (timestamp).toLocaleString()
 
@@ -44,25 +49,49 @@ module.exports = {
         const filter = response => {
             return response.author.id === message.author.id;
         }       
+
+        const buttons = await destroyinf(false)
         
-        message.channel.send('Are you sure you want to delete this infraction? Type `Yes` if you wish to procced', {embed:embed}).then(() => { 
-            message.channel.awaitMessages(filter, { max: 1, time: 5000000, errors: ['time'] }) 
-            .then(async collected => {
-                if (collected.first() === "yes") {
-                    const delete_query = `DELETE * FROM guild.infractions WHERE report_id = ${inf_id} AND server_id = ${message.guild.id}`
-
-                    const res = await client.query(delete_query).catch(console.error)
-
-                    message.channel.send('#' + inf_id + 'has been deleted');
-                }
-                else { 
-                    message.channel.send(200);
-                    return; 
-                }
-            })
-             .catch(collected => { message.channel.send('Time up'); }); });
+        message.channel.send('Are you sure you want to delete this infraction? Click on `Yes` if you wish to procced', {buttons : buttons , embed:embed})
         
         client.end();
         
+    },
+
+    button: async(button, discordclient) => {
+
+        const client = new Client({
+            connectionString: pgkey,
+            ssl: {
+                rejectUnauthorized: false
+            }
+        });
+
+        const buttons = await destroyinf(true)
+
+        if(button.id == 'yes'){
+
+            await client.connect()
+
+            const inf_id =  button.message.embeds[0].title.slice(12)
+            const delete_query = `DELETE FROM guild.infractions WHERE report_id = ${inf_id} AND server_id = ${button.guild.id}`
+            const res = await client.query(delete_query).catch(console.error)
+
+
+            button.reply.send('#' + inf_id + ' has been deleted');
+            button.message.edit({
+                buttons: buttons
+            })
+
+            client.end()
+        }
+        else if (button.id == 'no'){
+
+            button.reply.send('Action cancelled')
+            button.message.edit({
+                buttons: buttons
+            })
+        }
+
     }
 };  

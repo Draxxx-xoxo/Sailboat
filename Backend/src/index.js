@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const {pgkey} = require('../config.json');
 const discordClient = new Discord.Client();
 require('discord-buttons')(discordClient);
-const { MessageButton, MessageActionRow } = require('discord-buttons');
+const { MessageButton, MessageActionRow, ButtonCollector } = require('discord-buttons');
 const functions = require('./handlers/common_functions')
 const yaml = require('js-yaml');
 const Log = require('./handlers/logging');
@@ -96,17 +96,28 @@ discordClient.on('message', async message => {
 //Buttons
 discordClient.on("clickButton", async button => {
 	
-	const report_buttons = require('./commands/report/report_buttons') 
+	if(button.id == 'yes' || 'no'){
+		const destroy_infs = require('./commands/infractions/destroy_inf')
 
-	try{
-		report_buttons.execute(button, discordClient)
-	} catch (error) {
-		console.log(error);
+		try{
+			destroy_infs.button(button, discordClient)
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	else{
+		const report_buttons = require('./commands/report/report_buttons') 
+
+		try{
+			report_buttons.execute(button, discordClient)
+		} catch (error) {
+			console.log(error);
+		}
 	}
 })
 
 discordClient.on("clickMenu", async menu => {
-	
+
 	const message_menu = require('./commands/infractions/message_menu') 
 
 	try{

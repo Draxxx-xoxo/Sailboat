@@ -35,4 +35,20 @@ module.exports = {
 
         return [warn, mute, kick, ban, deny]
     },
+
+    async destroyinf(disabled) {
+        let yes = new MessageButton()
+        .setLabel('Yes')
+        .setDisabled(disabled)
+        .setStyle('blurple')
+        .setID('yes');
+
+        let no = new MessageButton()
+        .setLabel('No')
+        .setDisabled(disabled)
+        .setStyle('blurple')
+        .setID('no');
+
+        return [yes, no]
+    },
 }
