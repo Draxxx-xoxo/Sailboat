@@ -6,7 +6,7 @@ const disbut = require("discord-buttons");
 module.exports = {
 	name: "inf",
 	category: "botinfo",
-    aliases:['infraction'],
+    aliases:['infraction','inf_search'],
     permissions:["MANAGE_GUILD","ADMINISTRATOR"],
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, discordclient) => {
@@ -26,6 +26,8 @@ module.exports = {
         const query = `SELECT * FROM guild.infractions WHERE report_id = ${inf_id} AND server_id = ${message.guild.id} ORDER BY report_id DESC`
        
         const res = (await client.query(query).catch(console.error)).rows[0]
+
+        if(res == undefined) return message.channel.send('This infafraction does not exsist on this server')
 
         const timestamp = `${res.timestamp}`
 
