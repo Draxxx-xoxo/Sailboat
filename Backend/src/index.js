@@ -11,12 +11,12 @@ const Log = require('./handlers/logging');
 discordClient.commands = new Discord.Collection();
 
 
-var commandFolders = fs.readdirSync("./src/commands");
+var commandFolders = fs.readdirSync("./src/plugins");
 
 for (const folder of commandFolders) {
-	const commandFiles = fs.readdirSync(`./src/commands/${folder}`).filter(file => file.endsWith('.js'));
+	const commandFiles = fs.readdirSync(`./src/plugins/${folder}`).filter(file => file.endsWith('.js'));
 	for (const file of commandFiles) {
-		const command = require(`./commands/${folder}/${file}`);
+		const command = require(`./plugins/${folder}/${file}`);
 		discordClient.commands.set(command.name, command);
 	}
 }
@@ -65,6 +65,10 @@ discordClient.on('message', async message => {
 			return
 		}
 	}
+
+	if(await functions.utilties_plugin(message.guild.id) == false){
+		return
+	}
 	
 	if (command.args && !args.length) {
 		let reply = `You didn't provide any arguments, ${message.author}!`;
@@ -97,7 +101,7 @@ discordClient.on('message', async message => {
 discordClient.on("clickButton", async button => {
 	
 	if(button.id == 'yes' || 'no'){
-		const destroy_infs = require('./commands/infractions/destroy_inf')
+		const destroy_infs = require('./plugins/infractions/destroy_inf')
 
 		try{
 			destroy_infs.button(button, discordClient)
@@ -118,7 +122,7 @@ discordClient.on("clickButton", async button => {
 
 discordClient.on("clickMenu", async menu => {
 
-	const message_menu = require('./commands/infractions/message_menu') 
+	const message_menu = require('./plugins/infractions/message_menu') 
 
 	try{
 		message_menu.execute(menu, discordClient)
