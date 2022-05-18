@@ -66,10 +66,10 @@ discordClient.on('message', async message => {
 		}
 	}
 
-	if(await functions.utilties_plugin(message.guild.id) == false){
+	/*if(await functions.utilties_plugin(message.guild.id) == false){
 		return
 	}
-	
+	*/
 	if (command.args && !args.length) {
 		let reply = `You didn't provide any arguments, ${message.author}!`;
 

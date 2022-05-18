@@ -1,72 +1,80 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
+const functions = require('./pg');
 
+async function pg_table(guildid){
+const pg = await functions.pg(`SELECT * FROM guild.configuration WHERE guild_id = ${guildid}`)
+
+    const doc = pg.rows[0].configuration
+
+    return doc 
+}
 module.exports = {
 
     async yamlfile(message) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
+        const doc = pg_table(message.guild.id)
         return doc
     },
 
     async getPreix(guildid) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        const doc = await pg_table(guildid);
         return doc.guild_settings.prefix
     },
 
     async muteRole(message) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
+        const doc = await pg_table(message.guild.id);
         return doc.plugins.mute_settings.role
     },
 
     async censorWords(message) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
+        const doc = await pg_table(message.guild.id);
         return doc.plugins.censor.censor_words
     },
 
     async censorIgnoreUser(message) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
+        const doc = await pg_table(message.guild.id);
         return doc.plugins.censor.ignore_users
     },
 
     async censorIgnoreChannel(message) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${message.guild.id}.yml`, 'utf8'));
+        const doc = await pg_table(message.guild.id);
         return doc.plugins.censor.ignore_channels
     },
 
 
     async welcomechannel(guildid) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        const doc = await pg_table(guildid);
         return doc.plugins.welcome_channel.channel
     },
 
     async join_message(guildid) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        const doc = await pg_table(guildid);
         return doc.plugins.welcome_channel.join_message
     },
 
     async leave_message(guildid) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        const doc = await pg_table(guildid);
         return doc.plugins.welcome_channel.leave_message
     },
 
     async command_logging(guildid) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        const doc = await pg_table(guildid);
         return doc.plugins.logging.command_logging
     },
     async command_logging(guildid) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        const doc = await pg_table(guildid);
         return doc.plugins.logging.infractions_logging
     },
     async report_pugin(guildid) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        const doc = await pg_table(guildid);
         return doc.plugins.reports.report_user
     },
     async report_logging(guildid) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        const doc = await pg_table(guildid);
         return doc.plugins.logging.report_logging
     },
     async report_logging_channel(guildid) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        const doc = await pg_table(guildid);
         return doc.plugins.reports.logging_channel
     },
 
@@ -91,7 +99,7 @@ module.exports = {
     },
 
     async rolelevel(guildid) {
-        const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+        const doc = await pg_table(guildid);
         return doc.plugins.level
     }
 }

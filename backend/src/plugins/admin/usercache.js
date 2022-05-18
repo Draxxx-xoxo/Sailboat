@@ -8,12 +8,13 @@ module.exports = {
 	category: "botinfo",
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, discordclient) => {
-
+        
         const client = new Client({
-            connectionString: pgkey,
-            ssl: {
-                rejectUnauthorized: false
-            }
+            user: process.env.user,
+            host: process.env.host,
+            database: process.env.db,
+            password: process.env.passwd,
+            port: process.env.port,
         });
 
 

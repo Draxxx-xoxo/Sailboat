@@ -20,11 +20,12 @@ module.exports = {
 
         if(!member) return
 
-		const client = new Client({
-            connectionString: pgkey,
-            ssl: {
-                rejectUnauthorized: false
-            }
+        const client = new Client({
+            user: process.env.user,
+            host: process.env.host,
+            database: process.env.db,
+            password: process.env.passwd,
+            port: process.env.port,
         });
               
         // opening connection
