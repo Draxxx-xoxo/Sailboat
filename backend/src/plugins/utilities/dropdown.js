@@ -1,4 +1,3 @@
-const disbut = require("discord-buttons");
 
 module.exports = {
 	name: "hello",

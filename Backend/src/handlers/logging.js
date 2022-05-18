@@ -1,7 +1,6 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 const Discord = require('discord.js');
-const {message} = new Discord.Client();
 
 module.exports = {
 	Send: (discordclient, log, guildid) => {

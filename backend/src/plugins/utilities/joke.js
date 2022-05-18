@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+/*const fetch = require('node-fetch');
 
 module.exports = {
 	name: "joke",
@@ -15,4 +15,4 @@ module.exports = {
 
 		message.channel.send(`Here is your joke ${joke.setup} ${joke.punchline}`);
 	},
-};
+};*/

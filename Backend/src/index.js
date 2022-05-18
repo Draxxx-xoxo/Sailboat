@@ -1,13 +1,12 @@
 require('dotenv').config(); 
 const fs = require('fs');
+const {Intents} = require('discord.js');
 const Discord = require('discord.js');
 const {pgkey} = require('../config.json');
-const discordClient = new Discord.Client();
-require('discord-buttons')(discordClient);
-const { MessageButton, MessageActionRow, ButtonCollector } = require('discord-buttons');
 const functions = require('./handlers/common_functions')
 const yaml = require('js-yaml');
 const Log = require('./handlers/logging');
+const discordClient = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]});
 discordClient.commands = new Discord.Collection();
 
 
@@ -35,9 +34,11 @@ discordClient.once('ready', async () => {
 });
 
 //COMMANDS
-discordClient.on('message', async message => {
+discordClient.on('messageCreate', async message => {
 
 	const prefix = await functions.getPreix(message.guild.id)
+
+	console.log(prefix)
 
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -66,10 +67,7 @@ discordClient.on('message', async message => {
 		}
 	}
 
-	/*if(await functions.utilties_plugin(message.guild.id) == false){
-		return
-	}
-	*/
+	
 	if (command.args && !args.length) {
 		let reply = `You didn't provide any arguments, ${message.author}!`;
 
@@ -98,7 +96,7 @@ discordClient.on('message', async message => {
 
 
 //Buttons
-discordClient.on("clickButton", async button => {
+/*discordClient.on("clickButton", async button => {
 	
 	if(button.id == 'yes' || 'no'){
 		const destroy_infs = require('./plugins/infractions/destroy_inf')
@@ -129,11 +127,11 @@ discordClient.on("clickMenu", async menu => {
 	} catch (error) {
 		console.log(error);
 	}
-})
+})*/
 
 
 //AUTOMOD
-discordClient.on('message', async message => {
+discordClient.on('messageCreate', async message => {
 	const censor = require('./auto_mod/censor')
 
 	if(message.author.bot) return;

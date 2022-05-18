@@ -2,7 +2,6 @@ const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js');
 const Discord = require('discord.js');
-const disbut = require("discord-buttons");
 const {command_logging} = require('../../handlers/common_functions')
 const {reportbuttons} = require('../../handlers/common_buttons')
 const {reportlog} = require('../../handlers/common_embeds')
