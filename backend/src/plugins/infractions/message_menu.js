@@ -7,10 +7,11 @@ module.exports = {
 	execute: async (menu, discordclient) => {
   
         const client = new Client({
-            connectionString: pgkey,
-            ssl: {
-                rejectUnauthorized: false
-            }
+            user: process.env.user,
+            host: process.env.host,
+            database: process.env.db,
+            password: process.env.passwd,
+            port: process.env.port,
         });
               
         // opening connection
