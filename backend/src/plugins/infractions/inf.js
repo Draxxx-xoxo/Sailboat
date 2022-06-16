@@ -11,6 +11,8 @@ module.exports = {
 	execute: async (message, args, discordclient) => {
 
         const inf_id = args[0];
+
+        if(!inf_id) return message.channel.send('Please input a infraction id')
   
         const client = new Client({
             user: process.env.user,

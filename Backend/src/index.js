@@ -38,8 +38,6 @@ discordClient.on('messageCreate', async message => {
 
 	const prefix = await functions.getPreix(message.guild.id)
 
-	console.log(prefix)
-
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -92,17 +90,24 @@ discordClient.on('messageCreate', async message => {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
 	}
+
+	const collector = message.createMessageComponentCollector({ componentType: 'BUTTON', time: 15000 });
+
+	collector.on('collect', async i => {
+		conosle.log(i)
+	});
 });
 
 
 //Buttons
-/*discordClient.on("clickButton", async button => {
-	
-	if(button.id == 'yes' || 'no'){
+discordClient.on('interactionCreate', interaction => {
+	if (!interaction.isButton()) return;
+
+	if(interaction.id == 'yes' || 'no'){
 		const destroy_infs = require('./plugins/infractions/destroy_inf')
 
 		try{
-			destroy_infs.button(button, discordClient)
+			destroy_infs.button(interaction, discordClient)
 		} catch (error) {
 			console.log(error);
 		}
@@ -111,12 +116,14 @@ discordClient.on('messageCreate', async message => {
 		const report_buttons = require('./commands/report/report_buttons') 
 
 		try{
-			report_buttons.execute(button, discordClient)
+			report_buttons.execute(interaction, discordClient)
 		} catch (error) {
 			console.log(error);
 		}
 	}
-})
+});
+
+/*
 
 discordClient.on("clickMenu", async menu => {
 

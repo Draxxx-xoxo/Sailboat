@@ -1,3 +1,4 @@
+const { MessageActionRow, MessageButton } = require('discord.js');
 
 module.exports = {
 
@@ -36,18 +37,20 @@ module.exports = {
     },
 
     async destroyinf(disabled) {
-        let yes = new MessageButton()
+        const buttons = new MessageActionRow()
+        .addComponents(
+        new MessageButton()
+        .setCustomId('yes')
         .setLabel('Yes')
         .setDisabled(disabled)
-        .setStyle('blurple')
-        .setID('yes');
-
-        let no = new MessageButton()
+        .setStyle('PRIMARY'),
+        new MessageButton()
+        .setCustomId('no')
         .setLabel('No')
         .setDisabled(disabled)
-        .setStyle('blurple')
-        .setID('no');
+        .setStyle('PRIMARY'),
+        );
 
-        return [yes, no]
+        return(buttons)
     },
 }
