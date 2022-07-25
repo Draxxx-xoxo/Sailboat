@@ -23,9 +23,9 @@ module.exports = {
 		const embed = new MessageEmbed()
 		.setTitle('Members who have ' + role.name)
 		.setDescription(list_role)
-		.setFooter(message.guild.roles.cache.get(`${role.id}`).members.map(m=>m).length + ' Members with the role')
+		.setFooter({text: message.guild.roles.cache.get(`${role.id}`).members.map(m=>m).length + ' Members with the role'})
 		
         
-        message.channel.send(embed)
+        message.channel.send({embeds: [embed]})
 	},
 };

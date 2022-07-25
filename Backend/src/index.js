@@ -90,20 +90,14 @@ discordClient.on('messageCreate', async message => {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
 	}
-
-	const collector = message.createMessageComponentCollector({ componentType: 'BUTTON', time: 15000 });
-
-	collector.on('collect', async i => {
-		conosle.log(i)
-	});
 });
 
 
 //Buttons
-discordClient.on('interactionCreate', interaction => {
+discordClient.on('interactionCreate', async interaction => {
 	if (!interaction.isButton()) return;
 
-	if(interaction.id == 'yes' || 'no'){
+	if(interaction.component.customId == 'yes' || 'no'){
 		const destroy_infs = require('./plugins/infractions/destroy_inf')
 
 		try{
