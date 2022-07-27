@@ -4,16 +4,9 @@ const { clientId, clientSecret, port } = require('./config.json');
 
 const app = express();
 
-app.get("/", function (req, res) {
-    res.sendFile(__dirname + "/index.html");
-});
-
-app.get('/test', async ({ query }, response, ) => {
+app.get('/', async ({ query }, response) => {
 	const { code } = query;
 
-	if(!code){
-		await response.sendfile(__dirname + "/index.html");
-	}
 	if (code) {
 		try {
 			const oauthResult = await fetch('https://discord.com/api/oauth2/token', {
@@ -23,7 +16,7 @@ app.get('/test', async ({ query }, response, ) => {
 					client_secret: clientSecret,
 					code,
 					grant_type: 'authorization_code',
-					redirect_uri: `http://localhost:${port}/test`,
+					redirect_uri: `http://localhost:8000/src/editor.php`,
 					scope: 'identify',
 				}),
 				headers: {
@@ -33,7 +26,7 @@ app.get('/test', async ({ query }, response, ) => {
 
 			const oauthData = await oauthResult.json();
 
-			const userResult = await fetch('https://discord.com/api/users/@me/guilds', {
+			const userResult = await fetch('https://discord.com/api/users/@me', {
 				headers: {
 					authorization: `${oauthData.token_type} ${oauthData.access_token}`,
 				},
@@ -41,11 +34,13 @@ app.get('/test', async ({ query }, response, ) => {
 
 			console.log(await userResult.json());
 		} catch (error) {
+			// NOTE: An unauthorized token will not throw an error;
+			// it will return a 401 Unauthorized response in the try block above
 			console.error(error);
 		}
 	}
-	return response.sendFile(__dirname + "/configuation_files/746773959068090368.yml");
+
+	return response.sendFile('index.html', { root: '.' });
 });
 
-  
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`));

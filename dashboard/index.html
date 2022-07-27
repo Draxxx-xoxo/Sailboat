@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="mystyle.css"/>
-	<title>My Discord OAuth2 Login</title>
+	<title>My Discord OAuth2 App</title>
 </head>
 <body>
 	<div id="info">
 		Hoi!
 	</div>
-	
-	<a id="login" style="display: none;" href="https://discord.com/api/oauth2/authorize?client_id=773747857193828414&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fsrc%2Feditor.php&response_type=code&scope=identify%20email">Identify Yourself</a>
-	
+	<a id="login" style="display: none;" href="https://discord.com/api/oauth2/authorize?client_id=773747857193828414&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fsrc%2Feditor.php&response_type=code&scope=identify">Identify Yourself</a>
 	<script>
 		function generateRandomString() {
 			let randomString = '';
