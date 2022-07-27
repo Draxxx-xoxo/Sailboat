@@ -94,22 +94,32 @@ discordClient.on('messageCreate', async message => {
 
 //Buttons
 discordClient.on('interactionCreate', async interaction => {
-	if (!interaction.isButton()) return;
+	if (interaction.isButton()){
+		if(interaction.component.customId == 'yes' || 'no'){
+			const destroy_infs = require('./plugins/infractions/destroy_inf')
 
-	if(interaction.component.customId == 'yes' || 'no'){
-		const destroy_infs = require('./plugins/infractions/destroy_inf')
+			try{
+				destroy_infs.button(interaction, discordClient)
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		else{
+			const report_buttons = require('./commands/report/report_buttons') 
 
-		try{
-			destroy_infs.button(interaction, discordClient)
-		} catch (error) {
-			console.log(error);
+			try{
+				report_buttons.execute(interaction, discordClient)
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	}
-	else{
-		const report_buttons = require('./commands/report/report_buttons') 
+
+	if(interaction.isSelectMenu()){
+		const message_menu = require('./plugins/infractions/message_menu') 
 
 		try{
-			report_buttons.execute(interaction, discordClient)
+			message_menu.execute(interaction, discordClient)
 		} catch (error) {
 			console.log(error);
 		}

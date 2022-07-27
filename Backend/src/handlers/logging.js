@@ -1,10 +1,19 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 const Discord = require('discord.js');
+const functions = require('./pg');
+
+async function pg_table(guildid){
+const pg = await functions.pg(`SELECT * FROM guild.configuration WHERE guild_id = ${guildid}`)
+
+    const doc = pg.rows[0].configuration
+
+    return doc 
+}
 
 module.exports = {
-	Send: (discordclient, log, guildid) => {
-		const doc = yaml.load(fs.readFileSync(`./configuation_files/${guildid}.yml`, 'utf8'));
+	Send: async (discordclient, log, guildid) => {
+        const doc = await pg_table(guildid)
 
 		var date = new Date();
 		var hour = date.getHours();

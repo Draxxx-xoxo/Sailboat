@@ -3,16 +3,7 @@ const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js')
 
 module.exports = {
-	name: "inf",
-	category: "botinfo",
-    aliases:['infraction','inf_search'],
-    permissions:["MANAGE_GUILD","ADMINISTRATOR"],
-	description: "Returns bot and API latency in milliseconds.",
-	execute: async (message, args, discordclient) => {
-
-        const inf_id = args[0];
-
-        if(!inf_id) return message.channel.send('Please input a infraction id')
+	execute: async (menu, discordclient) => {
   
         const client = new Client({
             user: process.env.user,
@@ -25,16 +16,18 @@ module.exports = {
         // opening connection
         await client.connect();
 
-        const query = `SELECT * FROM guild.infractions WHERE report_id = ${inf_id} AND server_id = ${message.guild.id} ORDER BY report_id DESC`
+        const inf_id = menu.values[0].replace(menu.values[0],menu.values[0].slice(10))
+
+        const query = `SELECT * FROM guild.infractions WHERE report_id = ${inf_id} AND server_id = ${menu.guild.id} ORDER BY report_id DESC`
        
         const res = (await client.query(query).catch(console.error)).rows[0]
-
-        if(res == undefined) return message.channel.send('This infraction does not exsist on this server')
 
         const timestamp = `${res.timestamp}`
 
         var date = new Date (timestamp).toLocaleString()
 
+
+        if(menu.values[0]== "infraction"+res.report_id) {
             const embed = new MessageEmbed()
             .setTitle('Infraction #' + res.report_id)
             .addFields(
@@ -43,8 +36,11 @@ module.exports = {
                 {name: 'Reason', value: res.reason || 'No Reason'}
             )
             .setFooter({text: 'Infraction was created on ' + date})
-            await message.channel.send({embeds: [embed]})
-    
+            await menu.reply({embeds: [embed]})
+        }
+
+
+
         client.end();
         
     }

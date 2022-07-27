@@ -24,7 +24,7 @@ module.exports = {
             return message.channel.send('Why are you mentioning a role? <:blob_ping:807930234410237963>')
         }
 
-        var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
+        var member = message.mentions.users.first() || await message.guild.members.fetch(args[0])
 
         //Dumb not working
         if(!member){
@@ -43,6 +43,8 @@ module.exports = {
 
         const query = await infractionQ(member, moderator_id, reason_, message, timestamp, 'warn')
 
+        console.log(query)
+
         const embed = new MessageEmbed()
         .setTitle(`You have been warned in ${message.guild.name}`)
         .setDescription(`Reason\n` + '```' + reason_ + '```');
@@ -50,7 +52,7 @@ module.exports = {
 
         await client.query(query);
 
-        message.channel.send(`${member.user.id} has been warned :ok_hand: User has been notified`)
+        message.channel.send(`${member.id} has been warned :ok_hand: User has been notified`)
         .then(msg => {
             msg.delete({ timeout: 3000 })
           });
@@ -62,7 +64,7 @@ module.exports = {
         if(await command_logging(message.guild.id) ==  true){
             Log.Send(
 			    discordclient,
-			    `${moderator_id.username}#${moderator_id.discriminator} warned ${member.user.username}#${member.user.discriminator} ` + '`' + `${member.user.id}` + '`' + ` Reason: ${reason_ || 'None'}`,
+			    `${moderator_id.username}#${moderator_id.discriminator} warned ${member.username}#${member.discriminator} ` + '`' + `${member.id}` + '`' + ` Reason: ${reason_ || 'None'}`,
                 message.guild.id
 		    );
         }
