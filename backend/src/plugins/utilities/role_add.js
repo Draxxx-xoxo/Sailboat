@@ -3,11 +3,11 @@ module.exports = {
 	category: "botinfo",
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, client) => {
-        const role = message.guild.roles.cache.get(args[0]);
-        const user = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[1]));
+        const role = await message.guild.roles.fetch(args[0]);
+        const user = await message.mentions.users.first() || await message.guild.members.fetch(args[1])
 
         if(!role) return message.channel.send('Please input a vaild role.')
-        if(!user) return message.channel.send('Please mention a user.')
+        if(!user || !args[1]) return message.channel.send('Please mention a user.')
 
 		for (let i = 0; i < user.roles.cache.map(r => r.id).length; i++) { 
         

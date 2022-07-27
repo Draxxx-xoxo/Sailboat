@@ -20,16 +20,16 @@ module.exports = {
             }
         
             const embed = new MessageEmbed()
-              .setTitle(`Role Info __${role.name}__`)
-              .addField("Role ID:", role.id, true)
-              .addField("Role name:", role.name, true)
-              .addField("Member(s) in role:", role.members.size, true)
-              .addField("Mentionable:", role.mentionable, true)
-              .addField("Role postion", role.position, true)
+              .setTitle(`Role Info __${role.name.toString()}__`)
+              .addField("Role ID:", role.id.toString(), true)
+              .addField("Role name:", role.name.toString(), true)
+              .addField("Member(s) in role:", role.members.size.toString(), true)
+              .addField("Mentionable:", role.mentionable.toString(), true)
+              .addField("Role postion", role.position.toString(), true)
               .addField("Role Color:", role.hexColor, true)
               .setColor(role.hexColor);
         
-            message.channel.send(embed);
+            message.channel.send({embeds: [embed]});
           }
 	},
 };

@@ -6,7 +6,7 @@ module.exports = {
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, client) => {
 
-        const role = message.guild.roles.cache.get(args[0]) || message.guild.roles.cache.find(r => r.name === args.join(" ")) || message.mentions.roles.first()
+        const role = await message.guild.roles.fetch(args[0]) || message.guild.roles.cache.find(r => r.name === args.join(" ")) || message.mentions.roles.first()
         
         if (!role) {
             return message.reply(`Please mention a role.`);

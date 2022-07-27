@@ -6,7 +6,7 @@ const {pgkey} = require('../config.json');
 const functions = require('./handlers/common_functions')
 const yaml = require('js-yaml');
 const Log = require('./handlers/logging');
-const discordClient = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]});
+const discordClient = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MEMBERS]});
 discordClient.commands = new Discord.Collection();
 
 
@@ -65,7 +65,6 @@ discordClient.on('messageCreate', async message => {
 		}
 	}
 
-	
 	if (command.args && !args.length) {
 		let reply = `You didn't provide any arguments, ${message.author}!`;
 
