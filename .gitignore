@@ -5,3 +5,4 @@ config.json
 
 Backend/.env
 Backend/config.json
+dashboard/ace-editor/
