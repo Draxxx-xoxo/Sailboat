@@ -104,8 +104,9 @@ discordClient.on('interactionCreate', async interaction => {
 				console.log(error);
 			}
 		}
-		else{
-			const report_buttons = require('./commands/report/report_buttons') 
+
+		if(interaction.component.customId.toLowerCase() == 'warn' || 'mute' || 'ban' || 'kick' || 'deny'){
+			const report_buttons = require('./plugins/report/report_buttons') 
 
 			try{
 				report_buttons.execute(interaction, discordClient)

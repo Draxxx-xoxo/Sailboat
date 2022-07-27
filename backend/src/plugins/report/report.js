@@ -23,7 +23,7 @@ module.exports = {
             return message.channel.send('Why are you mentioning a role? <:blob_ping:807930234410237963>')
         }
 
-        var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
+        var member = message.mentions.users.first() || await message.guild.members.fetch(args[0]);
 
         if(!member){
             message.channel.send('Please mention a user or input a user ID')
@@ -86,8 +86,8 @@ module.exports = {
 
             
             message.guild.channels.cache.get(reportchannel).send({
-                buttons: report_buttons,
-                embed: embed
+                components: [report_buttons],
+                embeds: [embed]
                 }); 
         }
         
