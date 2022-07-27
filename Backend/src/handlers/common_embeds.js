@@ -10,7 +10,7 @@ module.exports = {
             {name: '\u200b', value: '\u200b', inline: true},
             {name: 'Reason', value: res.reason, inline: true},
         )
-        .setFooter('Status: ' + res.status + ' ' + emoji)
+        .setFooter({text:'Status: ' + res.status + ' ' + emoji})
         
         return embed
     }

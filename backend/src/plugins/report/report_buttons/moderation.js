@@ -12,11 +12,11 @@ module.exports = {
 
             const report_log = await reportlog(res, '🔴')
 
-            button.reply.send(`${member.id} has been warned :ok_hand: User has been notified`);
+            button.reply(`${member.user.id} has been warned :ok_hand: User has been notified`);
 
             button.message.edit({
-                embed: report_log,
-                buttons: buttons
+                embeds: [report_log],
+                components: [buttons]
             })
     },
 
@@ -37,11 +37,11 @@ module.exports = {
         .setDescription(`Reason\n` + '```' + reason_ + '```');
 
         button.message.edit({
-            embed: report_log,
-            buttons: buttons
+            embeds: [report_log],
+            components: [buttons]
         })
 
-        button.reply.send(`${member.id} has been warned :ok_hand: User has been notified`);
+        button.reply(`${member.id} has been warned :ok_hand: User has been notified`);
 
 
         discordclient.users.cache.get(member.id).send(embed).catch(() => button.message.reply("Can't send DM to your user!"));
@@ -74,11 +74,11 @@ module.exports = {
         .setDescription(`Reason\n` + '```' + reason_ + '```');
 
         button.message.edit({
-            embed: report_log,
-            buttons: buttons
+            embeds: [report_log],
+            components: [buttons]
         })
 
-        button.reply.send(`${member.id} has been kicked :ok_hand: User has been notified`);
+        button.reply(`${member.id} has been kicked :ok_hand: User has been notified`);
 
 
         discordclient.users.cache.get(member.id).send(embed).catch(() => button.message.reply("Can't send DM to your user!"));
@@ -111,11 +111,11 @@ module.exports = {
         .setDescription(`Reason\n` + '```' + reason_ + '```');
 
         button.message.edit({
-            embed: report_log,
-            buttons: buttons
+            embeds: [report_log],
+            components: [buttons]
         })
 
-        button.reply.send(`${member.id} has been banned :ok_hand: User has been notified`);
+        button.reply(`${member.id} has been banned :ok_hand: User has been notified`);
 
 
         discordclient.users.cache.get(member.id).send(embed).catch(() => button.message.reply("Can't send DM to your user!"));
@@ -139,7 +139,7 @@ module.exports = {
         var role_id = await functions.muteRole(button);
 
         if(!role_id){
-            return button.reply.send({content: 'Please add a mute role', ephemeral: true})
+            return button.reply({content: 'Please add a mute role', ephemeral: true})
         }
 
         const update = await functions.reportupdate(report_id, button, 'approved');
@@ -154,11 +154,11 @@ module.exports = {
         .setDescription(`Reason\n` + '```' + reason_ + '```');
 
         button.message.edit({
-            embed: report_log,
-            buttons: buttons
+            embeds: [report_log],
+            components: [buttons]
         })
 
-        button.reply.send(`${member.id} has been Muted :ok_hand: User has been notified`);
+        button.reply(`${member.id} has been Muted :ok_hand: User has been notified`);
 
 
         discordclient.users.cache.get(member.id).send(embed).catch(() => button.message.reply("Can't send DM to your user!"));

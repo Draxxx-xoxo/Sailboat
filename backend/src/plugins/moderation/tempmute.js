@@ -19,7 +19,7 @@ module.exports = {
     
         await client.connect()
 
-        var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
+        var member = message.mentions.users.first() || await message.guild.members.fetch(args[0])
         if(!member){ 
             message.reply('Please Provide a Member to TempMute.')
         }

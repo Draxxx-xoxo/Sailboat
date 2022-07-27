@@ -35,17 +35,17 @@ module.exports = {
             )
             .addField(
                 "Bot Info",
-                `**Status:** ${client.user.presence.status}
-                **Users:** ${client.users.cache.size}
-                **Servers:** ${client.guilds.cache.size}
-                **Channels:** ${client.channels.cache.size}
-                **Created on:** ${client.user.createdAt}
+                `**Status:** ${client.user.presence.status.toString()}
+                **Users:** ${client.users.cache.size.toString()}
+                **Servers:** ${client.guilds.cache.size.toString()}
+                **Channels:** ${client.channels.cache.size.toString()}
+                **Created on:** ${client.user.createdAt.toString()}
             `)
-            .setFooter(message.author.username, message.author.displayAvatarURL)
+            .setFooter({text: message.author.username, iconURL: message.author.displayAvatarURL})
             .setTimestamp()
             .setColor("#0000FF");
       
-            message.channel.send(embed);
+            message.channel.send({embeds: [embed]});
 
               }
         )

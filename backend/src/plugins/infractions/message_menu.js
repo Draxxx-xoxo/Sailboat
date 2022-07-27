@@ -1,7 +1,6 @@
 const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js')
-const disbut = require("discord-buttons");
 
 module.exports = {
 	execute: async (menu, discordclient) => {
@@ -36,8 +35,8 @@ module.exports = {
                 {name: 'Moderator', value: res.moderator_tag + '\n<@' + res.moderator_id + '>', inline: true},
                 {name: 'Reason', value: res.reason || 'No Reason'}
             )
-            .setFooter('Infraction was created on ' + date)
-            await menu.reply.send(embed)
+            .setFooter({text: 'Infraction was created on ' + date})
+            await menu.reply({embeds: [embed]})
         }
 
 

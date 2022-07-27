@@ -1,8 +1,8 @@
 const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
-const {MessageEmbed} = require('discord.js')
-const disbut = require("discord-buttons");
+const {MessageEmbed, MessageActionRow, MessageSelectMenu } = require('discord.js')
 const functions = require('../../handlers/common_functions')
+
 
 module.exports = {
 	name: "inf_search",
@@ -12,10 +12,8 @@ module.exports = {
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, discordclient) => {
 
-        var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0])); 
+        var member = 	message.mentions.members.first() || await message.guild.members.fetch(args[0])
 
-        if(!member) return
-  
         const client = new Client({
           user: process.env.user,
           host: process.env.host,
@@ -84,37 +82,39 @@ module.exports = {
                   emoji = "⚠️";
                   break;
               };
-            
-            let option = options.push(
-            new disbut.MessageMenuOption()
-            .setLabel('#' + report_id_arrary[i])
-            .setEmoji(emoji)
-            .setValue('infraction' + report_id_arrary[i])
-            .setDescription(infractions_arrary[i])
-            )
         
+            let option = options.push(
+              {
+                label: '#' + report_id_arrary[i],
+                emoji: emoji,
+                description: infractions_arrary[i],
+                value: 'infraction' + report_id_arrary[i],
+              },
+            )
 
         }
 
-        var select = new disbut.MessageMenu()
-        .setID('customid')
-        .setPlaceholder('Click me! :D')
-        .setMaxValues(1)
-        .setMinValues(1)
-        .addOptions(options)
+        console.log(options)
+        const row = new MessageActionRow()
+        .addComponents(
+          new MessageSelectMenu()
+            .setCustomId('search')
+            .setPlaceholder('Nothing selected')
+            .addOptions(options),
+        );
 
         var prefix = await functions.getPreix(message.guild.id)
 
         var inf_search = new MessageEmbed()
-            .setAuthor(`Infractions Overview for ${member.user.username}`, member.user.displayAvatarURL())
+            .setAuthor({name: `Infractions Overview for ${member.user.username.toString()}`, iconURL: member.user.displayAvatarURL()})
             .setDescription('Use `' + prefix + 'inf {infraction_no}` to see more information about an individual infraction')
             .setThumbnail(member.user.displayAvatarURL())
             .addFields(
                 { name: "Infractions", value: report_arrary.join('\n'), inline: false},
-                { name: 'Total Infractions', value: totalrowcount, inline: true },
-                { name: `Joined ${message.member.guild.name}`, value: new Date (member.joinedTimestamp).toLocaleString(), inline: true },
+                { name: 'Total Infractions', value: totalrowcount.toString(), inline: true },
+                { name: `Joined ${message.member.guild.name.toString()}`, value: new Date (member.joinedTimestamp).toLocaleString(), inline: true },
             )
-        message.channel.send(inf_search, select);
+        message.channel.send({embeds: [inf_search], components: [row]});
         
         client.end();
     }

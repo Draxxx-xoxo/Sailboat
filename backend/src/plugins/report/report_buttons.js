@@ -2,7 +2,6 @@ const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js');
 const Discord = require('discord.js');
-const disbut = require("discord-buttons");
 const {command_logging} = require('../../handlers/common_functions')
 const {reportbuttons} = require('../../handlers/common_buttons')
 const {reportlog} = require('../../handlers/common_embeds')
@@ -28,7 +27,7 @@ module.exports = {
 
         const res = await client.query(query);
 
-        const member = button.guild.member(res.rows[0].reported_user_id)
+        const member = await button.guild.members.fetch(res.rows[0].reported_user_id)
 
         if(!member){
             button.reply.send({ content: 'Member is not in the guild', ephemeral: true})
@@ -39,19 +38,19 @@ module.exports = {
 
         const report_buttons = await reportbuttons(true)
 
-        if(button.id == 'warn'){
+        if(button.component.customId == 'warn'){
             await moderation.warn(button, report_id, client, member, report_buttons, reason_, discordclient);
         };
-        if (button.id == 'deny'){
+        if (button.component.customId == 'deny'){
             await moderation.deny(button, report_id, client, member, report_buttons);
         };
-        if (button.id == 'kick'){
+        if (button.component.customId == 'kick'){
             await moderation.kick(button, report_id, client, member, report_buttons, reason_, discordclient)
         };
-        if (button.id == 'ban'){
+        if (button.component.customId == 'ban'){
             await moderation.ban(button, report_id, client, member, report_buttons, reason_, discordclient)
         }
-        if (button.id == 'mute'){
+        if (button.component.customId == 'mute'){
             await moderation.mute(button, report_id, client, member, report_buttons, reason_, discordclient)
         }
         client.end();

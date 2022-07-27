@@ -1,7 +1,6 @@
 const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js')
-const disbut = require("discord-buttons");
 
 module.exports = {
 	name: "inf",
@@ -12,6 +11,8 @@ module.exports = {
 	execute: async (message, args, discordclient) => {
 
         const inf_id = args[0];
+
+        if(!inf_id) return message.channel.send('Please input a infraction id')
   
         const client = new Client({
             user: process.env.user,
@@ -28,13 +29,11 @@ module.exports = {
        
         const res = (await client.query(query).catch(console.error)).rows[0]
 
-        if(res == undefined) return message.channel.send('This infafraction does not exsist on this server')
+        if(res == undefined) return message.channel.send('This infraction does not exsist on this server')
 
         const timestamp = `${res.timestamp}`
 
         var date = new Date (timestamp).toLocaleString()
-
-
 
             const embed = new MessageEmbed()
             .setTitle('Infraction #' + res.report_id)
@@ -43,8 +42,8 @@ module.exports = {
                 {name: 'Moderator', value: res.moderator_tag + '\n<@' + res.moderator_id + '>', inline: true},
                 {name: 'Reason', value: res.reason || 'No Reason'}
             )
-            .setFooter('Infraction was created on ' + date)
-            await message.channel.send(embed)
+            .setFooter({text: 'Infraction was created on ' + date})
+            await message.channel.send({embeds: [embed]})
     
         client.end();
         

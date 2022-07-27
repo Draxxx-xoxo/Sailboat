@@ -1,8 +1,9 @@
 const {Client} = require('pg');
 const {pgkey} = require('../../../config.json');
 const {MessageEmbed} = require('discord.js')
-const disbut = require("discord-buttons");
 const {destroyinf} = require('../../handlers/common_buttons')
+const { MessageActionRow, MessageButton } = require('discord.js');
+
 
 module.exports = {
 	name: "inf_destroy",
@@ -33,6 +34,8 @@ module.exports = {
        
         const res = (await client.query(query).catch(console.error)).rows[0]
 
+        if(res == undefined) return message.channel.send('This infraction does not exsist on this server')
+
         const timestamp = `${res.timestamp}` || ''
 
         var date = new Date (timestamp).toLocaleString()
@@ -45,15 +48,13 @@ module.exports = {
             {name: 'Moderator', value: res.moderator_tag + '\n<@' + res.moderator_id + '>', inline: true},
             {name: 'Reason', value: res.reason || 'No Reason'}
         )
-        .setFooter('Infraction was created on ' + date)
+        .setFooter({text:'Infraction was created on '})
 
-        const filter = response => {
-            return response.author.id === message.author.id;
-        }       
 
         const buttons = await destroyinf(false)
-        
-        message.channel.send('Are you sure you want to delete this infraction? Click on `Yes` if you wish to procced', {buttons : buttons , embed:embed})
+
+
+        message.channel.send({content: 'Are you sure you want to delete this infraction? Click on `Yes` if you wish to procced', components:[buttons], embeds:[embed]})
         
         client.end();
         
@@ -62,15 +63,16 @@ module.exports = {
     button: async(button, discordclient) => {
 
         const client = new Client({
-            connectionString: pgkey,
-            ssl: {
-                rejectUnauthorized: false
-            }
+            user: process.env.user,
+            host: process.env.host,
+            database: process.env.db,
+            password: process.env.passwd,
+            port: process.env.port,
         });
 
         const buttons = await destroyinf(true)
 
-        if(button.id == 'yes'){
+        if(button.component.customId == 'yes'){
 
             await client.connect()
 
@@ -79,18 +81,18 @@ module.exports = {
             const res = await client.query(delete_query).catch(console.error)
 
 
-            button.reply.send('#' + inf_id + ' has been deleted');
+            button.reply('#' + inf_id + ' has been deleted');
             button.message.edit({
-                buttons: buttons
+                components:[buttons]
             })
 
             client.end()
         }
-        else if (button.id == 'no'){
+        else if (button.component.customId == 'no'){
 
-            button.reply.send('Action cancelled')
+            button.reply('Action cancelled')
             button.message.edit({
-                buttons: buttons
+                components:[buttons]
             })
         }
 
