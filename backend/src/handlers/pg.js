@@ -14,11 +14,8 @@ module.exports = {
         });
 
         await client.connect();
-
-        const pgquery = query
-
+        const pgquery = query;
         const row = await client.query(pgquery).catch(console.error);
-
         client.end();
 
         return row
