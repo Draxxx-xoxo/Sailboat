@@ -4,5 +4,5 @@
 
 ## Configuration
 
-- [Overview of Configuration file](configuration/Overview.md)
-- [Setting Up Guild Settings](configuration/Guild Settings.md)
+- [Overview of Configuration File](configuration/Overview.md)
+- [Setting Up Guild Settings](configuration/Guild-Settings.md)
