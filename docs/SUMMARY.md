@@ -6,3 +6,7 @@
 
 - [Overview of Configuration File](configuration/Overview.md)
 - [Setting Up Guild Settings](configuration/Guild-Settings.md)
+
+## Self-Hosting
+
+- [READM ME FIRST](self-hosting/Read-First.md)
