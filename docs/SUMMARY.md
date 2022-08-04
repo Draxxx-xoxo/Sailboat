@@ -1,12 +1,13 @@
 # Table of contents
 
-* [Wall-E-Bot](README.md)
+- [Wall-E-Bot](README.md)
 
 ## Configuration
 
-* [Overview of Configuration File](configuration/Overview.md)
-* [Setting Up Guild Settings](configuration/Guild-Settings.md)
+- [Overview of Configuration File](configuration/Overview.md)
+- [Setting Up Guild Settings](configuration/Guild-Settings.md)
 
 ## Self-Hosting
 
-* [READ ME FIRST](self-hosting/Read-First.md)
+- [Read Me First](self-hosting/Read-First.md)
+- [Setting Up](self-hosting/Setting-Up.md)
