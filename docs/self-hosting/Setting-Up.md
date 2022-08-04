@@ -5,6 +5,25 @@
 - Localhost PostgreSQL
 - MongoDB (For Website)
 
-# Downloading the Code from Github repository
+# Setting Up the Code
+
+## Backend
 
 Go to our [Github repository](https://github.com/Draxxx-xoxo/Wall-E-Bot) and download the zip or run the commmand `git clone https://github.com/Draxxx-xoxo/Wall-E-Bot` in terminal
+
+Open terminal to the Wall_E_Bot folder and run `cd backend`
+Run `npm ci`,
+Copy the `.example.env` file to `.env` and fill in the database information and bot token.
+
+```
+token=YOUR TOKEN
+user=
+host=localhost
+db=
+passwd=
+port=5432
+```
+
+---
+
+## Database
