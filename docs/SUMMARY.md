@@ -9,8 +9,8 @@
 
 ## Plugins
 
-- [Admin](Plugins/Admin.md)
-- [Utilties](Plugins/Utilties.md)
+- [Admin](plugin/Admin.md)
+- [Utilties](plugin/Utilties.md)
 
 ## Self-Hosting
 
