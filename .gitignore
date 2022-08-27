@@ -5,4 +5,5 @@ config.json
 
 Backend/.env
 Backend/config.json
-dashboard/ace-editor/
+dashboard_oauth/src/public/scripts/ace-editor/
+dashboard_oauth/src/public/scripts/ace-editor/src/
