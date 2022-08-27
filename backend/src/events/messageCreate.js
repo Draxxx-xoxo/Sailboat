@@ -1,4 +1,5 @@
 const functions = require('../handlers/common_functions')
+const api = require('../handlers/api')
 
 module.exports = async (discordClient, message) => {
     const prefix = await functions.getPreix(message.guild.id)
@@ -52,6 +53,6 @@ module.exports = async (discordClient, message) => {
 		
 	} catch (error) {
 		console.error(error);
-		message.reply('there was an error trying to execute that command!');
+		message.reply('There was an error trying to execute that command!');
 	}
 };
