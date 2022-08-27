@@ -2,7 +2,6 @@ require('dotenv').config()
 const DiscordStrategy = require('passport-discord').Strategy;
 const passport = require('passport');
 const DiscordUser = require('../models/DiscordUser');
-const {pg} = require('../database/pg')
 
 passport.serializeUser((user, done) => {
     console.log("Serialize");
@@ -25,12 +24,6 @@ passport.use(new DiscordStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         const user = await DiscordUser.findOne({ discordId: profile.id });
-        const query = `
-        SELECT guild_id, owner_id
-        FROM guild.allowed_guilds
-        WHERE guild_id = '734281219839230022'
-        `
-        
         if(user)
         {
             console.log("User exists.");
