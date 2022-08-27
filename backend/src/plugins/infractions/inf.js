@@ -5,7 +5,7 @@ const {MessageEmbed} = require('discord.js')
 module.exports = {
 	name: "inf",
 	category: "botinfo",
-    aliases:['infraction','inf_search'],
+    aliases:['infraction','inf_search','case'],
     permissions:["MANAGE_GUILD","ADMINISTRATOR"],
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, discordclient) => {

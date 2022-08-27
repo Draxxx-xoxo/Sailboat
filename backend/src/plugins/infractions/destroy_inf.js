@@ -8,7 +8,7 @@ const { MessageActionRow, MessageButton } = require('discord.js');
 module.exports = {
 	name: "inf_destroy",
 	category: "botinfo",
-    aliases:['infraction_destroy', 'inf_destroy'],
+    aliases:['infraction_destroy', 'inf_destroy','inf_delete'],
     permissions:["MANAGE_GUILD","ADMINISTRATOR"],
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, discordclient) => {
