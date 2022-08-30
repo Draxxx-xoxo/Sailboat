@@ -1,7 +1,6 @@
 require('dotenv').config();
 require('./strategies/discordstrategy');
 const express = require('express');
-const phpnode = require( 'php-node' ); 
 const app = express();
 const PORT = process.env.PORT || 53134;
 const session = require('express-session');
@@ -15,8 +14,9 @@ db.then(() => console.log('Connected to MongoDB.')).catch(err => console.log(err
 // Routes
 const authRoute = require('./routes/auth');
 const dashboardRoute = require('./routes/dashboard');
-const docsRoute = require('./routes/docs');
 const editorRoute = require('./routes/editor')
+
+app.use(express.static(__dirname + '/public/scripts'));
 
 app.use(session({
     secret: 'some random secret',
@@ -28,6 +28,7 @@ app.use(session({
     name: 'discord.oauth2',
     store: new MongoStore({ mongooseConnection:  mongoose.connection })
 }));
+
 
 
 app.set('view engine', 'ejs');
@@ -43,8 +44,7 @@ app.use(passport.session());
 // Middleware Routes
 app.use('/auth', authRoute);
 app.use('/dashboard', dashboardRoute);
-app.use('/docs', docsRoute);
-app.use('/editor', editorRoute);
+app.use('/:GuildID/editor', editorRoute);
 
 app.get('/', isAuthorized, (req, res) => {
     res.render('home');

@@ -43,8 +43,6 @@ module.exports = {
 
         const query = await infractionQ(member, moderator_id, reason_, message, timestamp, 'warn')
 
-        console.log(query)
-
         const embed = new MessageEmbed()
         .setTitle(`You have been warned in ${message.guild.name}`)
         .setDescription(`Reason\n` + '```' + reason_ + '```');
