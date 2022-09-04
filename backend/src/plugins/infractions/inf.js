@@ -25,7 +25,7 @@ module.exports = {
         // opening connection
         await client.connect();
 
-        const query = `SELECT * FROM guild.infractions WHERE report_id = ${inf_id} AND server_id = ${message.guild.id} ORDER BY report_id DESC`
+        const query = `SELECT * FROM public.infractions WHERE id = ${inf_id} AND guild_id = ${message.guild.id} ORDER BY id DESC`
        
         const res = (await client.query(query).catch(console.error)).rows[0]
 
@@ -33,16 +33,14 @@ module.exports = {
 
         const timestamp = `${res.timestamp}`
 
-        var date = new Date (timestamp).toLocaleString()
-
             const embed = new MessageEmbed()
-            .setTitle('Infraction #' + res.report_id)
+            .setTitle('Infraction #' + res.id)
             .addFields(
                 {name: 'User', value: res.discord_tag + '\n<@' + res.discord_id + '>', inline: true},
                 {name: 'Moderator', value: res.moderator_tag + '\n<@' + res.moderator_id + '>', inline: true},
                 {name: 'Reason', value: res.reason || 'No Reason'}
             )
-            .setFooter({text: 'Infraction was created on ' + date})
+            .setFooter({text: 'Infraction was created on ' + res.created_at})
             await message.channel.send({embeds: [embed]})
     
         client.end();

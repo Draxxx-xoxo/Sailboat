@@ -12,9 +12,14 @@ module.exports = {
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, discordclient) => {
 
-        var member = 	message.mentions.members.first() || await message.guild.members.fetch(args[0])
+      var member = ''
+      if(message.mentions.members.first()){
+          member = message.mentions.members.first()
+      }  else if(args[0]){
+          member = await message.guild.members.fetch(args[0])
+      }
 
-        const client = new Client({
+      const client = new Client({
           user: process.env.user,
           host: process.env.host,
           database: process.env.db,
@@ -25,8 +30,8 @@ module.exports = {
         // opening connection
         await client.connect();
          
-        const query = `SELECT * FROM guild.infractions WHERE discord_id = ${member.user.id} AND server_id = ${message.guild.id} ORDER BY report_id DESC`
-        const totalquery = `SELECT * FROM guild.infractions WHERE discord_id = ${member.user.id} AND server_id = ${message.guild.id} ORDER BY report_id`
+        const query = `SELECT * FROM public.infractions WHERE discord_id = ${member.user.id} AND guild_id = ${message.guild.id} ORDER BY id DESC`
+        const totalquery = `SELECT * FROM public.infractions WHERE discord_id = ${member.user.id} AND guild_id = ${message.guild.id} ORDER BY id`
   
         var res = (await client.query(query).catch(console.error)).rows
         var rowcount = (await client.query(query).catch(console.error)).rowCount
@@ -39,7 +44,7 @@ module.exports = {
 
 
         for (let i = 0; i < rowcount; i++) {
-            var report_id = report_id_arrary.push(res[i].report_id)
+            var report_id = report_id_arrary.push(res[i].id)
             var infractions = infractions_arrary.push(res[i].infractions)
             var reason = reason_arrary.push(res[i].reason)
         }
@@ -93,8 +98,7 @@ module.exports = {
             )
 
         }
-
-        console.log(options)
+        
         const row = new MessageActionRow()
         .addComponents(
           new MessageSelectMenu()

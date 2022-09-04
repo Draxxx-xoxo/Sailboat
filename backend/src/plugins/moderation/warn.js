@@ -24,7 +24,13 @@ module.exports = {
             return message.channel.send('Why are you mentioning a role? <:blob_ping:807930234410237963>')
         }
 
-        var member = message.mentions.users.first() || await message.guild.members.fetch(args[0])
+        var member = ''
+        if(message.mentions.members.first()){
+            member = message.mentions.members.first()
+        }  else if(args[0]){
+            member = await message.guild.members.fetch(args[0])
+        }
+        //var member = message.mentions.members.first() || await message.guild.members.fetch(args[0])
 
         //Dumb not working
         if(!member){
@@ -43,9 +49,7 @@ module.exports = {
 
         const query = await infractionQ(member, moderator_id, reason_, message, timestamp, 'warn')
 
-        const embed = new MessageEmbed()
-        .setTitle(`You have been warned in ${message.guild.name}`)
-        .setDescription(`Reason\n` + '```' + reason_ + '```');
+        const DmMsg = `You have been warned in ${message.guild.name}\n Reason\n` + '```' + reason_ + '```'
 
 
         await client.query(query);
@@ -56,7 +60,7 @@ module.exports = {
           });
 
 
-        discordclient.users.cache.get(member.user.id).send(embed).catch(() => message.reply("Can't send DM to your user!"));
+        member.send(DmMsg).catch(() => message.reply("Can't send DM to your user!"));
 
 
         if(await command_logging(message.guild.id) ==  true){

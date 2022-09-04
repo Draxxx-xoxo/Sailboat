@@ -16,7 +16,13 @@ module.exports = {
             return message.channel.send('Why are you mentioning a role? <:blob_ping:807930234410237963>')
         }
 
-        var member = message.mentions.users.first() || await message.guild.members.fetch(args[0])
+        var member = ''
+        if(message.mentions.members.first()){
+            member = message.mentions.members.first()
+        }  else if(args[0]){
+            member = await message.guild.members.fetch(args[0])
+        }
+        //var member = message.mentions.users.first() || await message.guild.members.fetch(args[0])
 
         //Dumb not working
         if(!member){

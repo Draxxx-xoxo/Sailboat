@@ -25,12 +25,12 @@ module.exports = {
         // opening connection
         await client.connect();
 
-        const query = `UPDATE guild.infractions SET reason = '${reason}' WHERE report_id = ${inf_id} AND server_id = ${message.guild.id}`
+        const query = `UPDATE public.infractions SET reason = '${reason}' WHERE id = ${inf_id} AND guild_id = ${message.guild.id}`
        
         const res = (await client.query(query).catch(console.error)).rows[0]
 
 
-        const checkquery = `SELECT * FROM guild.infractions WHERE report_id = ${inf_id} AND server_id = ${message.guild.id} ORDER BY report_id DESC`
+        const checkquery = `SELECT * FROM public.infractions WHERE id = ${inf_id} AND guild_id = ${message.guild.id} ORDER BY id DESC`
 
         const checkres = (await client.query(checkquery).catch(console.error)).rows[0]
 
