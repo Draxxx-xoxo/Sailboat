@@ -1,12 +1,12 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 const functions = require('./pg');
+const moment = require('moment');
 
 async function pg_table(guildid){
-const pg = await functions.pg(`SELECT * FROM guild.configuration WHERE guild_id = ${guildid}`)
+const pg = await functions.pg(`SELECT * FROM public.configurations WHERE guild_id = ${guildid}`)
 
     const doc = pg.rows[0].configuration
-
     return doc 
 }
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
     },
 
     async getPreix(guildid) {
-        const doc = await pg_table(guildid);
+        const doc = await pg_table(guildid)
         return doc.guild_settings.prefix
     },
 
@@ -80,9 +80,9 @@ module.exports = {
 
     async infractionQ(member, moderator_id, reason_, message, timestamp, infraction) {
         const query = `
-        INSERT INTO guild.Infractions(
-            discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, timestamp, server_id)
-            VALUES (${member.user.id}, '${member.user.username}#${member.user.discriminator}', '${infraction}', ${moderator_id.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${timestamp}, ${message.guild.id}); 
+        INSERT INTO public.infractions(
+            discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, guild_id, created_at)
+            VALUES (${member.user.id}, '${member.user.username}#${member.user.discriminator}', '${infraction}', ${moderator_id.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${message.guild.id}, '${moment().format()}'); 
         `
 
         return query
