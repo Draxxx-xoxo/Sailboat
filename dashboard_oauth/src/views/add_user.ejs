@@ -1,0 +1,131 @@
+<%- include('partials/header') -%>
+<%- include('partials/nav') -%>
+<html>
+    <form onsubmit="return submitdata()";>
+        <label for="userID">UserID</label><br>
+        <input type="text" id="userID" name="userID" required><br>
+        <label for="permissions">User Permissions</label>
+        <select name="permissions" id="permissions"><br>
+            <option value="editor">Editor</option>
+            <option value="viewer">Viewer</option>
+        </select><br>
+        <input type="submit" value="Submit">
+    </form>
+    <table>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 50%;
+                left: 0px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            th, td {
+            border: 1px solid;
+            }
+            tr:hover {background-color: coral;}
+        </style>
+        <script>
+    
+            function generateTableHead(table, data) {
+            let thead = table.createTHead();
+            let row = thead.insertRow();
+            for (let key of data) {
+                let th = document.createElement("th");
+                let text = document.createTextNode(key);
+                th.appendChild(text);
+                row.appendChild(th);
+            }
+            }
+    
+            function generateTable(table, data) {
+            for (let element of data) {
+                let row = table.insertRow();
+                for (key in element) {
+                let cell = row.insertCell();
+                let text = document.createTextNode(element[key]);
+                cell.appendChild(text);
+                }
+            }
+            }
+            const currentURL = window.location.href
+            var guildid = window.location.pathname.split('/');
+            const Http = new XMLHttpRequest();
+            const url = `http://localhost:1337/api/infractions?filters[guild_id][$eq]=${guildid[1]}`
+            Http.open("Get", url);
+            Http.setRequestHeader("Authorization", 'bearer 822ca389f5560fec7410bd387bdac30cf87379d1608de0b400b903549af53bff5942217c08fdf0fc1ecf3f06b681e0684c1c15a7a6dd1c74533524abe31f93bcf0484c0f63861763afa589ba6750879d6c224fa4ad2f3b7787c32fe518ab6115b98bd6b44e1d0fad3f1cd68a5dafa251c0268e815b7e1c057b7573f91198ed61');
+            Http.send();
+            Http.onload = () => {
+                if (Http.readyState === Http.DONE) {
+                if (Http.status === 200) {
+
+                let mountains = [
+                { name: "Monte Falco", height: 1658, place: "Parco Foreste Casentinesi" },
+                { name: "Monte Falterona", height: 1654, place: "Parco Foreste Casentinesi" }
+                ];
+                const infractions = []
+                    var response = JSON.parse(Http.responseText);
+                    var Array = response.data;
+                    for (let i = 0; i < Array.length; i++){
+                        var infraction = {
+                            "id": Array[i].id,
+                            //"discord_id": Array[i].attributes.discord_id,
+                            "discord_tag": Array[i].attributes.discord_tag,
+                            "infractions": Array[i].attributes.infractions,
+                            "moderator_id": Array[i].attributes.moderator_id,
+                            //"moderator_tag": Array[i].attributes.moderator_tag,
+                            "reason": Array[i].attributes.reason,
+                            //"guild_id": Array[i].attributes.guild_id,
+                        }
+                        
+                        infractions.push(infraction);
+                    }
+                    let table = document.querySelector("table");
+                    let data = Object.keys(infractions[0]);
+                    generateTable(table, infractions);
+                    generateTableHead(table, data);
+                }}
+            }; 
+    
+        </script>
+    </table>
+    <script>
+        function submitdata(){
+            const userID = document.getElementById("userID").value
+            var permissions = document.getElementById("permissions").value
+            if(permissions == 'editor'){
+                permissions = 0
+            }
+            else if(permissions == 'viewer'){
+                permissions = 1
+            }
+            const Http = new XMLHttpRequest();
+            const url = `http://localhost:1337/api/allowed-users`
+            var guildid = (window.location.pathname.split('/'))[1];
+            Http.open("Post", url);
+            Http.setRequestHeader("Authorization", 'bearer 822ca389f5560fec7410bd387bdac30cf87379d1608de0b400b903549af53bff5942217c08fdf0fc1ecf3f06b681e0684c1c15a7a6dd1c74533524abe31f93bcf0484c0f63861763afa589ba6750879d6c224fa4ad2f3b7787c32fe518ab6115b98bd6b44e1d0fad3f1cd68a5dafa251c0268e815b7e1c057b7573f91198ed61');
+            Http.setRequestHeader("Content-type", "application/json");
+            const data = `
+            {
+            "data": {
+                "guildID": "${guildid}", 
+                "UserID": "${userID}", 
+                "permissionID": ${permissions}
+            }
+            }
+            `
+            console.log(data)
+            Http.send(data);
+            Http.onload = () => {
+                if (Http.readyState === Http.DONE) {
+                if (Http.status === 200) {
+                    var response = JSON.parse(Http.responseText);
+                    console.log(response)
+                }
+                }
+            }; 
+            return false
+        }
+    </script>
+</html>
+<%- include('partials/footer') -%>
