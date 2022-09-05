@@ -3,15 +3,53 @@ const { getPermissions } = require('../utils/utils');
 const {Client} = require('pg');
 
 
-function isAuthorized(req, res, next) {
-    if(req.user) {
-        console.log("User is logged in.");
-        console.log(req.user)
-        next();
+async function isAuthorized (req, res, next){
+
+    var userID = ''
+
+    if(req.user == undefined){
+        userID = null
     }
     else {
-        console.log("User is not logged in.");
-        res.redirect('/');
+        userID = req.user.discordId
+    }
+    const client = new Client({
+        user: process.env.user,
+        host: process.env.host,
+        database: process.env.db,
+        password: process.env.passwd,
+        port: process.env.port,
+    }); 
+    client.connect();
+
+    const guildid = req.baseUrl.slice(1)
+    const queryGuild = `SELECT * FROM allowed_guilds JOIN  allowed_users d USING (guild_id) WHERE d.guild_id = ${guildid} AND d.user_id = ${userID}`;
+    const res_guild = await client.query(queryGuild);
+    const queryAdmin = `SELECT * FROM global_admins WHERE user_id = ${userID};`
+    const res_admin = await client.query(queryAdmin);
+    client.end();
+
+    if(res_admin.rowCount = 1){
+        console.log("User is logged in & a Super Admin");
+        next();
+    }
+    else{
+        if(req.user && res_guild.rowCount > 0) {
+            console.log("User is logged in & guild is allowed.");
+            //console.log(req.user)
+            console.log(res_guild.rowCount)
+            next();
+        }
+        else {
+            if(req.user == undefined){
+                console.log("User is not logged in.");
+                res.redirect('/');
+            }
+            else{
+                console.log("User is not in guild.");
+                res.redirect('/dashboard');
+            }
+        }
     }
 }
 
@@ -31,8 +69,8 @@ router.get('/infractions', isAuthorized, async (req, res) => {
     const res_guild = await client.query(queryGuild);
 
     client.end()
-    console.log(queryGuild);
-    console.log(res_guild.rows)
+    //console.log(queryGuild);
+    //console.log(res_guild.rows)
 
 
     res.render('infractions', {
@@ -58,8 +96,8 @@ router.get('/add_user', isAuthorized, async (req, res) => {
     const res_guild = await client.query(queryGuild);
 
     client.end()
-    console.log(queryGuild);
-    console.log(res_guild.rows)
+    //console.log(queryGuild);
+    //console.log(res_guild.rows)
 
 
     res.render('add_user', {
