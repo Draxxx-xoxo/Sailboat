@@ -42,7 +42,7 @@ module.exports = {
 
 
         const embed = new MessageEmbed()
-        .setTitle('Infraction #' + res.report_id)
+        .setTitle('Infraction #' + res.id)
         .addFields(
             {name: 'User', value: res.discord_tag + '\n<@' + res.discord_id + '>', inline: true},
             {name: 'Moderator', value: res.moderator_tag + '\n<@' + res.moderator_id + '>', inline: true},
@@ -80,6 +80,7 @@ module.exports = {
             const delete_query = `DELETE FROM public.infractions WHERE id = ${inf_id} AND guild_id = ${button.guild.id}`
             const res = await client.query(delete_query).catch(console.error)
 
+            console.log(res)
 
             button.reply('#' + inf_id + ' has been deleted');
             button.message.edit({
@@ -88,7 +89,7 @@ module.exports = {
 
             client.end()
         }
-        else if (button.component.customId == 'no'){
+        if (button.component.customId == 'no'){
 
             button.reply('Action cancelled')
             button.message.edit({
