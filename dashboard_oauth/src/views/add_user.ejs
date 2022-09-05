@@ -51,7 +51,7 @@
             const currentURL = window.location.href
             var guildid = window.location.pathname.split('/');
             const Http = new XMLHttpRequest();
-            const url = `http://localhost:1337/api/infractions?filters[guild_id][$eq]=${guildid[1]}`
+            const url = `http://localhost:1337/api/allowed-users?filters[guild_id][$eq]=${guildid[1]}`
             Http.open("Get", url);
             Http.setRequestHeader("Authorization", 'bearer 822ca389f5560fec7410bd387bdac30cf87379d1608de0b400b903549af53bff5942217c08fdf0fc1ecf3f06b681e0684c1c15a7a6dd1c74533524abe31f93bcf0484c0f63861763afa589ba6750879d6c224fa4ad2f3b7787c32fe518ab6115b98bd6b44e1d0fad3f1cd68a5dafa251c0268e815b7e1c057b7573f91198ed61');
             Http.send();
@@ -59,30 +59,27 @@
                 if (Http.readyState === Http.DONE) {
                 if (Http.status === 200) {
 
-                let mountains = [
-                { name: "Monte Falco", height: 1658, place: "Parco Foreste Casentinesi" },
-                { name: "Monte Falterona", height: 1654, place: "Parco Foreste Casentinesi" }
-                ];
-                const infractions = []
+                const Users = []
                     var response = JSON.parse(Http.responseText);
                     var Array = response.data;
                     for (let i = 0; i < Array.length; i++){
-                        var infraction = {
+                        var user = {
                             "id": Array[i].id,
-                            //"discord_id": Array[i].attributes.discord_id,
-                            "discord_tag": Array[i].attributes.discord_tag,
-                            "infractions": Array[i].attributes.infractions,
-                            "moderator_id": Array[i].attributes.moderator_id,
+                            "discord_id": Array[i].attributes.UserID,
+                            //"discord_tag": Array[i].attributes.discord_tag,
+                            "permissions": Array[i].attributes.permissionID,
+                            //"infractions": Array[i].attributes.infractions,
+                            //"moderator_id": Array[i].attributes.moderator_id,
                             //"moderator_tag": Array[i].attributes.moderator_tag,
-                            "reason": Array[i].attributes.reason,
+                            //"reason": Array[i].attributes.reason,
                             //"guild_id": Array[i].attributes.guild_id,
                         }
                         
-                        infractions.push(infraction);
+                        Users.push(user);
                     }
                     let table = document.querySelector("table");
-                    let data = Object.keys(infractions[0]);
-                    generateTable(table, infractions);
+                    let data = Object.keys(Users[0]);
+                    generateTable(table, Users);
                     generateTableHead(table, data);
                 }}
             }; 
