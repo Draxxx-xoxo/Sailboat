@@ -1,3 +1,5 @@
+<%- include('partials/header') -%>
+<%- include('partials/nav') -%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,61 +11,78 @@
         overflow: hidden;
     }
 
-    #editor {
-        margin: 0;
-        position: fixed;
-        top: 0;
+    #editor { 
+        position: absolute;
+        top: 55px;
+        right: 0;
         bottom: 0;
         left: 100px;
-        right: 0;
-        width: 900px; 
-        height: 900px;
     }
   </style>
 </head>
 <body>
-<!--   <?php
-  // Connecting, selecting database
-  $dbconn = pg_connect("host=localhost dbname=walle_testing user=jovan_wee password=b747400s port=5432")
-      or die('Could not connect: ' . pg_last_error());
-  
-  // Performing SQL query
-  $query = 'SELECT * FROM guild.configuration';
-  $result = pg_query($dbconn, $query) or die('Query failed: ' . pg_last_error());
-  
-  $arr = pg_fetch_array($result, 0, PGSQL_NUM);
-  
-  // Free resultset
-  pg_free_result($result);
-  
-  // Closing connection
-  pg_close($dbconn);
+  <div id="editor"> </div>
 
-  ?>
- -->
-  <pre id="editor">
-  <!-- <?php echo $arr[3]; ?> -->
-  </pre>
-  
-
-<script src="/dashboard_oauth/ace-editor/src/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="/ace-editor/src/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.js" integrity="sha512-CwxrLIN0dww6lRc/oKeZiI9oGlOob2HPMU0Yu0g+P3/G1cuTii+tt0jpyEKhilfrV7D/zmvKiVPIHUDU6xbBxg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-    var editor = ace.edit("editor");
-    console.log(editor.getValue());
-    editor.setTheme("ace/theme/twilight");
-    editor.session.setMode("ace/mode/yaml");
-    
-    
+  const currentURL = window.location.href
+  var guildid = window.location.pathname.split('/');
+  const Http = new XMLHttpRequest();
+  const url = `http://localhost:1337/api/configurations?filters[guild_id][$eq]=${guildid[1]}`
+  Http.open("Get", url);
+  Http.setRequestHeader("Authorization", 'bearer 822ca389f5560fec7410bd387bdac30cf87379d1608de0b400b903549af53bff5942217c08fdf0fc1ecf3f06b681e0684c1c15a7a6dd1c74533524abe31f93bcf0484c0f63861763afa589ba6750879d6c224fa4ad2f3b7787c32fe518ab6115b98bd6b44e1d0fad3f1cd68a5dafa251c0268e815b7e1c057b7573f91198ed61');
+  Http.send();
+  var editor = ace.edit("editor");
+  Http.onload = () => {
+    if (Http.readyState === Http.DONE) {
+      if (Http.status === 200) {
+        var response = JSON.parse(Http.responseText);
+        console.log(response)
+        var rawconfig = response.data[0].attributes.configuration
+        //var editor = ace.edit("editor");
+        if(rawconfig == null) rawconfig = {welcome: "Hello there! To get started please read our docs"}
+        var yamlconfig = jsyaml.dump(rawconfig, {noArrayIndent: true});
+        editor.setValue(yamlconfig);
+        editor.setTheme("ace/theme/twilight");
+        editor.session.setMode("ace/mode/yaml");
+      }
+    }
+  }; 
 </script>
-<form action="" method="post">
-  <button type="submit" onclick="console.log(editor.getValue()); const update_config = editor.getValue();" name='updatebutton'>Click me</button>
-</form>
-<h1>Note</h1>
-<!-- <?php
-  if(isset($_POST["updatebutton"]))
-  {
-  echo "<script>document.writeln(update_config);</script>";
+<button onclick="update()">Click Me</button>
+<script>
+  function update(){
+    var jsonconfig = jsyaml.load(editor.getValue(), 'json');
+    const Http = new XMLHttpRequest();
+    var guildid = window.location.pathname.split('/');
+    const filterURL = `http://localhost:1337/api/configurations?filters[guild_id][$eq]=${guildid[1]}`
+    Http.open("Get", filterURL);
+    Http.setRequestHeader("Authorization", 'bearer 822ca389f5560fec7410bd387bdac30cf87379d1608de0b400b903549af53bff5942217c08fdf0fc1ecf3f06b681e0684c1c15a7a6dd1c74533524abe31f93bcf0484c0f63861763afa589ba6750879d6c224fa4ad2f3b7787c32fe518ab6115b98bd6b44e1d0fad3f1cd68a5dafa251c0268e815b7e1c057b7573f91198ed61');
+    Http.send();
+    Http.onload = () => {
+    if (Http.readyState === Http.DONE) {
+      if (Http.status === 200) {
+        var id = JSON.parse(Http.responseText).data[0].id
+
+        const url = `http://localhost:1337/api/configurations/${id}`
+        const data = `
+        {
+          "data": {
+            "configuration": ${JSON.stringify(jsonconfig)}
+          }
+        }
+        `
+        Http.open("Put", url, true);
+        Http.setRequestHeader("Authorization", 'bearer 822ca389f5560fec7410bd387bdac30cf87379d1608de0b400b903549af53bff5942217c08fdf0fc1ecf3f06b681e0684c1c15a7a6dd1c74533524abe31f93bcf0484c0f63861763afa589ba6750879d6c224fa4ad2f3b7787c32fe518ab6115b98bd6b44e1d0fad3f1cd68a5dafa251c0268e815b7e1c057b7573f91198ed61');
+        Http.setRequestHeader("Content-type", "application/json");
+        Http.send(data);
+        
+      }
+    }
+  }; 
   }
-?> -->
+</script>
 </body>
 </html>
+<%- include('partials/footer') -%>
