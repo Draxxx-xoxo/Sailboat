@@ -14,7 +14,7 @@ db.then(() => console.log('Connected to MongoDB.')).catch(err => console.log(err
 // Routes
 const authRoute = require('./routes/auth');
 const dashboardRoute = require('./routes/dashboard');
-const editorRoute = require('./routes/editor')
+const guildRoute = require('./routes/guild')
 
 app.use(express.static(__dirname + '/public/scripts'));
 
@@ -32,7 +32,6 @@ app.use(session({
 
 
 app.set('view engine', 'ejs');
-//app.set('view engine', 'php');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -44,7 +43,7 @@ app.use(passport.session());
 // Middleware Routes
 app.use('/auth', authRoute);
 app.use('/dashboard', dashboardRoute);
-app.use('/:GuildID/editor', editorRoute);
+app.use('/:GuildID', guildRoute);
 
 app.get('/', isAuthorized, (req, res) => {
     res.render('home');
@@ -62,5 +61,3 @@ function isAuthorized(req, res, next) {
 }
 
 app.listen(PORT, () => console.log(`Now listening to requests on port ${PORT}`));
-
-// https://discordapp.com/developers/docs/topics/permissions

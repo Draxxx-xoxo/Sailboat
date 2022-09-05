@@ -2,44 +2,26 @@
   <article class="media">
     <div class="media-left">
       <figure class="image is-64x64">
-        <img src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png" alt="Image">
+        <img src="<%= guild.icon %>" alt="Image">
       </figure>
     </div>
     <div class="media-content">
       <div class="columns is-gapless">
         <div class="content column">
           <p>
-            <strong><%= guild.name %></strong> <small><%= guild.id %></small>
-            <ul>
-              <% guild.features.forEach(feature => { %>
-                <li><%= feature %></li>
-              <% }) %>
-            </ul>
+            <strong><%= guild.guild_name %></strong> <small><%= guild.guild_id %></small>
           </p>
         </div>
-        <div class="content column">
-          <div class="dropdown is-hoverable">
-            <div class="dropdown-trigger">
-              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
-                <span>View Permissions</span>
-                <span class="icon is-small">
-                  <i class="fas fa-angle-down" aria-hidden="true"></i>
-                </span>
-              </button>
-            </div>
-            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
-              <div class="dropdown-content">
-                <div class="dropdown-item">
-                  <% permissions.get(guild.id).forEach((v,k) => { %>
-                    <li><%= k %></li>
-                  <% }) %>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a href="/<%= guild.id %>/editor" class="button">Configurator</a>
+          <a href="/<%= guild.guild_id %>/add_user" class="button">Add User</a>
+          <a href="/<%= guild.guild_id %>/editor" class="button">Configurator</a>
+          <a href="/<%= guild.guild_id %>/infractions" class="button">Infractions</a>
+
         </div>
       </div>
+      <script>
+        console.log('<%= JSON.stringify(guild) %>')
+      </script>
     </div>
   </article>
 </div>
+
