@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "infractions",
+  "info": {
+    "singularName": "infraction",
+    "pluralName": "infractions",
+    "displayName": "Infraction",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "discord_id": {
+      "type": "biginteger"
+    },
+    "discord_tag": {
+      "type": "string"
+    },
+    "infractions": {
+      "type": "string"
+    },
+    "moderator_id": {
+      "type": "biginteger"
+    },
+    "moderator_tag": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "text"
+    },
+    "guild_id": {
+      "type": "biginteger"
+    }
+  }
+}

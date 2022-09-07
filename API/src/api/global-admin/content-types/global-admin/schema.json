@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "global_admins",
+  "info": {
+    "singularName": "global-admin",
+    "pluralName": "global-admins",
+    "displayName": "Super Admin"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "username": {
+      "type": "string"
+    },
+    "userID": {
+      "type": "biginteger"
+    },
+    "permissionID": {
+      "type": "integer"
+    }
+  }
+}

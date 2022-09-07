@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "allowed_guilds",
+  "info": {
+    "singularName": "allowed-guild",
+    "pluralName": "allowed-guilds",
+    "displayName": "Allowed-Guild"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "guildName": {
+      "type": "string"
+    },
+    "guildID": {
+      "type": "biginteger"
+    },
+    "icon": {
+      "type": "text"
+    }
+  }
+}

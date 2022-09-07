@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "allowed_users",
+  "info": {
+    "singularName": "allowed-user",
+    "pluralName": "allowed-users",
+    "displayName": "Allowed-User",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "guildID": {
+      "type": "biginteger",
+      "required": false,
+      "unique": false
+    },
+    "UserID": {
+      "type": "biginteger",
+      "required": true
+    },
+    "permissionID": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "configurations",
+  "info": {
+    "singularName": "configuration",
+    "pluralName": "configurations",
+    "displayName": "Configuration",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "guild_id": {
+      "type": "biginteger",
+      "required": true,
+      "unique": true
+    },
+    "guild_name": {
+      "type": "string"
+    },
+    "owner_id": {
+      "type": "biginteger"
+    },
+    "configuration": {
+      "type": "json"
+    }
+  }
+}
