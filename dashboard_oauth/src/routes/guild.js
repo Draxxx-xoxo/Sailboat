@@ -28,8 +28,8 @@ async function isAuthorized (req, res, next){
     const queryAdmin = `SELECT * FROM global_admins WHERE user_id = ${userID};`
     const res_admin = await client.query(queryAdmin);
     client.end();
-
-    if(res_admin.rowCount = 1){
+    
+    if(res_admin.rowCount == 1){
         console.log("User is logged in & a Super Admin");
         next();
     }
@@ -47,7 +47,7 @@ async function isAuthorized (req, res, next){
             }
             else{
                 console.log("User is not in guild.");
-                res.redirect('/dashboard');
+                res.render('forbidden');
             }
         }
     }
