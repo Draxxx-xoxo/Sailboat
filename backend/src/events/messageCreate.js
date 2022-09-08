@@ -1,4 +1,5 @@
 const functions = require('../handlers/common_functions')
+const Log = require('../handlers/logging')
 
 module.exports = async (discordClient, message) => {
     const prefix = await functions.getPreix(message.guild.id)

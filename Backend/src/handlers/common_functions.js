@@ -61,7 +61,7 @@ module.exports = {
         const doc = await pg_table(guildid);
         return doc.plugins.logging.command_logging
     },
-    async command_logging(guildid) {
+    async infraction_logging(guildid) {
         const doc = await pg_table(guildid);
         return doc.plugins.logging.infractions_logging
     },
@@ -90,9 +90,9 @@ module.exports = {
 
     async reportupdate(report_id, button, status){
         const query = `
-        UPDATE guild.reports
+        UPDATE public.reports
         SET status = '${status}'
-        WHERE "report_id" = ${report_id} AND "server_id" = ${button.guild.id}
+        WHERE "id" = ${report_id} AND "guild_id" = ${button.guild.id}
         RETURNING *
         `
         return query

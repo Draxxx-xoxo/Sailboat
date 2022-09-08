@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const functions = require('./pg');
 
 async function pg_table(guildid){
-const pg = await functions.pg(`SELECT * FROM guild.configuration WHERE guild_id = ${guildid}`)
+const pg = await functions.pg(`SELECT * FROM public.configurations WHERE guild_id = ${guildid}`)
 
     const doc = pg.rows[0].configuration
 
