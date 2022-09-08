@@ -23,7 +23,7 @@ module.exports = {
         // opening connection
         await client.connect();
 
-        const query = `SELECT * FROM guild.reports WHERE "server_id" = ${button.guild.id} AND "report_id" = ${report_id}`
+        const query = `SELECT * FROM public.reports WHERE "guild_id" = ${button.guild.id} AND "id" = ${report_id}`
 
         const res = await client.query(query);
 

@@ -15,9 +15,20 @@ module.exports = {
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, discordclient) => {
 
-		var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0])); 
+        var member = ''
+        if(message.mentions.members.first()){
+            member = message.mentions.members.first()
+        }  else if(args[0]){
+            member = await message.guild.members.fetch(args[0])
+        }
 
-        if(!member) return
+        if(!member){
+            message.channel.send('Please mention a user or input a user ID')
+            .then(msg => {
+                msg.delete({ timeout: 3000 })
+            });
+            return  
+        };
 
         const client = new Client({
             user: process.env.user,
@@ -30,7 +41,7 @@ module.exports = {
         // opening connection
         await client.connect();
 
-		const query = `SELECT * FROM guild.reports WHERE reported_user_id = ${member.user.id} AND server_id = ${message.guild.id} ORDER BY report_id DESC`
+		const query = `SELECT * FROM public.reports WHERE reported_user_id = ${member.user.id} AND guild_id = ${message.guild.id} ORDER BY id DESC`
 		var res = (await client.query(query).catch(console.error))
 
 		var report_id_arrary = [];
@@ -39,7 +50,7 @@ module.exports = {
 		var message_id_arrary = []
 
         for (let i = 0; i < res.rowCount; i++) {
-            var report_id = report_id_arrary.push(res.rows[i].report_id);
+            var report_id = report_id_arrary.push(res.rows[i].id);
             var reason = reason_arrary.push(res.rows[i].reason);
 			var reason = status_arrary.push(res.rows[i].status);
 			var message_id = message_id_arrary.push(res.rows[i].message_id)

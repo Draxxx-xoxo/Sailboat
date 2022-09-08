@@ -23,8 +23,13 @@ module.exports = {
             return message.channel.send('Why are you mentioning a role? <:blob_ping:807930234410237963>')
         }
 
-        var member = message.mentions.users.first() || await message.guild.members.fetch(args[0]);
-
+        var member = ''
+        if(message.mentions.members.first()){
+            member = message.mentions.members.first()
+        }  else if(args[0]){
+            member = await message.guild.members.fetch(args[0])
+        }
+        
         if(!member){
             message.channel.send('Please mention a user or input a user ID')
             .then(msg => {
@@ -56,9 +61,9 @@ module.exports = {
 
 
         const query = `
-        INSERT INTO guild.reports(
-            reporter_id, reporter_tag, reported_user_tag, reported_user_id, reason, "timestamp", server_id, status)
-            VALUES (${message.author.id},'${message.author.tag}', '${member.user.tag}', ${member.user.id},'${reason_|| 'No Reason'}',${Date.now()}, ${message.guild.id}, 'pending')
+        INSERT INTO public.reports(
+            reporter_id, reporter_tag, reported_user_tag, reported_user_id, reason, guild_id, status)
+            VALUES (${message.author.id},'${message.author.tag}', '${member.user.tag}', ${member.user.id},'${reason_|| 'No Reason'}', ${message.guild.id}, 'pending')
             RETURNING *
         `
         

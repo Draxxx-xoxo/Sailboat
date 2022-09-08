@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reports",
+  "info": {
+    "singularName": "report",
+    "pluralName": "reports",
+    "displayName": "Report"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "reporter_id": {
+      "type": "biginteger"
+    },
+    "reporter_tag": {
+      "type": "string"
+    },
+    "reported_user_id": {
+      "type": "biginteger"
+    },
+    "reported_user_tag": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "text"
+    },
+    "guild_id": {
+      "type": "biginteger"
+    },
+    "status": {
+      "type": "string"
+    },
+    "message_id": {
+      "type": "biginteger"
+    }
+  }
+}
