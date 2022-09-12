@@ -34,7 +34,7 @@ fs.readdir(resolve(__dirname, "./events/"), (err, files) => {
 });
 
 //AUTOMOD
-discordClient.on('messageCreate', async message => {
+/*discordClient.on('messageCreate', async message => {
 	const censor = require('./auto_mod/censor')
 
 	if(message.author.bot) return;
@@ -45,7 +45,9 @@ discordClient.on('messageCreate', async message => {
 		console.log(error);
 	}
 	
-});
+});*/
+
+
 
 discordClient.login(process.env.token);
 

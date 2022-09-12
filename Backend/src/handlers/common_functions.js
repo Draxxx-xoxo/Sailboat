@@ -2,61 +2,48 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 const functions = require('./pg');
 const moment = require('moment');
-
 async function pg_table(guildid){
-const pg = await functions.pg(`SELECT * FROM public.configurations WHERE guild_id = ${guildid}`)
-
+    const pg = await functions.pg(`SELECT * FROM public.configurations WHERE guild_id = ${guildid}`)
     const doc = pg.rows[0].configuration
     return doc 
 }
 module.exports = {
-
     async yamlfile(message) {
         const doc = pg_table(message.guild.id)
         return doc
     },
-
-    async getPreix(guildid) {
+    async getPrefix(guildid) {
         const doc = await pg_table(guildid)
         return doc.guild_settings.prefix
     },
-
     async muteRole(message) {
         const doc = await pg_table(message.guild.id);
         return doc.plugins.mute_settings.role
     },
-
     async censorWords(message) {
         const doc = await pg_table(message.guild.id);
         return doc.plugins.censor.censor_words
     },
-
     async censorIgnoreUser(message) {
         const doc = await pg_table(message.guild.id);
         return doc.plugins.censor.ignore_users
     },
-
     async censorIgnoreChannel(message) {
         const doc = await pg_table(message.guild.id);
         return doc.plugins.censor.ignore_channels
     },
-
-
     async welcomechannel(guildid) {
         const doc = await pg_table(guildid);
         return doc.plugins.welcome_channel.channel
     },
-
     async join_message(guildid) {
         const doc = await pg_table(guildid);
         return doc.plugins.welcome_channel.join_message
     },
-
     async leave_message(guildid) {
         const doc = await pg_table(guildid);
         return doc.plugins.welcome_channel.leave_message
     },
-
     async command_logging(guildid) {
         const doc = await pg_table(guildid);
         return doc.plugins.logging.command_logging
@@ -77,7 +64,6 @@ module.exports = {
         const doc = await pg_table(guildid);
         return doc.plugins.reports.logging_channel
     },
-
     async infractionQ(member, moderator_id, reason_, message, timestamp, infraction) {
         const query = `
         INSERT INTO public.infractions(
@@ -87,7 +73,6 @@ module.exports = {
 
         return query
     },
-
     async reportupdate(report_id, button, status){
         const query = `
         UPDATE public.reports
@@ -97,9 +82,18 @@ module.exports = {
         `
         return query
     },
-
     async rolelevel(guildid) {
         const doc = await pg_table(guildid);
         return doc.plugins.level
+    },
+    async censor_check(guildid){
+        const doc = await pg_table(guildid);
+        const checker = doc.plugins.censor
+        if(checker == undefined){
+            return false
+        }
+        else {
+            return true
+        }
     }
 }

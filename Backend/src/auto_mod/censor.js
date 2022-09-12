@@ -17,11 +17,11 @@ module.exports = {
 
 	for(let i = 0; i < ignoreChannels.length; i++) {
 		if(ignoreChannels[i] == message.channel.id) return;
-	}
+	};
 
 	for(let i = 0; i < ignoreusers.length; i++) {
 		if(ignoreusers[i] == message.member.user.id) return;
-	}
+	};
 
 
 	for (let i = 0; i < censorArray.length; i++) { 
@@ -32,9 +32,9 @@ module.exports = {
 				discordclient, 
 				`censored message by ${message.member.user.tag} in ${message.channel.id} found blacklist word ${censorArray[i]}` + '```' + message.content + '```', 
 				message.guild.id
-				)
-
-		}
-	}
+				);
+			return;
+		};
+	};
 	}
 };
