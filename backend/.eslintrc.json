@@ -4,15 +4,13 @@
         "commonjs": true,
         "es2021": true
     },
-    "extends": [
-        "prettier"
-    ],
     "overrides": [
     ],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
     "rules": {
-        "quotes": ["error", "double"]
+        "quotes": ["error", "double"],
+        "indent": ["error", 2]
     }
 }
