@@ -43,5 +43,13 @@ module.exports = async (discordClient, interaction) => {
 				console.log(error);
 			}
 		}
-	}
+		if ( commandName === 'what_happened_to_eve'){
+			const what_happened_to_eve = require('../plugins/utilities/announcement')
+			try{
+				what_happened_to_eve.execute(interaction, discordClient)
+			} catch (error) {
+				console.log(error);
+			}
+		}
+}
 };
