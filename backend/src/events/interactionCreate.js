@@ -32,4 +32,16 @@ module.exports = async (discordClient, interaction) => {
 			console.log(error);
 		}
 	}
+	if(interaction.isCommand()){
+
+		const { commandName } = interaction;
+		if (commandName === 'ping') {
+			const ping = require('../plugins/admin/ping')
+			try{
+				ping.execute(interaction, discordClient)
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	}
 };

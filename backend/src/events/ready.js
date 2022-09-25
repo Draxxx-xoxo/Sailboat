@@ -6,5 +6,6 @@ module.exports = (discordClient) => {
         `\n[!] Guild Count: ${discordClient.guilds.cache.size}` + 
         `\n[!] Commands: ${discordClient.commands.size}` +
         `\n[!] Bot is online`
-
-)};
+        )
+    discordClient.user.setStatus('idle');
+};
