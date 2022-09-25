@@ -95,5 +95,11 @@ module.exports = {
         else {
             return true
         }
+    },
+
+    async super_admins(){
+        const pg = await functions.pg(`SELECT * FROM public.global_admins`);
+        const doc = pg.rows.map(user => user.user_id)
+        return doc
     }
 }
