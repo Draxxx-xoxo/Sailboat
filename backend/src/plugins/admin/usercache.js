@@ -1,33 +1,33 @@
-const {Client} = require('pg');
-const {pgkey} = require('../../../config.json');
-const {MessageEmbed} = require('discord.js')
+const {Client} = require("pg");
+const {pgkey} = require("../../../config.json");
+const {MessageEmbed} = require("discord.js")
 
 module.exports = {
-	name: "cacheuser",
-	category: "botinfo",
-	description: "Returns bot and API latency in milliseconds.",
-	execute: async (message, args, discordclient) => {
+  name: "cacheuser",
+  category: "botinfo",
+  description: "Returns bot and API latency in milliseconds.",
+  execute: async (message, args, discordclient) => {
         
-        const client = new Client({
-            user: process.env.user,
-            host: process.env.host,
-            database: process.env.db,
-            password: process.env.passwd,
-            port: process.env.port,
-        });
+    const client = new Client({
+      user: process.env.user,
+      host: process.env.host,
+      database: process.env.db,
+      password: process.env.passwd,
+      port: process.env.port,
+    });
 
 
-        var guild_membersID = message.guild.members.cache.map(user => user.id);
+    var guild_membersID = message.guild.members.cache.map(user => user.id);
 
-        var guild_membersTag = message.guild.members.cache.map(members => members.user.tag);
+    var guild_membersTag = message.guild.members.cache.map(members => members.user.tag);
 
 
-        // opening connection
-        await client.connect();
+    // opening connection
+    await client.connect();
 
-        for (let i = 0; i < guild_membersID.length; i++) {
+    for (let i = 0; i < guild_membersID.length; i++) {
 
-        var query = `
+      var query = `
         INSERT INTO guild.discord_users("UserID", discord_tag, "timestamp")
         SELECT * FROM (SELECT ${guild_membersID[i]}, '${guild_membersTag[i]}', ${Date.now()}) AS tmp
         WHERE NOT EXISTS (
@@ -35,15 +35,15 @@ module.exports = {
         ) LIMIT 1;
         `
         
-        const res = (await client.query(query).catch(console.error))
+      const res = (await client.query(query).catch(console.error))
               
-        }
+    }
 
-        message.channel.send(guild_membersID.length + ' Members have been cached')
+    message.channel.send(guild_membersID.length + " Members have been cached")
 
-        client.end()
+    client.end()
 
     
 
-	},
+  },
 };

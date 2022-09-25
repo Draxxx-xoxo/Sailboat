@@ -10,15 +10,14 @@ const discordClient = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Inten
 discordClient.commands = new Discord.Collection();
 require('./slash_commands')
 
-
-var commandFolders = fs.readdirSync("./src/plugins");
+const commandFolders = fs.readdirSync("./src/plugins")
 
 for (const folder of commandFolders) {
-	const commandFiles = fs.readdirSync(`./src/plugins/${folder}`).filter(file => file.endsWith('.js'));
-	for (const file of commandFiles) {
-		const command = require(`./plugins/${folder}/${file}`);
-		discordClient.commands.set(command.name, command);
-	}
+  const commandFiles = fs.readdirSync(`./src/plugins/${folder}`).filter(file => file.endsWith(".js"))
+  for (const file of commandFiles) {
+    const command = require(`./plugins/${folder}/${file}`)
+    discordClient.commands.set(command.name, command)
+  }
 }
 
 fs.readdir(resolve(__dirname, "./events/"), (err, files) => {
@@ -52,3 +51,4 @@ fs.readdir(resolve(__dirname, "./events/"), (err, files) => {
 
 discordClient.login(process.env.sailboat_token);
 
+discordClient.login(process.env.token)

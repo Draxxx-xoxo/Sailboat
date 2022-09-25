@@ -1,7 +1,7 @@
 module.exports = (discordClient) => {
-    console.log(
+  console.log(
 			
-        `[!] Username: ${discordClient.user.username}` +
+    `[!] Username: ${discordClient.user.username}` +
         `\n[!] ID: ${discordClient.user.id}` +
         `\n[!] Guild Count: ${discordClient.guilds.cache.size}` + 
         `\n[!] Commands: ${discordClient.commands.size}` +
