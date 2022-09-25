@@ -1,14 +1,14 @@
-require('dotenv').config(); 
-const fs = require('fs');
-const {Intents} = require('discord.js');
-const Discord = require('discord.js');
-const functions = require('./handlers/common_functions')
+require("dotenv").config(); 
+const fs = require("fs");
+const {Intents} = require("discord.js");
+const Discord = require("discord.js");
+const functions = require("./handlers/common_functions")
 const { resolve } = require("path");
-const yaml = require('js-yaml');
-const Log = require('./handlers/logging');
+const yaml = require("js-yaml");
+const Log = require("./handlers/logging");
 const discordClient = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]});
 discordClient.commands = new Discord.Collection();
-require('./slash_commands')
+require("./slash_commands")
 
 const commandFolders = fs.readdirSync("./src/plugins")
 
@@ -21,15 +21,15 @@ for (const folder of commandFolders) {
 }
 
 fs.readdir(resolve(__dirname, "./events/"), (err, files) => {
-	if (err) return console.error;
-	files.forEach((file) => {
-		if (!file.endsWith(".js")) return;
-		if(file == 'logging_events.js') return;
-		const evt = require(`./events/${file}`);
-		let evtName = file.split(".")[0];
+  if (err) return console.error;
+  files.forEach((file) => {
+    if (!file.endsWith(".js")) return;
+    if(file == "logging_events.js") return;
+    const evt = require(`./events/${file}`);
+    let evtName = file.split(".")[0];
 
-		discordClient.on(evtName, evt.bind(null, discordClient));
-	});
+    discordClient.on(evtName, evt.bind(null, discordClient));
+  });
 	
 });
 

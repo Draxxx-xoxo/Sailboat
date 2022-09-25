@@ -80,26 +80,26 @@ module.exports = {
         WHERE "id" = ${report_id} AND "guild_id" = ${button.guild.id}
         RETURNING *
         `
-        return query
-    },
-    async rolelevel(guildid) {
-        const doc = await pg_table(guildid);
-        return doc.plugins.level
-    },
-    async censor_check(guildid){
-        const doc = await pg_table(guildid);
-        const checker = doc.plugins.censor
-        if(checker == undefined){
-            return false
-        }
-        else {
-            return true
-        }
-    },
-
-    async super_admins(){
-        const pg = await functions.pg(`SELECT * FROM public.global_admins`);
-        const doc = pg.rows.map(user => user.user_id)
-        return doc
+    return query
+  },
+  async rolelevel(guildid) {
+    const doc = await pg_table(guildid);
+    return doc.plugins.level
+  },
+  async censor_check(guildid){
+    const doc = await pg_table(guildid);
+    const checker = doc.plugins.censor
+    if(checker == undefined){
+      return false
     }
+    else {
+      return true
+    }
+  },
+
+  async super_admins(){
+    const pg = await functions.pg("SELECT * FROM public.global_admins");
+    const doc = pg.rows.map(user => user.user_id)
+    return doc
+  }
 }
