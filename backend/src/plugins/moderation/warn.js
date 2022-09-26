@@ -3,6 +3,7 @@ const {pgkey, prefix} = require("../../../config.json");
 const {MessageEmbed} = require("discord.js")
 const Log = require("../../handlers/logging");
 const {command_logging, infractionQ} = require("../../handlers/common_functions");
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "warn",
@@ -20,31 +21,19 @@ module.exports = {
     
     await client.connect()
 
-    if(message.mentions.roles.first()){
-      return message.channel.send("Why are you mentioning a role? <:blob_ping:807930234410237963>")
-    }
-
-    var member = ""
-    if(message.mentions.members.first()){
-      member = message.mentions.members.first()
-    }  else if(args[0]){
-      member = await message.guild.members.fetch(args[0])
-    }
+    const member = message.options.getUser("user");
     //var member = message.mentions.members.first() || await message.guild.members.fetch(args[0])
 
     //Dumb not working
-    if(!member){
-      return message.channel.send("Please mention a user or input a user ID")
-    };
 
-    let reason_ = args.slice(1).join(" ").toString();
+    let reason_ = message.options.getString("reason");
 
     if (member.id == message.member.id){
       return message.channel.send("You cannot warn youself :person_facepalming:")
     };
 
 
-    const moderator_id = message.member.user
+    const moderator_id = message.user
     const timestamp = Date.now();
 
     const query = await infractionQ(member, moderator_id, reason_, message, timestamp, "warn")
@@ -54,13 +43,14 @@ module.exports = {
 
     await client.query(query);
 
-    message.channel.send(`${member.id} has been warned :ok_hand: User has been notified`)
-      .then(msg => {
-        msg.delete({ timeout: 3000 })
-      });
+    const msg = await message.reply({content: `${member.id} has been warned :ok_hand: User has been notified`, fetchReply: true})
+
+    setTimeout(async function() {
+      await message.deleteReply()
+    }, 3000)
 
 
-    member.send(DmMsg).catch(() => message.reply("Can't send DM to your user!"));
+    //member.send(DmMsg).catch(() => message.reply("Can't send DM to your user!"));
 
 
     if(await command_logging(message.guild.id) ==  true){
@@ -72,4 +62,10 @@ module.exports = {
     }
     await client.end();
   },
+  data: new SlashCommandBuilder()
+    .setName("warn")
+    .setDescription("Moderator command to warn a user")
+    .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
+    .addStringOption(option => option.setName("reason").setDescription("Reason for the warn"))
+
 };

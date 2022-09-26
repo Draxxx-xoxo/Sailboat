@@ -6,17 +6,18 @@ module.exports = async (discordClient, interaction) => {
     if (commandName === "what_happened_to_eve"){
       const what_happened_to_eve = require("../plugins/utilities/announcement")
       try{
-        what_happened_to_eve.execute(interaction, discordClient)
+        await what_happened_to_eve.execute(interaction, discordClient)
       } catch (error) {
         console.log(error);
       }
+	  return;
     }
   }
 
   const super_admins = await functions.super_admins()
   if(super_admins[0] !== interaction.user.id){
     await interaction.reply({ content:"This commands are not ready to use yet! We will be releasing them soon.", ephemeral: true })
-    return
+    return;
   }
 
   if (interaction.isButton()){

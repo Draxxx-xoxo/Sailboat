@@ -68,7 +68,7 @@ module.exports = {
     const query = `
         INSERT INTO public.infractions(
             discord_id, discord_tag, infractions, moderator_id, moderator_tag, reason, guild_id, created_at)
-            VALUES (${member.user.id}, '${member.user.username}#${member.user.discriminator}', '${infraction}', ${moderator_id.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${message.guild.id}, '${moment().format()}'); 
+            VALUES (${member.id}, '${member.username}#${member.discriminator}', '${infraction}', ${moderator_id.id}, '${moderator_id.username}#${moderator_id.discriminator}', '${reason_}', ${message.guild.id}, '${moment().format()}'); 
         `
 
     return query

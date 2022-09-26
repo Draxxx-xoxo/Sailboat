@@ -7,13 +7,13 @@ module.exports = {
   user: ["716206954313285713"],
   execute: async (message, client) => {
     try{
-      var result = message.content.split(" ").slice(1).join(" ")
+      const result = message.options.getString("code")
       let evaled = eval(result);
-      message.channel.send("```"+ evaled + "```")
+      await message.reply({content: "```"+ evaled + "```", ephemeral: true})
     }
     catch(error){
       console.log(error);
-      message.channel.send("```"+ error + "```");
+      message.reply({ cotent: "```"+ error + "```", ephemeral: true});
     }
   },
   data: new SlashCommandBuilder()
