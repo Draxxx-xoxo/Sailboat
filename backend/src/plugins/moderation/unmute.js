@@ -4,32 +4,16 @@ const {MessageEmbed} = require("discord.js");
 const functions = require("../.././handlers/common_functions");
 const Log = require("../../handlers/logging");
 const {command_logging} = require("../../handlers/common_functions");
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "unmute",
   category: "botinfo",
   description: "Returns bot and API latency in milliseconds.",
-  execute: async (message, args, discordclient) => {
+  execute: async (message, discordclient) => {
                         
-    if(message.mentions.roles.first()){
-      return message.channel.send("Why are you mentioning a role? <:blob_ping:807930234410237963>")
-    }
-
-    var member = ""
-    if(message.mentions.members.first()){
-      member = message.mentions.members.first()
-    }  else if(args[0]){
-      member = await message.guild.members.fetch(args[0])
-    }
+    var member = message.options.getUser("user");
         
-    //Dumb not working
-    if(!member){
-      return message.channel.send("Please mention a user or input a user ID")
-    };
-
-    let reason_ = args.slice(1).join(" ").toString();
-                
-    
 
     if (member.id == message.member.user.id){
       return message.channel.send("You cannot mute yourself :person_facepalming:")
@@ -53,31 +37,39 @@ module.exports = {
       return message.channel.send("Please add a mute role")
     }
 
-    if(member.roles.cache.has(role_id) == false){
-      return message.channel.send("That person is not muted")
+    var member_ = await discordclient.guilds.cache.get(message.guild.id).members.cache.get(member.id)
+
+    if(member_.roles.cache.has(role_id) == false){
+      return message.reply("That person is not muted")
     }
 
     const embed = new MessageEmbed()
       .setTitle(`You have been unmuted in ${message.guild.name}`)
 
-    member.roles.remove(role_id)
+    member_.roles.remove(role_id)
         
     client.end()
-    message.channel.send(`${member.id} has been unmuted :ok_hand: User has been notified`)
-      .then(msg => {
-        msg.delete({ timeout: 3000 })
-      })    
+    message.reply({ content: `${member.id} has been unmuted :ok_hand: User has been notified`, fetchReply: true})
+
+    setTimeout(async function() {
+      await message.deleteReply()
+    }, 3000)
+
     discordclient.users.cache.get(member.id).send(embed).catch(() => message.reply("Can't send DM to your user!"));
 
     if(await command_logging(message.guild.id) ==  true){
       Log.Send(
 			    discordclient,
-			    `${moderator_id.username}#${moderator_id.discriminator} unmuted ${member.user.username}#${member.user.discriminator} ` + "`" + `${member.id}` + "`",
+			    `${moderator_id.username}#${moderator_id.discriminator} unmuted ${member.username}#${member.discriminator} ` + "`" + `${member.id}` + "`",
         message.guild.id
 		    );
     }
                 
     await client.end()        
-  } 
+  }, 
+  data: new SlashCommandBuilder()
+    .setName("unmute")
+    .setDescription("Moderator command to unmute a user")
+    .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
 };
     

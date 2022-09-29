@@ -2,7 +2,7 @@ const {Client} = require("pg");
 const {pgkey, prefix} = require("../../../config.json");
 const {MessageEmbed} = require("discord.js")
 const Log = require("../../handlers/logging");
-const {command_logging, infractionQ} = require("../../handlers/common_functions");
+const {command_logging, infractionQ, infraction_logging} = require("../../handlers/common_functions");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
   category: "botinfo",
   permissions:["MANAGE_MESSAGES"],
   description: "Returns bot and API latency in milliseconds.",
-  execute: async (message, args, discordclient) => {
+  execute: async (message, discordclient) => {
     const client = new Client({
       user: process.env.user,
       host: process.env.host,
@@ -29,7 +29,7 @@ module.exports = {
     let reason_ = message.options.getString("reason");
 
     if (member.id == message.member.id){
-      return message.channel.send("You cannot warn youself :person_facepalming:")
+      return message.reply("You cannot warn youself :person_facepalming:")
     };
 
 
@@ -52,8 +52,7 @@ module.exports = {
 
     //member.send(DmMsg).catch(() => message.reply("Can't send DM to your user!"));
 
-
-    if(await command_logging(message.guild.id) ==  true){
+    if(await infraction_logging(message.guild.id) ==  true){
       Log.Send(
 			    discordclient,
 			    `${moderator_id.username}#${moderator_id.discriminator} warned ${member.username}#${member.discriminator} ` + "`" + `${member.id}` + "`" + ` Reason: ${reason_ || "None"}`,

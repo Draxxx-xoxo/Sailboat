@@ -3,7 +3,7 @@ const {pgkey} = require("../../../config.json");
 const {MessageEmbed} = require("discord.js");
 const Log = require("../../handlers/logging");
 const {command_logging, infractionQ} = require("../../handlers/common_functions");
-
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "ban",
@@ -12,25 +12,14 @@ module.exports = {
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, discordclient) => {
 
-    if(message.mentions.roles.first()){
-      return message.channel.send("Why are you mentioning a role? <:blob_ping:807930234410237963>")
-    }
+    const member = message.options.getUser("user");
+    //var member = message.mentions.members.first() || await message.guild.members.fetch(args[0])
 
-    var member = ""
-    if(message.mentions.members.first()){
-      member = message.mentions.members.first()
-    }  else if(args[0]){
-      member = await message.guild.members.fetch(args[0])
-    }
-    //var member = message.mentions.users.first() || await message.guild.members.fetch(args[0])
+    let reason_ = message.options.getString("reason");
 
-    //Dumb not 
-    if(!member){
-      return message.channel.send("Please mention a user or input a user ID")
+    if (member.id == message.member.id){
+      return message.reply("You cannot warn youself :person_facepalming:")
     };
-
-
-    let reason_ = args.slice(1).join(" ").toString();
 
     const embed = new MessageEmbed()
       .setTitle(`You have been banned in ${message.guild.name}`)
@@ -71,11 +60,17 @@ module.exports = {
     if(await command_logging(message.guild.id) ==  true){
       Log.Send(
         discordclient,
-        `${moderator_id.username}#${moderator_id.discriminator} muted ${member.user.username}#${member.user.discriminator} ` + "`" + `${member.user.id}` + "`" + ` Reason: ${reason_ || "None"}`,
+        `${moderator_id.username}#${moderator_id.discriminator} muted ${member.username}#${member.discriminator} ` + "`" + `${member.id}` + "`" + ` Reason: ${reason_ || "None"}`,
         message.guild.id
       );
     }
         
     await client.end();  
   },
+  data: new SlashCommandBuilder()
+    .setName("ban")
+    .setDescription("Moderator command to ban a user")
+    .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
+    .addStringOption(option => option.setName("reason").setDescription("Reason for the warn"))
+
 };

@@ -14,9 +14,9 @@ for (const file of adminCommandFolder) {
 }
 
 
-const rest = new REST({ version: "9" }).setToken(process.env.sailboat_token);
+const rest = new REST({ version: "9" }).setToken(process.env.sailboat_canary_token);
 
-rest.put(Routes.applicationGuildCommands("746743807042912336", "734281219839230022"), { body: admin_commands })
+rest.put(Routes.applicationGuildCommands("952099325142528040", "734281219839230022"), { body: admin_commands })
   .then(() => console.log("Successfully registered admin commands."))
   .catch(console.error);
 
@@ -33,6 +33,6 @@ for (const folder of commandFolders) {
   }
 }
 
-rest.put(Routes.applicationCommands("746743807042912336"),{ body: globalCommands },)
+rest.put(Routes.applicationCommands("952099325142528040"),{ body: globalCommands },)
   .then(() => console.log("Successfully registered global commands."))
   .catch(console.error);

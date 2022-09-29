@@ -7,5 +7,5 @@ module.exports = (discordClient) => {
         `\n[!] Commands: ${discordClient.commands.size}` +
         "\n[!] Bot is online"
   )
-  discordClient.user.setStatus("idle");
+  discordClient.user.setStatus("offline");
 };
