@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "message_logs",
+  "info": {
+    "singularName": "message-log",
+    "pluralName": "message-logs",
+    "displayName": "MessageLog",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "messageId": {
+      "type": "biginteger"
+    },
+    "channelId": {
+      "type": "biginteger"
+    },
+    "authorId": {
+      "type": "biginteger"
+    },
+    "authorTag": {
+      "type": "text"
+    },
+    "content": {
+      "type": "text"
+    },
+    "embed": {
+      "type": "json"
+    },
+    "sticker": {
+      "type": "json"
+    },
+    "attachments": {
+      "type": "text"
+    },
+    "guildId": {
+      "type": "biginteger"
+    }
+  }
+}
