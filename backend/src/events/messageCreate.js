@@ -1,10 +1,45 @@
 const functions = require('../handlers/common_functions')
 const Log = require('../handlers/logging')
+const { pg } = require("../handlers/pg")
+var jsonFormat = require("json-format");
+
 module.exports = async (discordClient, message) => {
+	let embed = message.embeds[0] || null
+		
+	if(embed == null){
+		embed = null
+	}
+	else{
+		embed = jsonFormat(message.embeds)
+	}
+
+	let stickers = message.stickers.toJSON() || null
+	
+	if(stickers == null){
+		stickers = null
+	}
+	else{
+		stickers = jsonFormat(stickers)
+	}
+
+	let attachments = message.attachments.toJSON() || null
+	
+	if(attachments == null){
+		attachments = null
+	}
+	else{
+		attachments = jsonFormat(attachments)
+	}
+
+	pg(`
+	INSERT INTO public.message_logs(
+		message_id, channel_id, author_id, author_tag, content, guild_id, attachments, sticker, embed)
+		VALUES (${message.id}, '${message.channel.id}', '${message.author.id}', '${message.author.username}#${message.author.discriminator}', '${message.content}', ${message.guild.id}, '${attachments}', '${stickers}', '${embed}');
+	
+	`)
     const prefix = await functions.getPrefix(message.guild.id)
 	const censor = require('../auto_mod/censor')
 	const plugin_check = await functions.censor_check(message.guild.id);
-	console.log(plugin_check)
 	if(plugin_check == true && !message.author.bot){
 		censor.execute(message, discordClient)
 	}

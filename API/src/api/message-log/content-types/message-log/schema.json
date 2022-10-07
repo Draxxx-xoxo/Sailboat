@@ -33,11 +33,11 @@
     "sticker": {
       "type": "json"
     },
-    "attachments": {
-      "type": "text"
-    },
     "guildId": {
       "type": "biginteger"
+    },
+    "attachments": {
+      "type": "json"
     }
   }
 }
