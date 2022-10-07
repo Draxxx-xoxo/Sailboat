@@ -5,10 +5,9 @@ module.exports = {
 	category: "botinfo",
 	description: "Returns bot and API latency in milliseconds.",
 	execute: async (message, args, client) => {
-        var member = message.mentions.users.first() || await message.guild.members.fetch(args[0]) || message.member.user
-    
+        var member = message.mentions.users.first() || await message.guild.members.fetch(args[0] || message.author.id)  
         const userinfo_embed = new MessageEmbed()
-        .setAuthor({name: `User infomation for ${member.user.username.toString()}`, iconURL: member.displayAvatarURL()})
+        .setAuthor({name: `User infomation for ${member.user.username}`, iconURL: member.displayAvatarURL()})
         .setThumbnail(member.displayAvatarURL())
         .addFields(
             { name: 'Profile', value: '<@!'+ member.id +'>', inline: true},
