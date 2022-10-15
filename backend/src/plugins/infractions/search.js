@@ -2,19 +2,17 @@ const {Client} = require("pg");
 const {pgkey} = require("../../../config.json");
 const {MessageEmbed, MessageActionRow, MessageSelectMenu } = require("discord.js")
 const functions = require("../../handlers/common_functions")
+const { SlashCommandBuilder } = require("@discordjs/builders");
 module.exports = {
-  name: "inf_search",
+  name: "infraction_search",
   category: "botinfo",
   aliases:["infraction search","infraction_search", "inf search"],
   permissions:["MANAGE_GUILD","ADMINISTRATOR"],
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, discordclient) => {
-    var member = ""
-    if(message.mentions.members.first()){
-      member = message.mentions.members.first()
-    }  else if(args[0]){
-      member = await message.guild.members.fetch(args[0])
-    }
+
+    const member = message.options.getUser("user");
+
     const client = new Client({
       user: process.env.user,
       host: process.env.host,
@@ -23,8 +21,8 @@ module.exports = {
       port: process.env.port,
     });
     await client.connect();
-    const query = `SELECT * FROM public.infractions WHERE discord_id = ${member.user.id} AND guild_id = ${message.guild.id} ORDER BY id DESC`
-    const totalquery = `SELECT * FROM public.infractions WHERE discord_id = ${member.user.id} AND guild_id = ${message.guild.id} ORDER BY id`
+    const query = `SELECT * FROM public.infractions WHERE discord_id = ${member.id} AND guild_id = ${message.guild.id} ORDER BY id DESC`
+    const totalquery = `SELECT * FROM public.infractions WHERE discord_id = ${member.id} AND guild_id = ${message.guild.id} ORDER BY id`
     var res = (await client.query(query).catch(console.error)).rows
     var rowcount = (await client.query(query).catch(console.error)).rowCount
     var totalrowcount = (await client.query(totalquery).catch(console.error)).rowCount
@@ -37,7 +35,7 @@ module.exports = {
       var reason = reason_arrary.push(res[i].reason)
     }
     if(rowcount === 0){
-      message.channel.send("This user does not have any infractions for this server")
+      message.reply("This user does not have any infractions for this server")
       return
     }
     var report_arrary = [];
@@ -81,17 +79,21 @@ module.exports = {
           .setPlaceholder("Nothing selected")
           .addOptions(options),
       );
-    var prefix = await functions.getPreix(message.guild.id)
+    //var prefix = await functions.getPreix(message.guild.id)
     var inf_search = new MessageEmbed()
-      .setAuthor({name: `Infractions Overview for ${member.user.username.toString()}`, iconURL: member.user.displayAvatarURL()})
-      .setDescription("Use `" + prefix + "inf {infraction_no}` to see more information about an individual infraction")
-      .setThumbnail(member.user.displayAvatarURL())
+      .setAuthor({name: `Infractions Overview for ${member.username.toString()}`, iconURL: member.displayAvatarURL()})
+      .setDescription("Use the Select Menu to see for infraction details")
+      .setThumbnail(member.displayAvatarURL())
       .addFields(
         { name: "Infractions", value: report_arrary.join("\n"), inline: false},
         { name: "Total Infractions", value: totalrowcount.toString(), inline: true },
         { name: `Joined ${message.member.guild.name.toString()}`, value: new Date (member.joinedTimestamp).toLocaleString(), inline: true },
       )
-    message.channel.send({embeds: [inf_search], components: [row]}) 
+    message.reply({embeds: [inf_search], components: [row]}) 
     client.end();
-  }
+  },
+  data: new SlashCommandBuilder()
+  .setName("infraction_search")
+  .setDescription("Lookup for member infractions")
+  .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
 };  

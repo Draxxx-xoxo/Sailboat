@@ -1,18 +1,17 @@
 const {Client} = require("pg");
 const {pgkey} = require("../../../config.json");
 const {MessageEmbed} = require("discord.js")
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
-  name: "inf",
+  name: "infraction",
   category: "botinfo",
   aliases:["infraction","inf_search","case"],
   permissions:["MANAGE_GUILD","ADMINISTRATOR"],
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, discordclient) => {
 
-    const inf_id = args[0];
-
-    if(!inf_id) return message.channel.send("Please input a infraction id")
+    const inf_id = message.options.getNumber('id');
   
     const client = new Client({
       user: process.env.user,
@@ -41,9 +40,13 @@ module.exports = {
         {name: "Reason", value: res.reason || "No Reason"}
       )
       .setFooter({text: "Infraction was created on " + res.created_at})
-    await message.channel.send({embeds: [embed]})
+    await message.reply({embeds: [embed]})
     
     client.end();
         
-  }
+  },
+  data: new SlashCommandBuilder()
+  .setName("infraction")
+  .setDescription("Lookup for an infraction")
+	.addNumberOption(option => option.setName('id').setDescription('Search for a specific infraction').setRequired(true))
 };  
