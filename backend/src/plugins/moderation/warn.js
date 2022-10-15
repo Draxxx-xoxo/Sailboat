@@ -50,7 +50,7 @@ module.exports = {
     }, 3000)
 
 
-    //member.send(DmMsg).catch(() => message.reply("Can't send DM to your user!"));
+    member.send(DmMsg).catch(() => message.reply("Can't send DM to your user!"));
 
     if(await infraction_logging(message.guild.id) ==  true){
       Log.Send(

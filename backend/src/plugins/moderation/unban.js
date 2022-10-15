@@ -6,14 +6,15 @@ const {command_logging, infractionQ} = require("../../handlers/common_functions"
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
-  name: "ban",
+  name: "unban",
   category: "botinfo",
   permissions:["BAN_MEMBERS"],
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, discordclient) => {
 
     const member = message.options.getUser("user");
-  
+    //var member = message.mentions.members.first() || await message.guild.members.fetch(args[0])
+
     let reason_ = message.options.getString("reason");
 
     if (member.id == message.member.id){
@@ -41,17 +42,15 @@ module.exports = {
    
     const moderator_id = message.member.user
     const timestamp = Date.now()
-    const query = await infractionQ(member, moderator_id, reason_, message, timestamp, "ban")
+    //const query = await infractionQ(member, moderator_id, reason_, message, timestamp, "unban")
 
 
-    //member.send('embed').catch(() => console.log("Can't send DM to your user!"));
-    message.guild.members.ban(member, {reason: reason_})
+    message.guild.members.unban(member).catch(console.error);
     //member.ban({reason: reason_})
         
-    await client.query(query);
+   // await client.query(query);
 
-        
-    message.reply({content: `${member.id} has been banned :ok_hand: User has been notified`, fetchReply: true})
+    message.reply({content: `${member.id} has been unbanned :ok_hand:`, fetchReply: true})
 
     setTimeout(async function() {
       await message.deleteReply()
@@ -60,7 +59,7 @@ module.exports = {
     if(await infraction_logging(message.guild.id) ==  true){
       Log.Send(
         discordclient,
-        `${moderator_id.username}#${moderator_id.discriminator} banned ${member.username}#${member.discriminator} ` + "`" + `${member.id}` + "`" + ` Reason: ${reason_ || "None"}`,
+        `${moderator_id.username}#${moderator_id.discriminator} unbanned ${member.username}#${member.discriminator} ` + "`" + `${member.id}` + "`" + ` Reason: ${reason_ || "None"}`,
         message.guild.id
       );
     }
@@ -68,9 +67,8 @@ module.exports = {
     await client.end();  
   },
   data: new SlashCommandBuilder()
-    .setName("ban")
+    .setName("unban")
     .setDescription("Moderator command to ban a user")
     .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
     .addStringOption(option => option.setName("reason").setDescription("Reason for the warn"))
-
 };
