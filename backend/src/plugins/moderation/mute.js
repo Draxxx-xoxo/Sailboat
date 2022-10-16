@@ -8,6 +8,7 @@ const {command_logging, infractionQ} = require("../../handlers/common_functions"
 module.exports = {
   name: "mute",
   category: "botinfo",
+  enable: false,
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, discordclient) => {
 

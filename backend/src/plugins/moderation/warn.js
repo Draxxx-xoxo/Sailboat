@@ -9,6 +9,7 @@ module.exports = {
   name: "warn",
   category: "botinfo",
   permissions:["MANAGE_MESSAGES"],
+  enable: true,
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, discordclient) => {
     const client = new Client({
@@ -50,7 +51,7 @@ module.exports = {
     }, 3000)
 
 
-    member.send(DmMsg).catch(() => message.reply("Can't send DM to your user!"));
+    //member.send(DmMsg).catch(() => message.reply("Can't send DM to your user!"));
 
     if(await infraction_logging(message.guild.id) ==  true){
       Log.Send(

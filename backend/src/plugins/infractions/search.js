@@ -7,6 +7,7 @@ module.exports = {
   name: "infraction_search",
   category: "botinfo",
   aliases:["infraction search","infraction_search", "inf search"],
+  enable: true,
   permissions:["MANAGE_GUILD","ADMINISTRATOR"],
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, discordclient) => {

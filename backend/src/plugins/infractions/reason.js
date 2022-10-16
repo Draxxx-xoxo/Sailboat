@@ -6,6 +6,7 @@ module.exports = {
   name: "reason",
   category: "botinfo",
   aliases:["inf_reason"],
+  enable: false,
   permissions:["MANAGE_GUILD","ADMINISTRATOR"],
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, discordclient) => {

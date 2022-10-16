@@ -1,24 +1,6 @@
 const functions = require("../handlers/common_functions")
 
 module.exports = async (discordClient, interaction) => {
-  if(interaction.isCommand()){
-    const { commandName } = interaction;
-    if (commandName === "what_happened_to_eve"){
-      const what_happened_to_eve = require("../plugins/utilities/announcement")
-      try{
-        await what_happened_to_eve.execute(interaction, discordClient)
-      } catch (error) {
-        console.log(error);
-      }
-	  return;
-    }
-  }
-
-  const super_admins = await functions.super_admins()
-  if(super_admins[0] !== interaction.user.id){
-    await interaction.reply({ content:"This commands are not ready to use yet! We will be releasing them soon.", ephemeral: true })
-    return;
-  }
 
   if (interaction.isButton()){
     if(interaction.component.customId == "yes" || "no"){
@@ -54,12 +36,28 @@ module.exports = async (discordClient, interaction) => {
   if(interaction.isCommand()){
 
     const { commandName } = interaction;
-    if (commandName === "what_happened_to_eve") return;
-    const command = discordClient.commands.get(commandName) 
+    const command = discordClient.commands.get(commandName)
+    const commandEnabled = command.enable || false
+    const super_admins = await functions.super_admins()
+
+    if(commandEnabled == false){
+      if(super_admins[0] !== interaction.user.id){
+        await interaction.reply({ content:"This commands are not ready to use yet! We will be releasing them soon.", ephemeral: true })
+        return;
+      }
+    }
+    if (command.permissions) {
+      const authorPerms = interaction.channel.permissionsFor(interaction.user);
+      if (!authorPerms || !authorPerms.has(command.permissions)) {
+        return interaction.reply({content: "You cannot use the " + command.name + " command", ephemeral: true});
+      }
+    }
+
     try{
       await command.execute(interaction, discordClient)
     } catch (error) {
       console.log(error);
     }
+  
   }
 };

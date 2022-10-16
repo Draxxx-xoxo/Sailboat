@@ -8,6 +8,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 module.exports = {
   name: "unban",
   category: "botinfo",
+  enable: true,
   permissions:["BAN_MEMBERS"],
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, discordclient) => {

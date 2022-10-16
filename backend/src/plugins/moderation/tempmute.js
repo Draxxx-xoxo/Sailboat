@@ -7,6 +7,7 @@ const Log = require("../../handlers/logging");
 module.exports = {
   name: "tempmute",
   category: "botinfo",
+  enable: false,
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, discordclient) => {
     const client = new Client({

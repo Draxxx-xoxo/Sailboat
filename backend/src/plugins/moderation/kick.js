@@ -10,6 +10,7 @@ module.exports = {
   name: "kick",
   category: "botinfo",
   permissions:["KICK_MEMBERS"],
+  enable: true,
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, discordclient) => {
 

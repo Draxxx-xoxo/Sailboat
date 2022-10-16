@@ -9,6 +9,7 @@ module.exports = {
   name: "inf_destroy",
   category: "botinfo",
   aliases:["infraction_destroy", "inf_destroy","inf_delete"],
+  enable: false,
   permissions:["MANAGE_GUILD","ADMINISTRATOR"],
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, discordclient) => {

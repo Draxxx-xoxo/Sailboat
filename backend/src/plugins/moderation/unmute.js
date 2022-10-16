@@ -9,6 +9,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 module.exports = {
   name: "unmute",
   category: "botinfo",
+  enable: false,
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, discordclient) => {
                         

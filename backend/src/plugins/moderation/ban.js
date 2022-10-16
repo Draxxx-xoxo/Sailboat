@@ -9,6 +9,7 @@ module.exports = {
   name: "ban",
   category: "botinfo",
   permissions:["BAN_MEMBERS"],
+  enable: true,
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, discordclient) => {
 
