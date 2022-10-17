@@ -1,11 +1,20 @@
 const {MessageEmbed} = require("discord.js");
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "userinfo",
   category: "botinfo",
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, client) => {
-    var member = message.mentions.users.first() || await message.guild.members.fetch(args[0]) || message.member.user
+    const user = message.options.getUser('user');        
+    var member = ""
+
+    if(user){
+      member = await message.guild.members.fetch(user.id)
+    }
+    else{
+      member =  await message.guild.members.fetch(message.user.id)
+    }
     
     const userinfo_embed = new MessageEmbed()
       .setAuthor({name: `User infomation for ${member.user.username.toString()}`, iconURL: member.displayAvatarURL()})
@@ -18,6 +27,10 @@ module.exports = {
         { name: `Joined ${message.member.guild.name}`, value: new Date (member.joinedTimestamp).toLocaleString(), inline: true },
       )
     
-    message.channel.send({embeds: [userinfo_embed]})
+    message.reply({embeds: [userinfo_embed]})
   },
+  data: new SlashCommandBuilder()
+  .setName("userinfo")
+  .setDescription("Returns information about the user in the server")
+  .addUserOption(option => option.setName("user").setDescription("The user to get info about"))
 };

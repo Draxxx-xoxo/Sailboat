@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "serverinfo",
@@ -6,9 +7,7 @@ module.exports = {
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, client) => {
 
-    const guildid = args[0]
-
-    const guild = await client.guilds.fetch(guildid) || message.guild
+    const guild = message.guild
 
     const serverinfo_embed = new MessageEmbed()
       .setAuthor({ name: guild.name.toString(), iconURL: guild.iconURL() })
@@ -25,6 +24,9 @@ module.exports = {
         { name: "Server Creation", value: new Date(guild.createdTimestamp).toLocaleString() },
       )
 
-    message.channel.send({ embeds: [serverinfo_embed] })
+    message.reply({ embeds: [serverinfo_embed] })
   },
+  data: new SlashCommandBuilder()
+  .setName("serverinfo")
+  .setDescription("Returns information about the server")
 };
