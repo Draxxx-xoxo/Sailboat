@@ -49,4 +49,4 @@ fs.readdir(resolve(__dirname, "./events/"), (err, files) => {
 
 
 
-discordClient.login(process.env.sailboat_canary_token);
+discordClient.login(process.env.sailboat_token);
