@@ -5,7 +5,7 @@ module.exports = {
   name: "avatar",
   category: "botinfo",
   description: "Returns bot and API latency in milliseconds.",
-  enable: false,
+  enable: true,
   execute: async (message, client) => {
     const user = message.options.getUser("user") || message.user;
     const avatarEembed = new MessageEmbed()

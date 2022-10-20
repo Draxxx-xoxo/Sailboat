@@ -4,6 +4,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 module.exports = {
   name: "userinfo",
   category: "botinfo",
+  enable: true,
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, client) => {
     const user = message.options.getUser('user');        

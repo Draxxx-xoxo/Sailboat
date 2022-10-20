@@ -8,7 +8,7 @@ module.exports = {
   name: "botinfo",
   category: "botinfo",
   description: "Returns bot and API latency in milliseconds.",
-  enable: false,
+  enable: true,
   execute: async (message, client) => {
     cpu(process.pid, async () => {
       const duration = moment
