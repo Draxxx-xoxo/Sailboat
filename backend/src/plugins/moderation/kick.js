@@ -12,7 +12,7 @@ module.exports = {
   permissions:["KICK_MEMBERS"],
   enable: true,
   description: "Returns bot and API latency in milliseconds.",
-  execute: async (message, args, discordclient) => {
+  execute: async (message, discordclient) => {
 
     const member = message.options.getUser("user");
   

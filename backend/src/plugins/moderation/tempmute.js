@@ -9,7 +9,7 @@ module.exports = {
   category: "botinfo",
   enable: false,
   description: "Returns bot and API latency in milliseconds.",
-  execute: async (message, args, discordclient) => {
+  execute: async (message, discordclient) => {
     const client = new Client({
       user: process.env.user,
       host: process.env.host,

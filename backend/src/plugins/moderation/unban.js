@@ -11,7 +11,7 @@ module.exports = {
   enable: true,
   permissions:["BAN_MEMBERS"],
   description: "Returns bot and API latency in milliseconds.",
-  execute: async (message, args, discordclient) => {
+  execute: async (message, discordclient) => {
 
     const member = message.options.getUser("user");
     //var member = message.mentions.members.first() || await message.guild.members.fetch(args[0])

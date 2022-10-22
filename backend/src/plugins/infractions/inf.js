@@ -10,7 +10,7 @@ module.exports = {
   enable: true,
   permissions:["MANAGE_GUILD","ADMINISTRATOR"],
   description: "Returns bot and API latency in milliseconds.",
-  execute: async (message, args, discordclient) => {
+  execute: async (message, discordclient) => {
 
     const inf_id = message.options.getNumber('id');
   

@@ -10,7 +10,7 @@ module.exports = {
   category: "botinfo",
   enable: false,
   description: "Returns bot and API latency in milliseconds.",
-  execute: async (message, args, discordclient) => {
+  execute: async (message, discordclient) => {
 
                         
     if(message.mentions.roles.first()){
