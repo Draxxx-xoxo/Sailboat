@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "configurator_v1s",
+  "info": {
+    "singularName": "configurator-v1",
+    "pluralName": "configurator-v1s",
+    "displayName": "Configurator V1",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "guildId": {
+      "type": "biginteger"
+    },
+    "muteRole": {
+      "type": "biginteger"
+    },
+    "report_user": {
+      "type": "boolean",
+      "default": false
+    },
+    "reportUserLoggingChannel": {
+      "type": "biginteger"
+    },
+    "loggingChannel": {
+      "type": "biginteger"
+    },
+    "reportLogging": {
+      "type": "boolean",
+      "default": false
+    },
+    "commandLogging": {
+      "type": "boolean",
+      "default": false
+    },
+    "infractionLogging": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
