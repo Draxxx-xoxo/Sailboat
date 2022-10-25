@@ -53,4 +53,27 @@ module.exports = {
 
     return(buttons)
   },
+
+  async configurationbuttons(disabled1, disabled2, disabled3) {
+    const buttons = new MessageActionRow()
+      .addComponents(
+        new MessageButton()
+          .setCustomId("logging")
+          .setLabel("Logging")
+          .setDisabled(disabled1)
+          .setStyle("PRIMARY"),
+        new MessageButton()
+          .setCustomId("reporting")
+          .setLabel("Reporting")
+          .setDisabled(disabled2)
+          .setStyle("PRIMARY"),
+        new MessageButton()
+          .setCustomId("mutes")
+          .setLabel("Mutes")
+          .setDisabled(disabled3)
+          .setStyle("PRIMARY"),
+      );
+
+    return(buttons)
+  }
 }
