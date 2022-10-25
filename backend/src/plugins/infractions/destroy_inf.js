@@ -3,18 +3,19 @@ const {pgkey} = require("../../../config.json");
 const {MessageEmbed} = require("discord.js")
 const {destroyinf} = require("../../handlers/common_buttons")
 const { MessageActionRow, MessageButton } = require("discord.js");
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 
 module.exports = {
-  name: "inf_destroy",
+  name: "destroy_infraction",
   category: "botinfo",
   aliases:["infraction_destroy", "inf_destroy","inf_delete"],
-  enable: false,
+  enable: true,
   permissions:["MANAGE_GUILD","ADMINISTRATOR"],
   description: "Returns bot and API latency in milliseconds.",
-  execute: async (message, args, discordclient) => {
+  execute: async (message, discordclient) => {
 
-    const inf_id = args[0];
+    const inf_id = message.options.getNumber('id');
   
     const client = new Client({
       user: process.env.user,
@@ -23,10 +24,6 @@ module.exports = {
       password: process.env.passwd,
       port: process.env.port,
     });
-
-    if(!inf_id){
-      return message.channel.send("Please enter a infraction to delete")
-    }
               
     // opening connection
     await client.connect();
@@ -35,7 +32,7 @@ module.exports = {
        
     const res = (await client.query(query).catch(console.error)).rows[0]
 
-    if(res == undefined) return message.channel.send("This infraction does not exsist on this server")
+    if(res == undefined) return message.reply("This infraction does not exsist on this server")
 
     //const timestamp = `${res.timestamp}` || ''
 
@@ -55,7 +52,7 @@ module.exports = {
     const buttons = await destroyinf(false)
 
 
-    message.channel.send({content: "Are you sure you want to delete this infraction? Click on `Yes` if you wish to procced", components:[buttons], embeds:[embed]})
+    message.reply({content: "Are you sure you want to delete this infraction? Click on `Yes` if you wish to procced", components:[buttons], embeds:[embed]})
         
     client.end();
         
@@ -81,8 +78,6 @@ module.exports = {
       const delete_query = `DELETE FROM public.infractions WHERE id = ${inf_id} AND guild_id = ${button.guild.id}`
       const res = await client.query(delete_query).catch(console.error)
 
-      console.log(res)
-
       button.reply("#" + inf_id + " has been deleted");
       button.message.edit({
         components:[buttons]
@@ -97,6 +92,9 @@ module.exports = {
         components:[buttons]
       })
     }
-
-  }
+  },
+  data: new SlashCommandBuilder()
+  .setName("destroy_infraction")
+  .setDescription("Destroy an infraction")
+	.addNumberOption(option => option.setName('id').setDescription('Delete a specific infraction').setRequired(true))
 };  

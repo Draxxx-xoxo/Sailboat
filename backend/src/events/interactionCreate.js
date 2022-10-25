@@ -3,7 +3,7 @@ const functions = require("../handlers/common_functions")
 module.exports = async (discordClient, interaction) => {
 
   if (interaction.isButton()){
-    if(interaction.component.customId == "yes" || "no"){
+    if(interaction.component.customId == "yes" || interaction.component.customId.toLowerCase() == "no"){
       const destroy_infs = require("../plugins/infractions/destroy_inf")
 
       try{
@@ -12,8 +12,7 @@ module.exports = async (discordClient, interaction) => {
         console.log(error);
       }
     }
-
-    if(interaction.component.customId.toLowerCase() == "warn" || "mute" || "ban" || "kick" || "deny"){
+    if(interaction.component.customId.toLowerCase() == "warn" || interaction.component.customId.toLowerCase() == "mute" || interaction.component.customId.toLowerCase()== "ban" || interaction.component.customId.toLowerCase() == "kick" || interaction.component.customId.toLowerCase() =="deny"){
       const report_buttons = require("../plugins/report/report_buttons") 
 
       try{
