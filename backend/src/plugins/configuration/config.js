@@ -34,8 +34,23 @@ module.exports = {
     .setDescription('**Which configuration would you like to change?**\n- Logging\n- Reporting\n- Mutes\n*Others are still in development*')
 
     const button = await buttons.configurationbuttons(false, false, false)
-    await message.reply({ embeds: [configuator], components: [button] })
-    
+
+    var backId = ''
+
+    if(!message.component){
+        backId = null
+    } else {
+        backId = message.component.customId.toLowerCase()
+    }
+
+    if(backId == "back"){
+      await message.message.edit({ embeds: [configuator], components: [button] })
+      message.deferUpdate()
+    }
+    else{
+      await message.reply({ embeds: [configuator], components: [button] })
+    }
+
     client.end()
   },
   data: new SlashCommandBuilder()

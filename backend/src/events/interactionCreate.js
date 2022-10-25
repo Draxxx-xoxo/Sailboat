@@ -5,7 +5,6 @@ module.exports = async (discordClient, interaction) => {
   if (interaction.isButton()){
     if(interaction.component.customId == "yes" || interaction.component.customId.toLowerCase() == "no"){
       const destroy_infs = require("../plugins/infractions/destroy_inf")
-
       try{
         destroy_infs.button(interaction, discordClient)
       } catch (error) {
@@ -20,6 +19,51 @@ module.exports = async (discordClient, interaction) => {
       } catch (error) {
         console.log(error);
       }
+    }
+    if(interaction.component.customId.toLowerCase() == "logging" || interaction.component.customId.toLowerCase() == "reporting" || interaction.component.customId.toLowerCase() == "mutes"){
+      const config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
+
+      try{
+        config_buttons.logging(interaction, discordClient)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if(interaction.component.customId.toLowerCase() == "back"){
+      const backbutton = require("../plugins/configuration/config")
+
+      try{
+         backbutton.execute(interaction, discordClient)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if(interaction.component.customId.toLowerCase() == "setup"){
+      const config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
+
+      try{
+        config_buttons.setup1(interaction, discordClient)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if(interaction.component.customId.toLowerCase() == "enable" || interaction.component.customId.toLowerCase() == "disable"){
+      const config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
+
+      try{
+        config_buttons.setup2(interaction, discordClient)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  if(interaction.isModalSubmit()){
+    const config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
+    try{
+      config_buttons.setup3(interaction, discordClient)
+    } catch (error) {
+      console.log(error);
     }
   }
 

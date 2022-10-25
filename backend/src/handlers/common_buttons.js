@@ -75,5 +75,46 @@ module.exports = {
       );
 
     return(buttons)
+  },
+  async setupbutton(disabled1, disabled2, disabled3) {
+    const buttons = new MessageActionRow()
+      .addComponents(
+        new MessageButton()
+          .setCustomId("setup")
+          .setLabel("Edit")
+          .setDisabled(disabled1)
+          .setStyle("PRIMARY"),
+          new MessageButton()
+          .setCustomId("Back")
+          .setLabel("Back")
+          .setDisabled(disabled2)
+          .setStyle("PRIMARY"),
+          new MessageButton()
+          .setCustomId("update")
+          .setLabel("Update")
+          .setDisabled(disabled3)
+          .setStyle("PRIMARY"),
+      );
+
+    return(buttons)
+  },
+  async setupbutton1(disabled) {
+    const buttons = new MessageActionRow()
+      .addComponents(
+        new MessageButton()
+          .setCustomId("enable")
+          .setLabel("Enable")
+          .setDisabled(disabled)
+          .setStyle("PRIMARY"),
+          new MessageButton()
+          .setCustomId("disable")
+          .setLabel("Disable")
+          .setDisabled(disabled)
+          .setStyle("PRIMARY"),
+      );
+    return(buttons)
+  }, 
+  async setupbutton2(disabled){
+
   }
 }
