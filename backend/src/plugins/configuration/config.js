@@ -28,9 +28,6 @@ module.exports = {
 
     const res = await client.query(query).catch(console.error);
 
-    if(res.rowCount == 0){
-       return message.reply("There is an error fetching your configurations. Please contact support if this issue persists.")
-    }
     const configuator = new MessageEmbed()
     .setColor('ad94f2')
     .setTitle('Configurator')
@@ -38,6 +35,8 @@ module.exports = {
 
     const button = await buttons.configurationbuttons(false, false, false)
     await message.reply({ embeds: [configuator], components: [button] })
+    
+    client.end()
   },
   data: new SlashCommandBuilder()
     .setName("configurator")
