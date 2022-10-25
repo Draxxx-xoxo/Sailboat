@@ -7,6 +7,11 @@ async function pg_table(guildid){
   const doc = pg.rows[0].configuration
   return doc 
 }
+async function Newpg_table(guildid){
+  const pg = await functions.pg(`SELECT * FROM public.configurator_v1s WHERE guild_id = ${guildid}`)
+  const doc = pg.rows[0]
+  return doc 
+}
 module.exports = {
   async yamlfile(message) {
     const doc = pg_table(message.guild.id)
@@ -53,16 +58,16 @@ module.exports = {
     return doc.plugins.logging.infractions_logging
   },
   async report_pugin(guildid) {
-    const doc = await pg_table(guildid);
-    return doc.plugins.reports.report_user
+    const doc = await Newpg_table(guildid);
+    return doc.report_user
   },
   async report_logging(guildid) {
-    const doc = await pg_table(guildid);
-    return doc.plugins.logging.report_logging
+    const doc = await Newpg_table(guildid);
+    return doc.report_user
   },
   async report_logging_channel(guildid) {
-    const doc = await pg_table(guildid);
-    return doc.plugins.reports.logging_channel
+    const doc = await Newpg_table(guildid);
+    return doc.report_user_logging_channel
   },
   async infractionQ(member, moderator_id, reason_, message, timestamp, infraction) {
     const query = `

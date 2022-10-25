@@ -64,13 +64,13 @@ module.exports = {
         
     //message.author.send('Overview about report').catch(() => message.reply("Can't send DM to your user!"));;
 
-    if(await report_logging(message.guild.id) ==  true){
+    /*if(await report_logging(message.guild.id) ==  true){
       Log.Send(
         discordclient,
         `${message.user.tag} reported ${member.user.tag}` + "`" + `${member.user.id}` + "`" + ` Reason: ${reason_ || "None"}`,
         message.guild.id
       );
-            
+    }*/
       const reportchannel = await report_logging_channel(message.guild.id);
 
       const report_buttons = await reportbuttons(false)
@@ -81,7 +81,6 @@ module.exports = {
         components: [report_buttons],
         embeds: [embed]
       });  
-    }
     await client.end();  
   },
   data: new SlashCommandBuilder()
