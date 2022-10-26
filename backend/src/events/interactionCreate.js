@@ -4,7 +4,7 @@ module.exports = async (discordClient, interaction) => {
 
   if (interaction.isButton()){
     if(interaction.component.customId == "yes" || interaction.component.customId.toLowerCase() == "no"){
-      const destroy_infs = require("../plugins/infractions/destroy_inf")
+      var destroy_infs = require("../plugins/infractions/destroy_inf")
       try{
         destroy_infs.button(interaction, discordClient)
       } catch (error) {
@@ -12,7 +12,7 @@ module.exports = async (discordClient, interaction) => {
       }
     }
     if(interaction.component.customId.toLowerCase() == "warn" || interaction.component.customId.toLowerCase() == "mute" || interaction.component.customId.toLowerCase()== "ban" || interaction.component.customId.toLowerCase() == "kick" || interaction.component.customId.toLowerCase() =="deny"){
-      const report_buttons = require("../plugins/report/report_buttons") 
+      var report_buttons = require("../plugins/report/report_buttons") 
 
       try{
         report_buttons.execute(interaction, discordClient)
@@ -20,11 +20,29 @@ module.exports = async (discordClient, interaction) => {
         console.log(error);
       }
     }
-    if(interaction.component.customId.toLowerCase() == "logging" || interaction.component.customId.toLowerCase() == "reporting" || interaction.component.customId.toLowerCase() == "mutes"){
-      const config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
+    if(interaction.component.customId.toLowerCase() == "logging" || interaction.component.customId.toLowerCase() == "reporting"){
+      var report_config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
 
       try{
-        config_buttons.logging(interaction, discordClient)
+        report_config_buttons.report(interaction, discordClient)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if(interaction.component.customId.toLowerCase() == "mutes"){
+      var mute_config_buttons = require("../plugins/configuration/config_buttons/mute_config_buttons")
+
+      try{
+        mute_config_buttons.mute(interaction, discordClient)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if(interaction.component.customId.toLowerCase() == "setupmutes"){
+      var mute_config_buttons = require("../plugins/configuration/config_buttons/mute_config_buttons")
+
+      try{
+        mute_config_buttons.setup1(interaction, discordClient)
       } catch (error) {
         console.log(error);
       }
@@ -38,7 +56,7 @@ module.exports = async (discordClient, interaction) => {
         console.log(error);
       }
     }
-    if(interaction.component.customId.toLowerCase() == "setup"){
+    if(interaction.component.customId.toLowerCase() == "setupreport"){
       const config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
 
       try{
@@ -59,11 +77,21 @@ module.exports = async (discordClient, interaction) => {
   }
 
   if(interaction.isModalSubmit()){
-    const config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
-    try{
-      config_buttons.setup3(interaction, discordClient)
-    } catch (error) {
-      console.log(error);
+    var config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
+    if(interaction.customId == 'channelID'){
+      try{
+        config_buttons.setup3(interaction, discordClient)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if(interaction.customId == 'roleID'){
+      var config_buttons = require("../plugins/configuration/config_buttons/mute_config_buttons")
+        try{
+          config_buttons.setup2(interaction, discordClient)
+        } catch (error) {
+          console.log(error);
+        }
     }
   }
 

@@ -4,7 +4,7 @@ const buttons = require('../../../handlers/common_buttons');
 const { Modal, TextInputComponent, MessageActionRow } = require('discord.js');
 
 module.exports = {
-  logging: async (message, discordClient) => {
+  report: async (message, discordClient) => {
 
     const client = new Client({
         user: process.env.user,
@@ -33,7 +33,7 @@ module.exports = {
         reportUser = 'Off'
     }
 
-    const button = await buttons.setupbutton(false, false, false);
+    const button = await buttons.setupbutton(false, false, false, 'Report');
 
     const reporting = new MessageEmbed()
     .setColor('ad94f2')
@@ -41,7 +41,7 @@ module.exports = {
     .setDescription('This are the current configurations for the reporting system. You can change them by clicking on the buttons below.')
     .addFields(
         { name: 'Reporting', value: reportUser},
-        { name: 'Reporting Channel ID', value: res.rows[0].report_user_logging_channel || 'No channel setup'},
+        { name: 'Reporting Channel', value: message.guild.channels.cache.get(res.rows[0].report_user_logging_channel).name + ' `' + res.rows[0].report_user_logging_channel + '`'  || 'No channel setup'},
     )
 
     await message.message.edit({ embeds: [reporting], components: [button] });
@@ -50,7 +50,7 @@ module.exports = {
     client.end()
   },
   setup1: async (message, discordClient) => {
-    var button = await buttons.setupbutton(true, false, false);
+    var button = await buttons.setupbutton(true, false, false, 'Report');
 
     message.message.edit({
         components: [button]

@@ -76,11 +76,11 @@ module.exports = {
 
     return(buttons)
   },
-  async setupbutton(disabled1, disabled2, disabled3) {
+  async setupbutton(disabled1, disabled2, disabled3, config) {
     const buttons = new MessageActionRow()
       .addComponents(
         new MessageButton()
-          .setCustomId("setup")
+          .setCustomId("setup"+config)
           .setLabel("Edit")
           .setDisabled(disabled1)
           .setStyle("PRIMARY"),
@@ -114,7 +114,4 @@ module.exports = {
       );
     return(buttons)
   }, 
-  async setupbutton2(disabled){
-
-  }
 }
