@@ -39,6 +39,12 @@
     "infractionLogging": {
       "type": "boolean",
       "default": false
+    },
+    "commandLoggingChannel": {
+      "type": "biginteger"
+    },
+    "infractionLoggingChannel": {
+      "type": "biginteger"
     }
   }
 }
