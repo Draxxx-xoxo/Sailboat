@@ -64,10 +64,10 @@ module.exports = {
     client.end();
   },
   data: new SlashCommandBuilder()
-  .setName("kick")
-  .setDescription("Moderator command to kick a member")
-  .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
-  .addStringOption(option => option.setName("reason").setDescription("Reason for the warn"))
+    .setName("kick")
+    .setDescription("Moderator command to kick a member")
+    .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
+    .addStringOption(option => option.setName("reason").setDescription("Reason for the warn"))
 
 }
     

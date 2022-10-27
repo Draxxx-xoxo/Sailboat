@@ -49,7 +49,7 @@ module.exports = {
     message.guild.members.unban(member).catch(console.error);
     //member.ban({reason: reason_})
         
-   // await client.query(query);
+    // await client.query(query);
 
     message.reply({content: `${member.id} has been unbanned :ok_hand:`, fetchReply: true})
 

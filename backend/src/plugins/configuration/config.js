@@ -1,7 +1,7 @@
 const { MessageEmbed } = require("discord.js")
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const {Client} = require("pg");
-const buttons = require('../../handlers/common_buttons');
+const buttons = require("../../handlers/common_buttons");
 
 module.exports = {
   name: "configurator",
@@ -11,12 +11,12 @@ module.exports = {
   execute: async (message, discordClient) => {
 
     const client = new Client({
-        user: process.env.user,
-        host: process.env.host,
-        database: process.env.db,
-        password: process.env.passwd,
-        port: process.env.port,
-      });
+      user: process.env.user,
+      host: process.env.host,
+      database: process.env.db,
+      password: process.env.passwd,
+      port: process.env.port,
+    });
 
     await client.connect();  
 
@@ -29,18 +29,18 @@ module.exports = {
     const res = await client.query(query).catch(console.error);
 
     const configuator = new MessageEmbed()
-    .setColor('ad94f2')
-    .setTitle('Configurator')
-    .setDescription('**Which configuration would you like to change?**\n- Logging\n- Reporting\n- Mutes\n*Others are still in development*')
+      .setColor("ad94f2")
+      .setTitle("Configurator")
+      .setDescription("**Which configuration would you like to change?**\n- Logging\n- Reporting\n- Mutes\n*Others are still in development*")
 
     const button = await buttons.configurationbuttons(false, false, false)
 
-    var backId = ''
+    var backId = ""
 
     if(!message.component){
-        backId = null
+      backId = null
     } else {
-        backId = message.component.customId.toLowerCase()
+      backId = message.component.customId.toLowerCase()
     }
 
     if(backId == "back"){
