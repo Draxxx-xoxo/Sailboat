@@ -17,14 +17,14 @@ module.exports = {
   execute: async (message, discordclient) => {
 
     if(await report_pugin(message.guild.id) == false){
-      message.reply('This server is not setup to accept reports. Please contact your administrator if you believe this is an error')
+      message.reply("This server is not setup to accept reports. Please contact your administrator if you believe this is an error")
       return
     }
 
-    var member = await message.guild.members.fetch(message.options.getUser('user').id)
+    var member = await message.guild.members.fetch(message.options.getUser("user").id)
 
 
-    let reason_ = message.options.getString('reason')
+    let reason_ = message.options.getString("reason")
 
     if (member.id == message.member.id){
       message.reply({content: "You cannot report youself :person_facepalming:", fetchReply: true})
@@ -71,21 +71,21 @@ module.exports = {
         message.guild.id
       );
     }*/
-      const reportchannel = await report_logging_channel(message.guild.id);
+    const reportchannel = await report_logging_channel(message.guild.id);
 
-      const report_buttons = await reportbuttons(false)
+    const report_buttons = await reportbuttons(false)
 
-      const embed = await reportlog(res,"🟡")
+    const embed = await reportlog(res,"🟡")
      
-      message.guild.channels.cache.get(reportchannel).send({
-        components: [report_buttons],
-        embeds: [embed]
-      });  
+    message.guild.channels.cache.get(reportchannel).send({
+      components: [report_buttons],
+      embeds: [embed]
+    });  
     await client.end();  
   },
   data: new SlashCommandBuilder()
-  .setName("report")
-  .setDescription("Report a user for moderators to review")
-  .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
-  .addStringOption(option => option.setName("reason").setDescription("Reason for the report").setRequired(true))
+    .setName("report")
+    .setDescription("Report a user for moderators to review")
+    .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
+    .addStringOption(option => option.setName("reason").setDescription("Reason for the report").setRequired(true))
 };

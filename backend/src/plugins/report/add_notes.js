@@ -17,8 +17,8 @@ module.exports = {
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, discordclient) => {
 
-    const id = message.options.getNumber('id')
-    const note = message.options.getString('note')
+    const id = message.options.getNumber("id")
+    const note = message.options.getString("note")
 
     const client = new Client({
       user: process.env.user,
@@ -40,14 +40,14 @@ module.exports = {
     const res = (await client.query(query).catch(console.error))
 
     if(res.rowCount == 1){
-        message.reply({content: 'Your note was created successfully', ephemeral: true})
+      message.reply({content: "Your note was created successfully", ephemeral: true})
     }
     
     await client.end();  
   },
   data: new SlashCommandBuilder()
-  .setName("note")
-  .setDescription("Add a note to the report")
-  .addNumberOption(option => option.setName('id').setDescription('Report ID to add the note').setRequired(true))
-  .addStringOption(option => option.setName('note').setDescription('Note that you want to add to the report').setRequired(true))
+    .setName("note")
+    .setDescription("Add a note to the report")
+    .addNumberOption(option => option.setName("id").setDescription("Report ID to add the note").setRequired(true))
+    .addStringOption(option => option.setName("note").setDescription("Note that you want to add to the report").setRequired(true))
 };
