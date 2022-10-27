@@ -33,6 +33,15 @@ module.exports = {
       reportUser = "Off"
     }
 
+    var reportChannel = ""
+
+    if(message.guild.channels.cache.get(res.rows[0].report_user_logging_channel) == undefined){
+      reportChannel =" No channel setup"
+    }
+    else {
+      reportChannel = message.guild.channels.cache.get(res.rows[0].report_user_logging_channel).name + " `" + res.rows[0].report_user_logging_channel + "`" 
+    }
+
     const button = await buttons.setupbutton(false, false, false, "Report");
 
     const reporting = new MessageEmbed()
@@ -41,7 +50,7 @@ module.exports = {
       .setDescription("This are the current configurations for the reporting system. You can change them by clicking on the buttons below.")
       .addFields(
         { name: "Reporting", value: reportUser},
-        { name: "Reporting Channel", value: message.guild.channels.cache.get(res.rows[0].report_user_logging_channel).name + " `" + res.rows[0].report_user_logging_channel + "`"  || "No channel setup"},
+        { name: "Reporting Channel", value: reportChannel},
       )
 
     await message.message.edit({ embeds: [reporting], components: [button] });

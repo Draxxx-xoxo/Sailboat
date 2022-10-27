@@ -24,8 +24,6 @@ module.exports = {
       return message.reply("There is an error fetching your configurations. Please contact support if this issue persists.")
     }
 
-    var reportUser = ""
-
     const button = await buttons.setupbutton(false, false, false, "Mutes");
 
     const reporting = new MessageEmbed()
@@ -35,8 +33,7 @@ module.exports = {
       .addFields(
         { name: "Mute Role", value: message.guild.roles.cache.get(res.rows[0].mute_role).name + " `" + res.rows[0].mute_role + "`" || "No role setup"},
       )
-
-    console.log(message.guild.roles.cache.get(res.rows[0].mute_role).name)
+      
     await message.message.edit({ embeds: [reporting], components: [button] });
     message.deferUpdate()
 

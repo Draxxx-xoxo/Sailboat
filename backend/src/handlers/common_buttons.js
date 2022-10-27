@@ -90,7 +90,7 @@ module.exports = {
           .setDisabled(disabled2)
           .setStyle("PRIMARY"),
         new MessageButton()
-          .setCustomId("update")
+          .setCustomId("update"+config)
           .setLabel("Update")
           .setDisabled(disabled3)
           .setStyle("PRIMARY"),

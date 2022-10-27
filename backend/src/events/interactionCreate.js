@@ -38,6 +38,15 @@ module.exports = async (discordClient, interaction) => {
         console.log(error);
       }
     }
+    if(interaction.component.customId.toLowerCase() == "updatemutes" || interaction.component.customId.toLowerCase() == "updatereport" ){
+      var updateButton = require("../plugins/configuration/config")
+
+      try{
+        updateButton.update_button(interaction, discordClient)
+      } catch (error) {
+        console.log(error);
+      }
+    }
     if(interaction.component.customId.toLowerCase() == "back"){
       const backbutton = require("../plugins/configuration/config")
 
