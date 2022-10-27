@@ -94,7 +94,7 @@ module.exports = {
     client.end();
   },
   data: new SlashCommandBuilder()
-  .setName("infraction_search")
-  .setDescription("Lookup for member infractions")
-  .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
+    .setName("infraction_search")
+    .setDescription("Lookup for member infractions")
+    .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
 };  

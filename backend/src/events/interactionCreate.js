@@ -42,7 +42,7 @@ module.exports = async (discordClient, interaction) => {
       const backbutton = require("../plugins/configuration/config")
 
       try{
-         backbutton.execute(interaction, discordClient)
+        backbutton.execute(interaction, discordClient)
       } catch (error) {
         console.log(error);
       }
@@ -69,20 +69,20 @@ module.exports = async (discordClient, interaction) => {
 
   if(interaction.isModalSubmit()){
     var config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
-    if(interaction.customId == 'channelID'){
+    if(interaction.customId == "channelID"){
       try{
         config_buttons.setup3(interaction, discordClient)
       } catch (error) {
         console.log(error);
       }
     }
-    if(interaction.customId == 'roleID'){
+    if(interaction.customId == "roleID"){
       var config_buttons = require("../plugins/configuration/config_buttons/mute_config_buttons")
-        try{
-          config_buttons.setup2(interaction, discordClient)
-        } catch (error) {
-          console.log(error);
-        }
+      try{
+        config_buttons.setup2(interaction, discordClient)
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 

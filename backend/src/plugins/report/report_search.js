@@ -16,7 +16,7 @@ module.exports = {
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, discordclient) => {
 
-    var member = await message.guild.members.fetch(message.options.getUser('user').id)
+    var member = await message.guild.members.fetch(message.options.getUser("user").id)
 
     const client = new Client({
       user: process.env.user,
@@ -72,7 +72,7 @@ module.exports = {
     await client.end();
   },
   data: new SlashCommandBuilder()
-  .setName("report_search")
-  .setDescription("Search for a user report.")
-  .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
+    .setName("report_search")
+    .setDescription("Search for a user report.")
+    .addUserOption(option => option.setName("user").setDescription("Select a user").setRequired(true))
 };

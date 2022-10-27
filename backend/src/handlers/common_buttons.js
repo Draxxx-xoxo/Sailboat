@@ -84,12 +84,12 @@ module.exports = {
           .setLabel("Edit")
           .setDisabled(disabled1)
           .setStyle("PRIMARY"),
-          new MessageButton()
+        new MessageButton()
           .setCustomId("Back")
           .setLabel("Back")
           .setDisabled(disabled2)
           .setStyle("PRIMARY"),
-          new MessageButton()
+        new MessageButton()
           .setCustomId("update")
           .setLabel("Update")
           .setDisabled(disabled3)
@@ -106,7 +106,7 @@ module.exports = {
           .setLabel("Enable")
           .setDisabled(disabled)
           .setStyle("PRIMARY"),
-          new MessageButton()
+        new MessageButton()
           .setCustomId("disable")
           .setLabel("Disable")
           .setDisabled(disabled)

@@ -28,6 +28,6 @@ module.exports = {
     message.reply({ embeds: [serverinfo_embed] })
   },
   data: new SlashCommandBuilder()
-  .setName("serverinfo")
-  .setDescription("Returns information about the server")
+    .setName("serverinfo")
+    .setDescription("Returns information about the server")
 };

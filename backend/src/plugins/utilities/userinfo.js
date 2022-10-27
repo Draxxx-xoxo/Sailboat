@@ -7,7 +7,7 @@ module.exports = {
   enable: true,
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, client) => {
-    const user = message.options.getUser('user');        
+    const user = message.options.getUser("user");        
     var member = ""
 
     if(user){
@@ -31,7 +31,7 @@ module.exports = {
     message.reply({embeds: [userinfo_embed]})
   },
   data: new SlashCommandBuilder()
-  .setName("userinfo")
-  .setDescription("Returns information about the user in the server")
-  .addUserOption(option => option.setName("user").setDescription("The user to get info about"))
+    .setName("userinfo")
+    .setDescription("Returns information about the user in the server")
+    .addUserOption(option => option.setName("user").setDescription("The user to get info about"))
 };

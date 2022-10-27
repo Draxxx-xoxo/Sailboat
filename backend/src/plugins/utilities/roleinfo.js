@@ -7,7 +7,7 @@ module.exports = {
   enable: true,
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, args, client) => {
-    let role = message.options.getRole('role');        
+    let role = message.options.getRole("role");        
 
     const embed = new MessageEmbed()
       .setTitle(`Role Info __${role.name.toString()}__`)
@@ -19,13 +19,13 @@ module.exports = {
         {name: "Role postion", value: role.position.toString(), inline: true},
         {name : "Role postion", value: role.position.toString(), inline: true},
         {name: "Role Color:", value: role.hexColor, inline: true}
-        )
+      )
       .setColor(role.hexColor);
         
     message.reply({embeds: [embed]});
   },
   data: new SlashCommandBuilder()
-  .setName("roleinfo")
-  .setDescription("Returns information about the role in the server")
-  .addRoleOption(option => option.setName("role").setDescription("The role to get info about").setRequired(true))
+    .setName("roleinfo")
+    .setDescription("Returns information about the role in the server")
+    .addRoleOption(option => option.setName("role").setDescription("The role to get info about").setRequired(true))
 };

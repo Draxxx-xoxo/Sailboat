@@ -15,7 +15,7 @@ module.exports = {
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, discordclient) => {
 
-    const inf_id = message.options.getNumber('id');
+    const inf_id = message.options.getNumber("id");
   
     const client = new Client({
       user: process.env.user,
@@ -94,7 +94,7 @@ module.exports = {
     }
   },
   data: new SlashCommandBuilder()
-  .setName("destroy_infraction")
-  .setDescription("Destroy an infraction")
-	.addNumberOption(option => option.setName('id').setDescription('Delete a specific infraction').setRequired(true))
+    .setName("destroy_infraction")
+    .setDescription("Destroy an infraction")
+	  .addNumberOption(option => option.setName("id").setDescription("Delete a specific infraction").setRequired(true))
 };  

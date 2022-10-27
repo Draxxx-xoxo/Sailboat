@@ -12,7 +12,7 @@ module.exports = {
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, discordclient) => {
 
-    const inf_id = message.options.getNumber('id');
+    const inf_id = message.options.getNumber("id");
   
     const client = new Client({
       user: process.env.user,
@@ -47,7 +47,7 @@ module.exports = {
         
   },
   data: new SlashCommandBuilder()
-  .setName("infraction")
-  .setDescription("Lookup for an infraction")
-	.addNumberOption(option => option.setName('id').setDescription('Search for a specific infraction').setRequired(true))
+    .setName("infraction")
+    .setDescription("Lookup for an infraction")
+	  .addNumberOption(option => option.setName("id").setDescription("Search for a specific infraction").setRequired(true))
 };  
