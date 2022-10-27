@@ -20,20 +20,11 @@ module.exports = async (discordClient, interaction) => {
         console.log(error);
       }
     }
-    if(interaction.component.customId.toLowerCase() == "logging" || interaction.component.customId.toLowerCase() == "reporting"){
-      var report_config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
+    if(interaction.component.customId.toLowerCase() == "logging" || interaction.component.customId.toLowerCase() == "reporting" || interaction.component.customId.toLowerCase() == "mutes"){
+      var main_buttons = require("../plugins/configuration/buttons.config")
 
       try{
-        report_config_buttons.report(interaction, discordClient)
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    if(interaction.component.customId.toLowerCase() == "mutes"){
-      var mute_config_buttons = require("../plugins/configuration/config_buttons/mute_config_buttons")
-
-      try{
-        mute_config_buttons.mute(interaction, discordClient)
+        main_buttons.main_button(interaction, discordClient)
       } catch (error) {
         console.log(error);
       }
