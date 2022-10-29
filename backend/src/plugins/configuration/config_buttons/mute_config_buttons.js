@@ -24,6 +24,15 @@ module.exports = {
       return message.reply("There is an error fetching your configurations. Please contact support if this issue persists.")
     }
 
+    var muteRole = ""
+
+    if(message.guild.roles.cache.get(res.rows[0].mute_role) == undefined){
+      muteRole = "No role setup"
+    }
+    else {
+      muteRole = message.guild.roles.cache.get(res.rows[0].mute_role).name + " `" + res.rows[0].mute_role + "`" 
+    }
+
     const button = await buttons.setupbutton(false, false, false, "Mutes");
 
     const reporting = new MessageEmbed()
@@ -31,7 +40,7 @@ module.exports = {
       .setTitle("Reporting")
       .setDescription("This are the current configurations for the reporting system. You can change them by clicking on the buttons below.")
       .addFields(
-        { name: "Mute Role", value: message.guild.roles.cache.get(res.rows[0].mute_role).name + " `" + res.rows[0].mute_role + "`" || "No role setup"},
+        { name: "Mute Role", value: muteRole},
       )
       
     await message.message.edit({ embeds: [reporting], components: [button] });

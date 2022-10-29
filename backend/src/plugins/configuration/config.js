@@ -89,6 +89,15 @@ module.exports = {
       reportChannel = message.guild.channels.cache.get(res.rows[0].report_user_logging_channel).name + " `" + res.rows[0].report_user_logging_channel + "`" 
     }
 
+    var muteRole = ""
+
+    if(message.guild.roles.cache.get(res.rows[0].mute_role) == undefined){
+      muteRole = "No role setup"
+    }
+    else {
+      muteRole = message.guild.roles.cache.get(res.rows[0].mute_role).name + " `" + res.rows[0].mute_role + "`" 
+    }
+
     if(message.component.customId == "updateReport"){
       embed = new MessageEmbed()
         .setColor("ad94f2")
@@ -106,7 +115,7 @@ module.exports = {
         .setTitle("Reporting")
         .setDescription("This are the current configurations for the reporting system. You can change them by clicking on the buttons below.")
         .addFields(
-          { name: "Mute Role", value: message.guild.roles.cache.get(res.rows[0].mute_role).name + " `" + res.rows[0].mute_role + "`" || "No role setup"},
+          { name: "Mute Role", value: muteRole},
         )
       config = "Mutes"
     }
