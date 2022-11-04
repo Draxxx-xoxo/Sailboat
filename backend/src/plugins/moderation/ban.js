@@ -27,7 +27,7 @@ module.exports = {
 
 
     if (member.id == message.member.id){
-      return message.channel.send("You cannot ban youself :person_facepalming:");
+      return message.reply("You cannot ban youself :person_facepalming:");
     }
 
     const client = new Client({

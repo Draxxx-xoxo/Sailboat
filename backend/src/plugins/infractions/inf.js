@@ -29,7 +29,7 @@ module.exports = {
        
     const res = (await client.query(query).catch(console.error)).rows[0]
 
-    if(res == undefined) return message.channel.send("This infraction does not exsist on this server")
+    if(res == undefined) return message.reply("This infraction does not exsist on this server")
 
     const timestamp = `${res.timestamp}`
 
