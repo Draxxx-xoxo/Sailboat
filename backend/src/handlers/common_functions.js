@@ -22,8 +22,8 @@ module.exports = {
     return doc.guild_settings.prefix
   },
   async muteRole(message) {
-    const doc = await pg_table(message.guild.id);
-    return doc.plugins.mute_settings.role
+    const doc = await Newpg_table(message.guild.id);
+    return doc.mute_role
   },
   async censorWords(message) {
     const doc = await pg_table(message.guild.id);
