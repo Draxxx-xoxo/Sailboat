@@ -1,9 +1,10 @@
 const {Client} = require("pg");
 const {pgkey} = require("../../../config.json");
 const {MessageEmbed} = require("discord.js")
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
-  name: "reason",
+  name: "infraction_reason",
   category: "botinfo",
   aliases:["inf_reason"],
   enable: false,
@@ -11,9 +12,9 @@ module.exports = {
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, discordclient) => {
 
-    const inf_id = args[0];
+    const inf_id = message.options.getNumber("id");
 
-    const reason = args.slice(1).join(" ");
+    const reason = message.options.getString("reason");
   
     const client = new Client({
       user: process.env.user,
@@ -39,9 +40,13 @@ module.exports = {
       return message.channel.send("Please enter a valid infraction")
     }
 
-    message.channel.send(`Reason for #${inf_id} has been updated to` + "```" + reason + "```")
+    message.reply(`Reason for #${inf_id} has been updated to` + "```" + reason + "```")
         
     client.end();
-        
-  }
+  },
+  data: new SlashCommandBuilder()
+    .setName("infraction_reason")
+    .setDescription("Change the reason of an infraction")
+	  .addNumberOption(option => option.setName("id").setDescription("Search for a specific infraction").setRequired(true))
+    .addStringOption(option => option.setName("reason").setDescription("Reason for the infraction").setRequired(true))
 };  
