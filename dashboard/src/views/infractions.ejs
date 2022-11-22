@@ -49,10 +49,6 @@
                 if (Http.readyState === Http.DONE) {
                 if (Http.status === 200) {
 
-                let mountains = [
-                { name: "Monte Falco", height: 1658, place: "Parco Foreste Casentinesi" },
-                { name: "Monte Falterona", height: 1654, place: "Parco Foreste Casentinesi" }
-                ];
                 const infractions = []
                     var response = JSON.parse(Http.responseText);
                     var Array = response.data;
