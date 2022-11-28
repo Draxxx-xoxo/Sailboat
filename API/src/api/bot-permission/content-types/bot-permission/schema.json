@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bot_permissions",
+  "info": {
+    "singularName": "bot-permission",
+    "pluralName": "bot-permissions",
+    "displayName": "Bot Permission",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "access": {
+      "type": "json"
+    },
+    "role_id": {
+      "type": "integer"
+    }
+  }
+}
