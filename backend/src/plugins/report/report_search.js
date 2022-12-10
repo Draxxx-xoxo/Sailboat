@@ -1,5 +1,4 @@
 const {Client} = require("pg");
-const {pgkey} = require("../../../config.json");
 const {MessageEmbed} = require("discord.js");
 const Log = require("../../handlers/logging");
 const {command_logging, report_pugin, report_logging, report_logging_channel} = require("../../handlers/common_functions");

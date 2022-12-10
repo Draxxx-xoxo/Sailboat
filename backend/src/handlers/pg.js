@@ -1,4 +1,3 @@
-const {pgkey} = require("../../config.json")
 const {Client} = require("pg");
 
 

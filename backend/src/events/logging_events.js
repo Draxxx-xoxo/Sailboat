@@ -1,7 +1,6 @@
 require("dotenv").config(); 
 const fs = require("fs");
 const Discord = require("discord.js");
-const {pgkey} = require("../../config.json");
 const {Intents} = require("discord.js");
 const discordClient = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]});
 const functions = require("../handlers/common_functions")

@@ -1,5 +1,4 @@
 const {Client} = require("pg");
-const {pgkey} = require("../../../config.json");
 const {MessageEmbed} = require("discord.js")
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
