@@ -10,6 +10,7 @@ module.exports = {
       const result = message.options.getString("code")
       let evaled = eval(result);
       await message.reply({content: "```"+ evaled + "```", ephemeral: true})
+      console.log(evaled)
     }
     catch(error){
       console.log(error);
