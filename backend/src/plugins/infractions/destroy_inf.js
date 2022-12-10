@@ -6,7 +6,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 
 module.exports = {
-  name: "destroy_infraction",
+  name: "infraction_destroy",
   category: "botinfo",
   aliases:["infraction_destroy", "inf_destroy","inf_delete"],
   enable: true,
@@ -93,7 +93,7 @@ module.exports = {
     }
   },
   data: new SlashCommandBuilder()
-    .setName("destroy_infraction")
+    .setName("infraction_destroy")
     .setDescription("Destroy an infraction")
 	  .addNumberOption(option => option.setName("id").setDescription("Delete a specific infraction").setRequired(true))
 };  
