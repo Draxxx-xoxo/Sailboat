@@ -56,8 +56,8 @@ module.exports = {
       await message.deleteReply()
     }, 3000)
 
-    if(await infraction_logging(message.guild.id) ==  true){
-      Log.Send(
+    if(message.guild.channels.cache.get(await infraction_logging(message.guild.id)) != undefined){
+      Log.Infraction(
         discordclient,
         `${moderator_id.username}#${moderator_id.discriminator} unbanned ${member.username}#${member.discriminator} ` + "`" + `${member.id}` + "`" + ` Reason: ${reason_ || "None"}`,
         message.guild.id

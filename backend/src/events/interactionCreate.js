@@ -1,4 +1,5 @@
 const functions = require("../handlers/common_functions")
+const Log = require("../handlers/logging")
 
 module.exports = async (discordClient, interaction) => {
 
@@ -143,6 +144,13 @@ module.exports = async (discordClient, interaction) => {
 
     try{
       await command.execute(interaction, discordClient)
+      if(interaction.guild.channels.cache.get(await functions.command_logging(interaction.guild.id)) != undefined){
+        Log.Command(
+          discordClient,
+          `${interaction.user.tag} used the command ` + "`" + command.name + "`" + ` in <#${interaction.channel.id}>`,
+          interaction.guild.id
+        )
+      }	
     } catch (error) {
       console.log(error);
     }

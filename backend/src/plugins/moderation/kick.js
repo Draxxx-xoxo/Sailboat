@@ -52,8 +52,8 @@ module.exports = {
 
     //discordclient.users.cache.get(member.id).send(embed).catch(() => message.reply("Can't send DM to your user!"));;
 
-    if(await infraction_logging(message.guild.id) ==  true){
-      Log.Send(
+    if(message.guild.channels.cache.get(await infraction_logging(message.guild.id)) != undefined){
+      Log.Infraction(
         discordclient,
         `${moderator_id.username}#${moderator_id.discriminator} kicked ${member.username}#${member.user.discriminator} ` + "`" + `${member.user.id}` + "`" + ` Reason: ${reason_ || "None"}`, 
         message.guild.id

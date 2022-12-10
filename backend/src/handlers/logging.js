@@ -1,24 +1,33 @@
-const yaml = require("js-yaml");
 const fs = require("fs");
-const Discord = require("discord.js");
 const functions = require("./pg");
 
 async function pg_table(guildid){
-  const pg = await functions.pg(`SELECT * FROM public.configurations WHERE guild_id = ${guildid}`)
-  const doc = pg.rows[0].configuration
-  return doc 
+  const pg = await functions.pg(`SELECT * FROM public.configurator_v1s WHERE guild_id = ${guildid}`)
+  const config = pg.rows[0]
+  return config 
 }
 
 module.exports = {
-  Send: async (discordclient, log, guildid) => {
-    const doc = await pg_table(guildid)
+  Command: async (discordclient, log, guildid) => {
+    const config = await pg_table(guildid)
 
     var date = new Date();
     var hour = date.getHours();
     var minute = date.getMinutes();
 
     discordclient.channels.cache
-      .get(doc.plugins.logging.channel)
+      .get(config.command_logging_channel)
+      .send(`\`\`[${hour}:${minute}]\`\` ${log}`);
+  },
+  Infraction: async (discordclient, log, guildid) => {
+    const config = await pg_table(guildid)
+
+    var date = new Date();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+
+    discordclient.channels.cache
+      .get(config.infraction_logging_channel)
       .send(`\`\`[${hour}:${minute}]\`\` ${log}`);
   },
 };

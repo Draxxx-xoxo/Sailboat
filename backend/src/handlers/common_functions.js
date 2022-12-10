@@ -50,12 +50,12 @@ module.exports = {
     return doc.plugins.welcome_channel.leave_message
   },
   async command_logging(guildid) {
-    const doc = await pg_table(guildid);
-    return doc.plugins.logging.command_logging
+    const doc = await Newpg_table(guildid);
+    return doc.command_logging_channel
   },
   async infraction_logging(guildid) {
-    const doc = await pg_table(guildid);
-    return doc.plugins.logging.infractions_logging
+    const doc = await Newpg_table(guildid);
+    return doc.infraction_logging_channel
   },
   async report_pugin(guildid) {
     const doc = await Newpg_table(guildid);

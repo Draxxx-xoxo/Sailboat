@@ -1,7 +1,7 @@
 const {Client} = require("pg");
 const {MessageEmbed} = require("discord.js");
 const Log = require("../../handlers/logging");
-const {command_logging, infractionQ} = require("../../handlers/common_functions");
+const {command_logging, infractionQ, infraction_logging} = require("../../handlers/common_functions");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -57,8 +57,8 @@ module.exports = {
       await message.deleteReply()
     }, 3000)
 
-    if(await infraction_logging(message.guild.id) ==  true){
-      Log.Send(
+    if(message.guild.channels.cache.get(await infraction_logging(message.guild.id)) != undefined){
+      Log.Infraction(
         discordclient,
         `${moderator_id.username}#${moderator_id.discriminator} banned ${member.username}#${member.discriminator} ` + "`" + `${member.id}` + "`" + ` Reason: ${reason_ || "None"}`,
         message.guild.id
