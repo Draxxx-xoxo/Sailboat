@@ -98,6 +98,33 @@ module.exports = {
       muteRole = message.guild.roles.cache.get(res.rows[0].mute_role).name + " `" + res.rows[0].mute_role + "`" 
     }
 
+    const loggingChannel = res.rows[0]
+
+    var infractionChannel = ""
+    var commandChannel = ""
+    var reportChannel = ""
+
+    if(message.guild.channels.cache.get(loggingChannel.infraction_logging_channel) == undefined){
+      infractionChannel = "No channel setup"
+    }
+    else{
+      infractionChannel = message.guild.channels.cache.get(loggingChannel.infraction_logging_channel).name + " `" + loggingChannel.infraction_logging_channel + "`" 
+    }
+
+    if(message.guild.channels.cache.get(loggingChannel.command_logging_channel) == undefined){
+      commandChannel = "No channel setup"
+    }
+    else{
+      commandChannel = message.guild.channels.cache.get(loggingChannel.command_logging_channel).name + " `" + loggingChannel.command_logging_channel + "`" 
+    }
+
+    if(message.guild.channels.cache.get(loggingChannel.report_logging_channel) == undefined){
+      reportChannel = "No channel setup"
+    }
+    else{
+      reportChannel = message.guild.channels.cache.get(loggingChannel.report_logging_channel).name + " `" + loggingChannel.report_logging_channel + "`" 
+    }
+
     if(message.component.customId == "updateReport"){
       embed = new MessageEmbed()
         .setColor("ad94f2")
@@ -118,6 +145,18 @@ module.exports = {
           { name: "Mute Role", value: muteRole},
         )
       config = "Mutes"
+    }
+    else if(message.component.customId == "updateLogging"){
+      embed = new MessageEmbed()
+        .setColor("ad94f2")
+        .setTitle("Logging")
+        .setDescription("These are the logging channels enabled for the server")
+        .addFields(
+          { name: "Infraction Logging", value: infractionChannel },
+          { name: "Command Logging", value: commandChannel },
+          { name: "Report Logging", value: reportChannel },
+        )
+      config = "Logging"
     }
     const button = await buttons.setupbutton(false, false, false, config);
     await message.message.edit({ embeds: [embed], components: [button] });

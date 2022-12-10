@@ -18,7 +18,8 @@ module.exports = {
       report_config_buttons.report(message, discordClient)
     }
     if(message.component.customId.toLowerCase() == "logging" ){
-
+      var logging_config_buttons = require("./config_buttons/logging_button_config")
+      logging_config_buttons.logging(message, discordClient)
     } 
 
   }

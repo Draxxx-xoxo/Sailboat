@@ -38,7 +38,7 @@ module.exports = async (discordClient, interaction) => {
         console.log(error);
       }
     }
-    if(interaction.component.customId.toLowerCase() == "updatemutes" || interaction.component.customId.toLowerCase() == "updatereport" ){
+    if(interaction.component.customId.toLowerCase() == "updatemutes" || interaction.component.customId.toLowerCase() == "updatereport" || interaction.component.customId.toLowerCase() == "updatelogging"){
       var updateButton = require("../plugins/configuration/config")
 
       try{
@@ -74,21 +74,38 @@ module.exports = async (discordClient, interaction) => {
         console.log(error);
       }
     }
+    if(interaction.component.customId.toLowerCase() == "enable" || interaction.component.customId.toLowerCase() == "disable"){
+      const config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
+
+      try{
+        config_buttons.setup2(interaction, discordClient)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if(interaction.customId.toLowerCase() == "setuplogging"){
+      var config_buttons = require("../plugins/configuration/config_buttons/logging_button_config")
+      try{
+        config_buttons.setup1(interaction, discordClient)
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   if(interaction.isModalSubmit()){
     var config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
-    if(interaction.customId == "channelID"){
+    if(interaction.customId == "reportChannelID"){
       try{
         config_buttons.setup3(interaction, discordClient)
       } catch (error) {
         console.log(error);
       }
     }
-    if(interaction.customId == "roleID"){
-      var config_buttons = require("../plugins/configuration/config_buttons/mute_config_buttons")
+    var loggingModal = require("../plugins/configuration/config_buttons/logging_button_config")
+    if(interaction.customId == "loggingchannelID"){
       try{
-        config_buttons.setup2(interaction, discordClient)
+        loggingModal.setup2(interaction, discordClient)
       } catch (error) {
         console.log(error);
       }

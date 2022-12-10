@@ -25,20 +25,8 @@
     "reportUserLoggingChannel": {
       "type": "biginteger"
     },
-    "loggingChannel": {
+    "reportLoggingChannel": {
       "type": "biginteger"
-    },
-    "reportLogging": {
-      "type": "boolean",
-      "default": false
-    },
-    "commandLogging": {
-      "type": "boolean",
-      "default": false
-    },
-    "infractionLogging": {
-      "type": "boolean",
-      "default": false
     },
     "commandLoggingChannel": {
       "type": "biginteger"

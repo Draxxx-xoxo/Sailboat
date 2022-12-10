@@ -94,7 +94,7 @@ module.exports = {
     await client.query(query);
 
     const modal = new Modal()
-      .setCustomId("channelID")
+      .setCustomId("reportChannelID")
       .setTitle("Change Logging Channel");
 
     const changeLoggingChannel = new TextInputComponent()

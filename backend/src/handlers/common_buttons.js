@@ -60,7 +60,7 @@ module.exports = {
         new MessageButton()
           .setCustomId("logging")
           .setLabel("Logging")
-          .setDisabled(true)
+          .setDisabled(disabled1)
           .setStyle("PRIMARY"),
         new MessageButton()
           .setCustomId("reporting")
