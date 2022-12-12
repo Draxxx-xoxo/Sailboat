@@ -142,6 +142,19 @@ module.exports = async (discordClient, interaction) => {
       }
     }
 
+    var channeltype = ""
+
+    if(interaction.channel == null){
+      channeltype = "null"
+    }
+    else{
+      channeltype = interaction.channel.type
+    }
+
+    if(channeltype != "GUILD_TEXT" || channeltype != "GUILD_NEWS" || channeltype != "GUILD_PUBLIC_THREAD" || channeltype != "GUILD_PRIVATE_THREAD" || channeltype != "GUILD_FORUM"){
+      return interaction.reply({ content: "I can't execute that command inside DMs!", ephemeral: true });
+    }
+
     try{
       await command.execute(interaction, discordClient)
       if(interaction.guild.channels.cache.get(await functions.command_logging(interaction.guild.id)) != undefined){
