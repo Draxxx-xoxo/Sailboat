@@ -87,6 +87,18 @@ module.exports = {
         `
     return query
   },
+  async addguild(guildName, guildId, guildIcon, guildOwner){
+    const query = `
+        INSERT INTO public.allowed_guilds(
+            guild_name, guild_id, icon)
+            VALUES ('${guildName}', '${guildId}', '${guildIcon}'); 
+
+        INSERT INTO public.allowed_users(
+            guild_id, user_id, permission_id)
+            VALUES ('${guildId}', '${guildOwner}', 0);    
+        `
+    return query
+  },
   async rolelevel(guildid) {
     const doc = await pg_table(guildid);
     return doc.plugins.level
