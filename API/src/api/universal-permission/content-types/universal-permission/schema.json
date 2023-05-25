@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "universal_permissions",
+  "info": {
+    "singularName": "universal-permission",
+    "pluralName": "universal-permissions",
+    "displayName": "Universal Permission ",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "perm_id": {
+      "type": "integer"
+    }
+  }
+}

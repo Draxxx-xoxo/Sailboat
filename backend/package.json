@@ -1,43 +1,43 @@
 {
-  "name": "walle",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
-  "scripts": {
-    "start-dev": "nodemon ./src/index.js",
-    "event-logging": "nodemon ./src/events/logging_events",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ."
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@discordjs/builders": "^1.0.0",
-    "@discordjs/collection": "^0.6.0",
-    "@discordjs/rest": "^1.0.1",
-    "ascii-table": "0.0.9",
-    "axios": "^0.27.2",
-    "cli-color": "^2.0.0",
-    "discord-api-types": "^0.32.1",
-    "discord.js": "^13.9.1",
-    "dotenv": "^8.2.0",
-    "express": "^4.18.1",
-    "js-yaml": "^4.1.0",
-    "moment": "^2.29.4",
-    "moment-duration-format": "^2.3.2",
-    "node-fetch": "^2.6.1",
-    "nodemon": "^2.0.7",
-    "path": "^0.12.7",
-    "pg": "^8.5.1",
-    "pidusage": "^2.0.21",
-    "require-dir": "^1.2.0",
-    "util": "^0.12.3"
-  },
-  "devDependencies": {
-    "eslint": "^8.23.1",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.2.5",
-    "eslint-plugin-promise": "^6.0.1"
-  }
+	"name": "walle",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/index.js",
+	"scripts": {
+		"start-dev": "nodemon ./src/index.js",
+		"event-logging": "nodemon ./src/events/logging_events",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node ."
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@discordjs/builders": "^1.0.0",
+		"@discordjs/collection": "^0.6.0",
+		"@discordjs/rest": "^1.0.1",
+		"ascii-table": "0.0.9",
+		"axios": "^0.27.2",
+		"cli-color": "^2.0.0",
+		"discord-api-types": "^0.32.1",
+		"discord.js": "^13.16.0",
+		"dotenv": "^8.2.0",
+		"express": "^4.18.1",
+		"js-yaml": "^4.1.0",
+		"moment": "^2.29.4",
+		"moment-duration-format": "^2.3.2",
+		"node-fetch": "^2.6.1",
+		"nodemon": "^2.0.7",
+		"path": "^0.12.7",
+		"pg": "^8.5.1",
+		"pidusage": "^2.0.21",
+		"require-dir": "^1.2.0",
+		"util": "^0.12.3"
+	},
+	"devDependencies": {
+		"eslint": "^8.23.1",
+		"eslint-config-standard": "^17.0.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-n": "^15.2.5",
+		"eslint-plugin-promise": "^6.0.1"
+	}
 }

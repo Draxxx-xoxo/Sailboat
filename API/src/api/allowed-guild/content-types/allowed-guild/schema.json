@@ -4,7 +4,8 @@
   "info": {
     "singularName": "allowed-guild",
     "pluralName": "allowed-guilds",
-    "displayName": "Allowed-Guild"
+    "displayName": "Allowed-Guild",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -18,7 +19,7 @@
       "type": "biginteger"
     },
     "icon": {
-      "type": "text"
+      "type": "string"
     }
   }
 }
