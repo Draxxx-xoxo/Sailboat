@@ -151,7 +151,7 @@ module.exports = async (discordClient, interaction) => {
       channeltype = interaction.channel.type
     }
 
-    if(channeltype != "GUILD_TEXT" || channeltype != "GUILD_NEWS" || channeltype != "GUILD_PUBLIC_THREAD" || channeltype != "GUILD_PRIVATE_THREAD" || channeltype != "GUILD_FORUM"){
+    if(channeltype == "null"){
       return interaction.reply({ content: "I can't execute that command inside DMs!", ephemeral: true });
     }
 

@@ -14,7 +14,7 @@ for (const file of adminCommandFolder) {
 }
 
 
-const rest = new REST({ version: "9" }).setToken(process.env.sailboat_canary_token);
+const rest = new REST({ version: "9" }).setToken(process.env.sailboat_token);
 
 rest.put(Routes.applicationGuildCommands("886060953362366464", "734281219839230022"), { body: admin_commands })
   .then(() => console.log("Successfully registered admin commands."))
