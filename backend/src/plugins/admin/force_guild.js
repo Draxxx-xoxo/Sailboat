@@ -18,7 +18,7 @@ module.exports = {
     const user_id = message.options.getNumber("user");
 
     if(guild_icon.includes("https://cdn.discordapp.com/")){
-      console.log("valid")
+      console.log("valid image link")
     }
     else {
       return message.reply({content: "Please provide a valid image link", ephemeral: true})
@@ -39,7 +39,7 @@ module.exports = {
        
     const checkres = (await client.query(checkquery).catch(console.error)).rows[0]
 
-    if(checkres) return message.reply("This server has access to the dashboard")
+    if(checkres) return message.reply({content :"This server has access to the dashboard", ephemeral: true})
 
     const query = await addguild(guild_name, guild_id, guild_icon, user_id)
     const res = (await client.query(query).catch(console.error))
@@ -64,7 +64,7 @@ module.exports = {
     .setName("add_guild")
     .setDescription("Add a guild to Sailboat's Dashboard")
     .addStringOption(option => option.setName("name").setDescription("Server Name").setRequired(true))
-	 .addNumberOption(option => option.setName("server").setDescription("Server ID").setRequired(true))
+	  .addNumberOption(option => option.setName("server").setDescription("Server ID").setRequired(true))
     .addStringOption(option => option.setName("icon").setDescription("Server Icon").setRequired(true))
     .addNumberOption(option => option.setName("user").setDescription("User ID").setRequired(true))
 

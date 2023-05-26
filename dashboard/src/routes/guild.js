@@ -116,4 +116,13 @@ router.get('/editor', isAuthorized, (req, res) => {
     });
 });
 
+router.get('/permissions', isAuthorized, (req, res) => {
+
+    res.render('bot_permissions.ejs', {
+        username: req.user.username,
+        discordId: req.user.discordId,
+        guilds: req.user.guilds,
+    });
+});
+
 module.exports = router;

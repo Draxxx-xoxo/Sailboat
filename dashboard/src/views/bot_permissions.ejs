@@ -2,12 +2,15 @@
 <%- include('partials/nav') -%>
 <html>
     <form onsubmit="submitdata(); return false";>
-        <label for="userID">UserID</label><br>
-        <input type="text" id="userID" name="userID" required><br>
-        <label for="permissions">User Permissions</label>
+        <label for="roleID">RoleID</label><br>
+        <input type="text" id="roleID" name="RoleID" required><br>
+        <label for="permissions">Role Permissions</label>
         <select name="permissions" id="permissions"><br>
-            <option value="editor">Editor</option>
-            <option value="viewer">Viewer</option>
+            <option value="administrator">Administrator</option>
+            <option value="head_moderator">Head Moderator</option>
+            <option value="moderator">Moderator</option>
+            <option value="helper">Helper</option>
+            <option value="trusted">Trusted</option>
         </select><br>
         <input type="submit" value="Submit">
     </form>
@@ -51,7 +54,7 @@
             const currentURL = window.location.href
             var guildid = window.location.pathname.split('/');
             const Http = new XMLHttpRequest();
-            const url = `http://localhost:1337/api/allowed-users?filters[guild_id][$eq]=${guildid[1]}`
+            const url = `http://localhost:1337/api/role-permissions?filters[guild_id][$eq]=${guildid[1]}`
             Http.open("Get", url);
             Http.setRequestHeader("Authorization", 'bearer 822ca389f5560fec7410bd387bdac30cf87379d1608de0b400b903549af53bff5942217c08fdf0fc1ecf3f06b681e0684c1c15a7a6dd1c74533524abe31f93bcf0484c0f63861763afa589ba6750879d6c224fa4ad2f3b7787c32fe518ab6115b98bd6b44e1d0fad3f1cd68a5dafa251c0268e815b7e1c057b7573f91198ed61');
             Http.send();
@@ -59,15 +62,35 @@
                 if (Http.readyState === Http.DONE) {
                 if (Http.status === 200) {
 
-                const Users = []
+                const Roles = []
                     var response = JSON.parse(Http.responseText);
                     var Array = response.data;
                     for (let i = 0; i < Array.length; i++){
-                        var user = {
+                        switch (Array[i].attributes.permissionId) {
+                            case 1:
+                                permission = "Administrator";
+                                break;
+                            case 2:
+                                permission = "Head Moderator";
+                                break;
+                            case 3:
+                                permission = "Moderator"
+                                break;
+                            case 4:
+                                permission = "Helper";
+                                break;
+                            case 5:
+                                permission = "Trusted";
+                                break;
+                            default:
+                                permission = "None";
+                                break;
+                        };
+                        var role = {
                             "ID": Array[i].id,
-                            "Discord ID": Array[i].attributes.UserID,
+                            "Role ID": Array[i].attributes.guildId,
                             //"discord_tag": Array[i].attributes.discord_tag,
-                            "Permissions": Array[i].attributes.permissionID,
+                            "Permissions": permission,
                             //"infractions": Array[i].attributes.infractions,
                             //"moderator_id": Array[i].attributes.moderator_id,
                             //"moderator_tag": Array[i].attributes.moderator_tag,
@@ -75,11 +98,11 @@
                             //"guild_id": Array[i].attributes.guild_id,
                         }
                         
-                        Users.push(user);
+                        Roles.push(role);
                     }
                     let table = document.querySelector("table");
-                    let data = Object.keys(Users[0]);
-                    generateTable(table, Users);
+                    let data = Object.keys(Roles[0]);
+                    generateTable(table, Roles);
                     generateTableHead(table, data);
                 }}
             }; 
@@ -88,17 +111,26 @@
     </table>
     <script>
         async function submitdata(){
-            const userID = document.getElementById("userID").value
+            const roleID = document.getElementById("roleID").value
             var permissions = document.getElementById("permissions").value
-            if(permissions == 'editor'){
-                permissions = 0
-            }
-            else if(permissions == 'viewer'){
+            if(permissions == 'administrator'){
                 permissions = 1
+            }
+            else if(permissions == 'head_moderator'){
+                permissions = 2
+            }
+            else if(permissions == 'moderator'){
+                permissions = 3
+            }
+            else if(permissions == 'helper'){
+                permissions = 4
+            }
+            else if(permissions == 'trusted'){
+                permissions = 5
             }
             const Http = new XMLHttpRequest();
             var guildid = (window.location.pathname.split('/'))[1];
-            const geturl = `http://localhost:1337/api/allowed-users?filters[UserID][$eq]=${userID}&filters[guild_id][$eq]=${guildid}`
+            const geturl = `http://localhost:1337/api/role-permissions?filters[guild_id][$eq]=${guildid}&filters[roleId][$eq]=${roleID}`
             await Http.open("Get", geturl);
             Http.setRequestHeader("Authorization", 'bearer 822ca389f5560fec7410bd387bdac30cf87379d1608de0b400b903549af53bff5942217c08fdf0fc1ecf3f06b681e0684c1c15a7a6dd1c74533524abe31f93bcf0484c0f63861763afa589ba6750879d6c224fa4ad2f3b7787c32fe518ab6115b98bd6b44e1d0fad3f1cd68a5dafa251c0268e815b7e1c057b7573f91198ed61');
             Http.setRequestHeader("Content-type", "application/json");
@@ -109,18 +141,18 @@
                     var response = JSON.parse(Http.responseText);
                     console.log(response.data.length)
                     if(response.data.length > 0){
-                        return alert('User already has access to dashboard. Contact Support if you believe this is an error')
+                        return alert('This role already has permissions set, please use the edit button to change the permissions')
                     } else {
-                        const posturl = `http://localhost:1337/api/allowed-users`
+                        const posturl = `http://localhost:1337/api/role-permissions`
                         Http.open("Post", posturl);
                         Http.setRequestHeader("Authorization", 'bearer 822ca389f5560fec7410bd387bdac30cf87379d1608de0b400b903549af53bff5942217c08fdf0fc1ecf3f06b681e0684c1c15a7a6dd1c74533524abe31f93bcf0484c0f63861763afa589ba6750879d6c224fa4ad2f3b7787c32fe518ab6115b98bd6b44e1d0fad3f1cd68a5dafa251c0268e815b7e1c057b7573f91198ed61');
                         Http.setRequestHeader("Content-type", "application/json");
                         const data = `
                         {
                             "data": {
-                            "guildID": "${guildid}", 
-                            "UserID": "${userID}", 
-                            "permissionID": ${permissions}
+                            "guildId": "${guildid}", 
+                            "roleId": "${roleID}", 
+                            "permissionId": ${permissions}
                             }
                         }
                         `   

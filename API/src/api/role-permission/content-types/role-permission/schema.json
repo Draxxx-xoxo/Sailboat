@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "role_permissions",
+  "info": {
+    "singularName": "role-permission",
+    "pluralName": "role-permissions",
+    "displayName": "Role Permission"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "guildId": {
+      "type": "biginteger"
+    },
+    "roleId": {
+      "type": "biginteger"
+    },
+    "permissionId": {
+      "type": "integer"
+    }
+  }
+}
