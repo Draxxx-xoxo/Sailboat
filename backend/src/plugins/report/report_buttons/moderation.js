@@ -12,7 +12,7 @@ module.exports = {
 
     const report_log = await reportlog(res, "🔴")
 
-    button.reply(`${member.user.id} has been warned :ok_hand: User has been notified`);
+    button.reply(`${member.user.id} has not been punished :ok_hand:`);
 
     button.message.edit({
       embeds: [report_log],
