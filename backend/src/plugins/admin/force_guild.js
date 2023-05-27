@@ -6,10 +6,9 @@ const {addguild} = require("../../handlers/common_functions")
 
 module.exports = {
   name: "add_guild",
-  category: "botinfo",
   enable: true,
-  user: ["716206954313285713"], 
-  description: "Returns bot and API latency in milliseconds.",
+  user: ["716206954313285713"],
+  permissions: 200, 
   execute: async (message, discordclient) => {
 
     const guild_name = message.options.getString("name");

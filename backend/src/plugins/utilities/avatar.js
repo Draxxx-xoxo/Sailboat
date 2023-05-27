@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "avatar",
-  category: "botinfo",
+  permissions: 20,
   description: "Returns bot and API latency in milliseconds.",
   enable: true,
   execute: async (message, client) => {

@@ -1,5 +1,6 @@
 const functions = require("../handlers/common_functions")
 const Log = require("../handlers/logging")
+const {permission} = require("../handlers/permissions") 
 
 module.exports = async (discordClient, interaction) => {
 
@@ -135,13 +136,6 @@ module.exports = async (discordClient, interaction) => {
         return;
       }
     }
-    if (command.permissions) {
-      const authorPerms = interaction.channel.permissionsFor(interaction.user);
-      if (!authorPerms || !authorPerms.has(command.permissions)) {
-        return interaction.reply({content: "You cannot use the " + command.name + " command", ephemeral: true});
-      }
-    }
-
     var channeltype = ""
 
     if(interaction.channel == null){
@@ -154,6 +148,13 @@ module.exports = async (discordClient, interaction) => {
     if(channeltype == "null"){
       return interaction.reply({ content: "I can't execute that command inside DMs!", ephemeral: true });
     }
+
+    const permission_check = await permission(discordClient, command.permissions, interaction.guild.id, interaction.member)
+    if(permission_check == false){
+      return interaction.reply({ content: "I can't execute that command you do not have the right permissions!", ephemeral: true });
+      
+    }
+
 
     try{
       await command.execute(interaction, discordClient)

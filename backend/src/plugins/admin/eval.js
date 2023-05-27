@@ -2,9 +2,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "eval",
-  category: "botinfo",
-  description: "Returns bot and API latency in milliseconds.",
   user: ["716206954313285713"],
+  permissions: 200,
   execute: async (message, client) => {
     try{
       const result = message.options.getString("code")

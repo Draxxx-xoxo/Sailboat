@@ -7,6 +7,7 @@ module.exports = {
   name: "tempmute",
   category: "botinfo",
   enable: false,
+  permissions: 40,
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, discordclient) => {
     const client = new Client({

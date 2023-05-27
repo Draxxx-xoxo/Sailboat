@@ -4,11 +4,9 @@ const functions = require("../../handlers/common_functions")
 const { SlashCommandBuilder } = require("@discordjs/builders");
 module.exports = {
   name: "infraction_search",
-  category: "botinfo",
   aliases:["infraction search","infraction_search", "inf search"],
   enable: true,
-  permissions:["MANAGE_GUILD","ADMINISTRATOR"],
-  description: "Returns bot and API latency in milliseconds.",
+  permissions: 40,
   execute: async (message, discordclient) => {
 
     const member = message.options.getUser("user");

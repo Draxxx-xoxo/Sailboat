@@ -8,7 +8,7 @@ module.exports = {
   name: "unban",
   category: "botinfo",
   enable: true,
-  permissions:["BAN_MEMBERS"],
+  permissions: 80,
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, discordclient) => {
 

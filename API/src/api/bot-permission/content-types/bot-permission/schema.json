@@ -21,7 +21,10 @@
     "access": {
       "type": "json"
     },
-    "role_id": {
+    "permissionId": {
+      "type": "integer"
+    },
+    "level": {
       "type": "integer"
     }
   }

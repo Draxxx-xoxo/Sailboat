@@ -6,9 +6,8 @@ require("moment-duration-format")
 
 module.exports = {
   name: "botinfo",
-  category: "botinfo",
-  description: "Returns bot and API latency in milliseconds.",
   enable: true,
+  permissions: 20,
   execute: async (message, client) => {
     cpu(process.pid, async () => {
       const duration = moment

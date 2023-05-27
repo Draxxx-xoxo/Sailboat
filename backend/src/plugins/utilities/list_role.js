@@ -2,8 +2,7 @@ const {MessageEmbed} = require("discord.js");
 
 module.exports = {
   name: "list_role",
-  category: "botinfo",
-  description: "Returns bot and API latency in milliseconds.",
+  permissions: 20,
   execute: async (message, args, client) => {
 
     const role = await message.guild.roles.fetch(args[0]) || message.guild.roles.cache.find(r => r.name === args.join(" ")) || message.mentions.roles.first()

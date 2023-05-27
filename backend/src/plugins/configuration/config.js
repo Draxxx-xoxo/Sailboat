@@ -5,9 +5,8 @@ const buttons = require("../../handlers/common_buttons");
 
 module.exports = {
   name: "configurator",
-  category: "botinfo",
-  description: "Returns bot and API latency in milliseconds.",
   enable: true,
+  permissions: 100,
   execute: async (message, discordClient) => {
 
     const client = new Client({

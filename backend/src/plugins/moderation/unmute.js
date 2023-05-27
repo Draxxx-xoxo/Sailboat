@@ -9,6 +9,7 @@ module.exports = {
   name: "unmute",
   category: "botinfo",
   enable: false,
+  permissions: 50,
   description: "Returns bot and API latency in milliseconds.",
   execute: async (message, discordclient) => {
                         

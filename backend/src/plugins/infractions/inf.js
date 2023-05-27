@@ -4,11 +4,9 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "infraction",
-  category: "botinfo",
   aliases:["infraction","inf_search","case"],
   enable: true,
-  permissions:["MANAGE_GUILD","ADMINISTRATOR"],
-  description: "Returns bot and API latency in milliseconds.",
+  permissions: 40,
   execute: async (message, discordclient) => {
 
     const inf_id = message.options.getNumber("id");

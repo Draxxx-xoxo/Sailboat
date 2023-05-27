@@ -7,11 +7,9 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "infraction_destroy",
-  category: "botinfo",
   aliases:["infraction_destroy", "inf_destroy","inf_delete"],
   enable: true,
-  permissions:["MANAGE_GUILD","ADMINISTRATOR"],
-  description: "Returns bot and API latency in milliseconds.",
+  permissions: 80,
   execute: async (message, discordclient) => {
 
     const inf_id = message.options.getNumber("id");

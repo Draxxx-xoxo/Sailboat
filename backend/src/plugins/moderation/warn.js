@@ -7,9 +7,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 module.exports = {
   name: "warn",
   category: "botinfo",
-  permissions:["MANAGE_MESSAGES"],
+  permissions: 40,
   enable: true,
-  description: "Returns bot and API latency in milliseconds.",
   execute: async (message, discordclient) => {
     const client = new Client({
       user: process.env.user,

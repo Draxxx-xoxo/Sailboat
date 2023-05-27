@@ -10,9 +10,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "report_search",
-  category: "",
-  permissions:[""],
-  description: "Returns bot and API latency in milliseconds.",
+  enable: true,
+  permissions: 50,
   execute: async (message, discordclient) => {
 
     var member = await message.guild.members.fetch(message.options.getUser("user").id)

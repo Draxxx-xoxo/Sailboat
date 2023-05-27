@@ -3,9 +3,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "serverinfo",
-  category: "botinfo",
   enable: true,
-  description: "Returns bot and API latency in milliseconds.",
+  permissions: 20,
   execute: async (message, args, client) => {
 
     const guild = message.guild

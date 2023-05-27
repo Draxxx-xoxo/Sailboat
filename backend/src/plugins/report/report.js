@@ -10,9 +10,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "report",
-  category: "",
-  permissions:[""],
-  description: "Returns bot and API latency in milliseconds.",
+  enable: true,
+  permissions: 20,
   execute: async (message, discordclient) => {
 
     if(await report_pugin(message.guild.id) == false){

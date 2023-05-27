@@ -2,9 +2,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "role_remove",
-  category: "botinfo",
   enable: false,
-  description: "Returns bot and API latency in milliseconds.",
+  permissions: 50,
   execute: async (message, args, client) => {
     const role = await message.guild.roles.fetch(message.options.getRole("role").id);
     const user = await message.guild.members.fetch(message.options.getUser("user").id);

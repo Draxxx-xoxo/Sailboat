@@ -10,10 +10,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "note",
-  category: "",
-  permissions:[""],
+  permissions: 50,
   enable: false,
-  description: "Returns bot and API latency in milliseconds.",
   execute: async (message, discordclient) => {
 
     const id = message.options.getNumber("id")
