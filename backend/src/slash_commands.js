@@ -16,7 +16,7 @@ for (const file of adminCommandFolder) {
 
 const rest = new REST({ version: "9" }).setToken(process.env.sailboat_token);
 
-rest.put(Routes.applicationGuildCommands("886060953362366464", "734281219839230022"), { body: admin_commands })
+rest.put(Routes.applicationGuildCommands(process.env.sailboat_clientID, process.env.admin_server), { body: admin_commands })
   .then(() => console.log("Successfully registered admin commands."))
   .catch(console.error);
 
@@ -24,7 +24,7 @@ const globalCommands = [];
 var commandFolders = fs.readdirSync("./src/plugins");
 
 for (const folder of commandFolders) {
-  const commandFiles = fs.readdirSync(`./src/plugins/${folder}`).filter(file => file.endsWith(".js") && file != "eval.js" && file != "usercache.js" && file != "ping.js");
+  const commandFiles = fs.readdirSync(`./src/plugins/${folder}`).filter(file => file.endsWith(".js") && file != "eval.js" && file != "usercache.js" && file != "ping.js" && file != "force_guild.js" && file != "admin_server");
   for (const file of commandFiles) {
     const command = require(`./plugins/${folder}/${file}`);
     if(command.data){
@@ -33,6 +33,6 @@ for (const folder of commandFolders) {
   }
 }
 
-rest.put(Routes.applicationCommands("886060953362366464"),{ body: globalCommands },)
+rest.put(Routes.applicationCommands(process.env.sailboat_clientID),{ body: globalCommands },)
   .then(() => console.log("Successfully registered global commands."))
   .catch(console.error);
