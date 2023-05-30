@@ -20,18 +20,22 @@ for (const folder of commandFolders) {
   }
 }
 
-fs.readdir(resolve(__dirname, "./events/"), (err, files) => {
-  if (err) return console.error;
-  files.forEach((file) => {
-    if (!file.endsWith(".js")) return;
-    if(file == "logging_events.js") return;
-    const evt = require(`./events/${file}`);
-    let evtName = file.split(".")[0];
+const eventFolders = fs.readdirSync("./src/events")
 
-    discordClient.on(evtName, evt.bind(null, discordClient));
+for (const folder of eventFolders) {
+  fs.readdir(resolve(`./src/events/${folder}`), (err, files) => {
+    if (err) return console.error;
+    files.forEach((file) => {
+      if (!file.endsWith(".js")) return;
+      if(file == "logging_events.js") return;
+      const evt = require(`./events/${folder}/${file}`);
+      let evtName = file.split(".")[0];
+  
+      discordClient.on(evtName, evt.bind(null, discordClient));
+    });
+    
   });
-	
-});
+}
 
 //AUTOMOD
 /*discordClient.on('messageCreate', async message => {

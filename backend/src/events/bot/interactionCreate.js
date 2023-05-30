@@ -1,12 +1,12 @@
-const functions = require("../handlers/common_functions")
-const Log = require("../handlers/logging")
-const {permission} = require("../handlers/permissions") 
+const functions = require("../../handlers/common_functions")
+const Log = require("../../handlers/logging")
+const {permission} = require("../../handlers/permissions") 
 
 module.exports = async (discordClient, interaction) => {
 
   if (interaction.isButton()){
     if(interaction.component.customId == "yes" || interaction.component.customId.toLowerCase() == "no"){
-      var destroy_infs = require("../plugins/infractions/destroy_inf")
+      var destroy_infs = require("../../plugins/infractions/destroy_inf")
       try{
         destroy_infs.button(interaction, discordClient)
       } catch (error) {
@@ -14,7 +14,7 @@ module.exports = async (discordClient, interaction) => {
       }
     }
     if(interaction.component.customId.toLowerCase() == "warn" || interaction.component.customId.toLowerCase() == "mute" || interaction.component.customId.toLowerCase()== "ban" || interaction.component.customId.toLowerCase() == "kick" || interaction.component.customId.toLowerCase() =="deny"){
-      var report_buttons = require("../plugins/report/report_buttons") 
+      var report_buttons = require("../../plugins/report/report_buttons") 
 
       try{
         report_buttons.execute(interaction, discordClient)
@@ -23,7 +23,7 @@ module.exports = async (discordClient, interaction) => {
       }
     }
     if(interaction.component.customId.toLowerCase() == "logging" || interaction.component.customId.toLowerCase() == "reporting" || interaction.component.customId.toLowerCase() == "mutes"){
-      var main_buttons = require("../plugins/configuration/buttons.config")
+      var main_buttons = require("../../plugins/configuration/buttons.config")
 
       try{
         main_buttons.main_button(interaction, discordClient)
@@ -32,7 +32,7 @@ module.exports = async (discordClient, interaction) => {
       }
     }
     if(interaction.component.customId.toLowerCase() == "setupmutes"){
-      var mute_config_buttons = require("../plugins/configuration/config_buttons/mute_config_buttons")
+      var mute_config_buttons = require("../../plugins/configuration/config_buttons/mute_config_buttons")
 
       try{
         mute_config_buttons.setup1(interaction, discordClient)
@@ -41,7 +41,7 @@ module.exports = async (discordClient, interaction) => {
       }
     }
     if(interaction.component.customId.toLowerCase() == "updatemutes" || interaction.component.customId.toLowerCase() == "updatereport" || interaction.component.customId.toLowerCase() == "updatelogging"){
-      var updateButton = require("../plugins/configuration/config")
+      var updateButton = require("../../plugins/configuration/config")
 
       try{
         updateButton.update_button(interaction, discordClient)
@@ -50,7 +50,7 @@ module.exports = async (discordClient, interaction) => {
       }
     }
     if(interaction.component.customId.toLowerCase() == "back"){
-      const backbutton = require("../plugins/configuration/config")
+      const backbutton = require("../../plugins/configuration/config")
 
       try{
         backbutton.execute(interaction, discordClient)
@@ -59,7 +59,7 @@ module.exports = async (discordClient, interaction) => {
       }
     }
     if(interaction.component.customId.toLowerCase() == "setupreport"){
-      const config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
+      const config_buttons = require("../../plugins/configuration/config_buttons/report_config_buttons")
 
       try{
         config_buttons.setup1(interaction, discordClient)
@@ -68,7 +68,7 @@ module.exports = async (discordClient, interaction) => {
       }
     }
     if(interaction.component.customId.toLowerCase() == "enable" || interaction.component.customId.toLowerCase() == "disable"){
-      const config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
+      const config_buttons = require("../../plugins/configuration/config_buttons/report_config_buttons")
 
       try{
         config_buttons.setup2(interaction, discordClient)
@@ -77,7 +77,7 @@ module.exports = async (discordClient, interaction) => {
       }
     }
     if(interaction.component.customId.toLowerCase() == "enable" || interaction.component.customId.toLowerCase() == "disable"){
-      const config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
+      const config_buttons = require("../../plugins/configuration/config_buttons/report_config_buttons")
 
       try{
         config_buttons.setup2(interaction, discordClient)
@@ -86,7 +86,7 @@ module.exports = async (discordClient, interaction) => {
       }
     }
     if(interaction.customId.toLowerCase() == "setuplogging"){
-      var config_buttons = require("../plugins/configuration/config_buttons/logging_button_config")
+      var config_buttons = require("../../plugins/configuration/config_buttons/logging_button_config")
       try{
         config_buttons.setup1(interaction, discordClient)
       } catch (error) {
@@ -96,7 +96,7 @@ module.exports = async (discordClient, interaction) => {
   }
 
   if(interaction.isModalSubmit()){
-    var config_buttons = require("../plugins/configuration/config_buttons/report_config_buttons")
+    var config_buttons = require("../../plugins/configuration/config_buttons/report_config_buttons")
     if(interaction.customId == "reportChannelID"){
       try{
         config_buttons.setup3(interaction, discordClient)
@@ -104,7 +104,7 @@ module.exports = async (discordClient, interaction) => {
         console.log(error);
       }
     }
-    var loggingModal = require("../plugins/configuration/config_buttons/logging_button_config")
+    var loggingModal = require("../../plugins/configuration/config_buttons/logging_button_config")
     if(interaction.customId == "loggingchannelID"){
       try{
         loggingModal.setup2(interaction, discordClient)
@@ -115,7 +115,7 @@ module.exports = async (discordClient, interaction) => {
   }
 
   if(interaction.isSelectMenu()){
-    const message_menu = require("../plugins/infractions/message_menu") 
+    const message_menu = require("../../plugins/infractions/message_menu") 
 
     try{
       message_menu.execute(interaction, discordClient)
