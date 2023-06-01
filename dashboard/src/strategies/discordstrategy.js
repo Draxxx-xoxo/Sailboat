@@ -20,7 +20,7 @@ passport.use(new DiscordStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     callbackURL: process.env.CLIENT_REDIRECT,
-    scope: ['identify', 'guilds']
+    scope: ['identify', 'guilds', 'email']
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         const user = await DiscordUser.findOne({ discordId: profile.id });
@@ -29,7 +29,8 @@ passport.use(new DiscordStrategy({
             console.log("User exists.");
             await user.updateOne({
                 username: `${profile.username}#${profile.discriminator}`,
-                guilds: profile.guilds.filter(guild => guild.id)
+                guilds: profile.guilds.filter(guild => guild.id),
+                email: profile.email
             });
             done(null, user);
         }
@@ -38,7 +39,8 @@ passport.use(new DiscordStrategy({
             const newUser = await DiscordUser.create({
                 discordId: profile.id,
                 username: profile.username,
-                guilds: profile.guilds
+                guilds: profile.guilds,
+                email: profile.email
             });
             const savedUser = await newUser.save();
             done(null, savedUser);
