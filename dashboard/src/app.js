@@ -1,7 +1,6 @@
 require('dotenv').config();
 require('./strategies/discordstrategy');
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
-//const stripe = require("stripe")('sk_test_Ou1w6LVt3zmVipDVJsvMeQsc');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 53134;
