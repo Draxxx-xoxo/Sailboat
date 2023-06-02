@@ -55,7 +55,7 @@ module.exports = {
     if(message.guild.channels.cache.get(await infraction_logging(message.guild.id)) != undefined){
       Log.Infraction(
         discordclient,
-        `${moderator_id.username}#${moderator_id.discriminator} kicked ${member.username}#${member.user.discriminator} ` + "`" + `${member.user.id}` + "`" + ` Reason: ${reason_ || "None"}`, 
+        `${moderator_id.username}#${moderator_id.discriminator} kicked ${member.username}#${member.discriminator} ` + "`" + `${member.id}` + "`" + ` Reason: ${reason_ || "None"}`, 
         message.guild.id
       );
     }
