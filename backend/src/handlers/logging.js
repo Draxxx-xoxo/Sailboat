@@ -30,4 +30,15 @@ module.exports = {
       .get(config.infraction_logging_channel)
       .send(`\`\`[${hour}:${minute}]\`\` ${log}`);
   },
+  Guild: async (discordclient, log, guildid) => {
+    const config = await pg_table(guildid)
+
+    var date = new Date();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+
+    discordclient.channels.cache
+      .get(config.guild_events_logging_channel)
+      .send(`\`\`[${hour}:${minute}]\`\` ${log}`);
+  },
 };

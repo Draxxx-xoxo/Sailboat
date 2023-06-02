@@ -53,6 +53,10 @@ module.exports = {
     const doc = await Newpg_table(guildid);
     return doc.command_logging_channel
   },
+  async guild_logging(guildid) {
+    const doc = await Newpg_table(guildid);
+    return doc.guild_events_logging_channel
+  },
   async infraction_logging(guildid) {
     const doc = await Newpg_table(guildid);
     return doc.infraction_logging_channel

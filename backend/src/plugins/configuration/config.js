@@ -102,6 +102,7 @@ module.exports = {
     var infractionChannel = ""
     var commandChannel = ""
     var reportChannel = ""
+    var guildChannel = ""
 
     if(message.guild.channels.cache.get(loggingChannel.infraction_logging_channel) == undefined){
       infractionChannel = "No channel setup"
@@ -122,6 +123,13 @@ module.exports = {
     }
     else{
       reportChannel = message.guild.channels.cache.get(loggingChannel.report_logging_channel).name + " `" + loggingChannel.report_logging_channel + "`" 
+    }
+
+    if(message.guild.channels.cache.get(loggingChannel.guild_events_logging_channel) == undefined){
+      guildChannel = "No channel setup"
+    }
+    else{
+      guildChannel = message.guild.channels.cache.get(loggingChannel.guild_events_logging_channel).name + " `" + loggingChannel.guild_events_logging_channel + "`" 
     }
 
     if(message.component.customId == "updateReport"){
@@ -154,6 +162,7 @@ module.exports = {
           { name: "Infraction Logging", value: infractionChannel },
           { name: "Command Logging", value: commandChannel },
           { name: "Report Logging", value: reportChannel },
+          { name: "Guild Logging", value: guildChannel },
         )
       config = "Logging"
     }

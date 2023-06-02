@@ -31,6 +31,7 @@ module.exports = {
     var infractionChannel = ""
     var commandChannel = ""
     var reportChannel = ""
+    var guildChannel = ""
 
     if(message.guild.channels.cache.get(loggingChannel.infraction_logging_channel) == undefined){
       infractionChannel = "No channel setup"
@@ -53,6 +54,13 @@ module.exports = {
       reportChannel = message.guild.channels.cache.get(loggingChannel.report_logging_channel).name + " `" + loggingChannel.report_logging_channel + "`" 
     }
 
+    if(message.guild.channels.cache.get(loggingChannel.guild_event_logging_channel) == undefined){
+      guildChannel = "No channel setup"
+    }
+    else{
+      guildChannel = message.guild.channels.cache.get(loggingChannel.guild_event_logging_channel).name + " `" + loggingChannel.guild_event_logging_channel + "`" 
+    }
+
     const logging = new MessageEmbed()
       .setColor("ad94f2")
       .setTitle("Logging")
@@ -61,6 +69,7 @@ module.exports = {
         { name: "Infraction Logging", value: infractionChannel },
         { name: "Command Logging", value: commandChannel },
         { name: "Report Logging", value: reportChannel },
+        { name: "Guild Logging", value: guildChannel },
       )
       
     await message.message.edit({ embeds: [logging], components: [button] });
@@ -89,14 +98,21 @@ module.exports = {
       .setLabel("Enter Channel ID for report logging")
       .setPlaceholder("Do not input anything if you do not wish to enable logging.")
       .setStyle("SHORT");
+    const guildEventLoggingChannel = new TextInputComponent()
+      .setCustomId("guildEventChannelId")
+      .setLabel("Enter Channel ID for guild event logging")
+      .setPlaceholder("Do not input anything if you do not wish to enable logging.")
+      .setStyle("SHORT");
 
 
     const firstactionrow = new MessageActionRow().addComponents(infractionLoggingChannel)
     const secondactionrow = new MessageActionRow().addComponents(commandLoggingChannel)
     const thirdactionrow = new MessageActionRow().addComponents(reportLoggingChannel)
+    const fourthactionrow = new MessageActionRow().addComponents(guildEventLoggingChannel)
 
 
-    modal.addComponents(firstactionrow, secondactionrow, thirdactionrow);
+
+    modal.addComponents(firstactionrow, secondactionrow, thirdactionrow, fourthactionrow);
     await message.showModal(modal);
 
   },
@@ -105,6 +121,7 @@ module.exports = {
     const infractionChannelId = message.fields.getTextInputValue("infractionChannelId") || "NULL";
     const commandChannelId = message.fields.getTextInputValue("commandChannelId") || "NULL";
     const reportChannelId = message.fields.getTextInputValue("reportChannelId") || "NULL";
+    const guildEventChannelId = message.fields.getTextInputValue("guildEventChannelId") || "NULL";
 
     const client = new Client({
       user: process.env.user,
@@ -116,7 +133,7 @@ module.exports = {
 
     await client.connect();  
 
-    const query = `UPDATE public.configurator_v1s SET infraction_logging_channel = '${infractionChannelId}', command_logging_channel = '${commandChannelId}', report_logging_channel = '${reportChannelId}' WHERE guild_id = ${message.guild.id}`
+    const query = `UPDATE public.configurator_v1s SET infraction_logging_channel = '${infractionChannelId}', command_logging_channel = '${commandChannelId}', report_logging_channel = '${reportChannelId}', guild_events_logging_channel = '${guildEventChannelId}' WHERE guild_id = ${message.guild.id}`
 
     await client.query(query);
 

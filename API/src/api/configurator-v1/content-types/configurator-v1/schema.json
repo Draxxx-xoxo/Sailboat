@@ -33,6 +33,9 @@
     },
     "infractionLoggingChannel": {
       "type": "biginteger"
+    },
+    "guildEventsLoggingChannel": {
+      "type": "biginteger"
     }
   }
 }
