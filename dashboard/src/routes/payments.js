@@ -22,7 +22,7 @@ function isAuthorized(req, res, next) {
 
 router.use("/checkout", isAuthorized, async (req, res) => {
 
-  const results = await axios({
+  /*const results = await axios({
     method: 'get',
     url: 'https://api.stripe.com/v1/customers',
     params:{
@@ -31,16 +31,26 @@ router.use("/checkout", isAuthorized, async (req, res) => {
     headers:{
       Authorization: `Bearer ${process.env.STRIPE_SECRET}`
     }
-  });
+  });*/
   
-  if(results.data.data){
+  res.render('checkout')
+
+  /*if(results.data.data){
     res.redirect('/billing')
   } else {
     res.render('checkout',{
       email: req.user.email
     });
-  }
+  }*/
 })
+
+router.use("/pricing", isAuthorized, async (req, res) => {
+
+    res.render('pricing_table',{
+      email: req.user.email
+    });
+})
+
 
 router.use("/success", isAuthorized, async (req, res) => {
   res.render('checkout-success');
@@ -68,7 +78,25 @@ router.post('/create-checkout-session', async (req, res) => {
       mode: 'subscription',
       success_url: `http://localhost:53134/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `http://localhost:53134/checkout`,
-      customer_email: req.user.email
+      customer_email: req.user.email,
+      custom_fields: [
+        {
+          key: 'discordUserName',
+          label: {
+            type: 'custom',
+            custom: 'Discord User Name',
+          },
+          type: 'text',
+        },
+        {
+          key: 'discordServerName',
+          label: {
+            type: 'custom',
+            custom: 'Discord Server Name',
+          },
+          type: 'text',
+        },
+      ],
     });
     res.redirect(303, session.url);
   });
