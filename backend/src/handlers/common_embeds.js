@@ -13,6 +13,14 @@ module.exports = {
       .setFooter({text:"Status: " + res.status + " " + emoji})
         
     return embed
+  },
+
+  async notelog(report_id) {
+    const embed = new MessageEmbed()
+      .setTitle("Notes for #" + report_id)
+      .setFooter({text:"Only moderators or admins are able to add notes"})
+        
+    return embed
   }
     
 }

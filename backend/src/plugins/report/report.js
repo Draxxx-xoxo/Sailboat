@@ -4,7 +4,7 @@ const Log = require("../../handlers/logging");
 const {command_logging, report_pugin, report_logging, report_logging_channel} = require("../../handlers/common_functions");
 const {reportbuttons} = require("../../handlers/common_buttons")
 const deny = require("./report_buttons/moderation")
-const {reportlog} = require("../../handlers/common_embeds");
+const {reportlog, notelog} = require("../../handlers/common_embeds");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 
@@ -51,7 +51,7 @@ module.exports = {
             VALUES (${message.user.id},'${message.user.tag}', '${member.user.tag}', ${member.user.id},'${reason_|| "No Reason"}', ${message.guild.id}, 'pending')
             RETURNING *
         `
-        
+
     const res = (await client.query(query)).rows[0]
 
     message.reply({content: "User has been reported, please check your DM's for updates", fetchReply: true})
@@ -73,12 +73,21 @@ module.exports = {
 
     const report_buttons = await reportbuttons(false)
 
-    const embed = await reportlog(res,"🟡")
+    const reportembed = await reportlog(res,"🟡")
+    const noteembed = (await notelog(res.id)).addFields({name: "\u200b", value: "\u200b"},)
      
-    message.guild.channels.cache.get(reportchannel).send({
+    const messagereply = message.guild.channels.cache.get(reportchannel).send({
       components: [report_buttons],
-      embeds: [embed]
+      embeds: [reportembed, noteembed]
     });  
+
+    const message_query = `
+      UPDATE public.reports 
+      SET message_id = '${(await messagereply).id}'
+      WHERE id = ${res.id}
+    `
+    await client.query(message_query)
+    
     await client.end();  
   },
   data: new SlashCommandBuilder()
