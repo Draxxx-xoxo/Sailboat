@@ -30,7 +30,7 @@ for (const folder of eventFolders) {
       if(file == "logging_events.js") return;
       const evt = require(`./events/${folder}/${file}`);
       let evtName = file.split(".")[0];
-  
+      console.log(`Loaded event '${evtName}'`);
       discordClient.on(evtName, evt.bind(null, discordClient));
     });
     
