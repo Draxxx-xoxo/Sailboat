@@ -54,11 +54,11 @@ module.exports = {
       reportChannel = message.guild.channels.cache.get(loggingChannel.report_logging_channel).name + " `" + loggingChannel.report_logging_channel + "`" 
     }
 
-    if(message.guild.channels.cache.get(loggingChannel.guild_event_logging_channel) == undefined){
+    if(message.guild.channels.cache.get(loggingChannel.guild_events_logging_channel) == undefined){
       guildChannel = "No channel setup"
     }
     else{
-      guildChannel = message.guild.channels.cache.get(loggingChannel.guild_event_logging_channel).name + " `" + loggingChannel.guild_event_logging_channel + "`" 
+      guildChannel = message.guild.channels.cache.get(loggingChannel.guild_events_logging_channel).name + " `" + loggingChannel.guild_events_logging_channel + "`" 
     }
 
     const logging = new MessageEmbed()
