@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Wall-E-Bot](README.md)
+* [Sailboat](README.md)
 
 ## Useful Links
 
