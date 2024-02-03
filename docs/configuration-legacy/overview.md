@@ -1,11 +1,17 @@
-# Overview of Configuration file
+# Overview of Configuration File
 
-- Configuration file is written in yaml and uploded into the bot's database.
-- Configuration file is used to set up the bot's settings and plugins.
+{% hint style="danger" %}
+This has been discontinued for all new setups. Please check out [Broken link](broken-reference "mention") on the updated way.
+{% endhint %}
+
+***
+
+* Configuration file is written in yaml and uploded into the bot's database.
+* Configuration file is used to set up the bot's settings and plugins.
 
 ### Example of Configuartion File
 
-```guild_settings:
+```
   prefix: ';'
   nickname: ''
 

@@ -21,7 +21,4 @@ guild_settings:
 
 All commands are automatically enabled. Sever Owners and Administrators can only use the commands.
 
-| Command | Aliases | Description                                 | Example |
-| ------- | ------- | ------------------------------------------- | ------- |
-| ping    |         | Returns bot and API latency in milliseconds | !ping   |
-| help    |         | Shows this help message (Coming Soon)       | !help   |
+<table><thead><tr><th>Command</th><th width="296">Aliases</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td>ping</td><td></td><td>Returns bot and API latency in milliseconds</td><td>!ping</td></tr><tr><td>help</td><td></td><td>Shows this help message (Coming Soon)</td><td>!help</td></tr></tbody></table>

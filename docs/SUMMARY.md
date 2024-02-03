@@ -7,17 +7,17 @@
 * [Dashboard](http://localhost:53134)
 * [Admin API](http://localhost:1337)
 
-## Configuration
+## Configuration\_V1
 
-* [Overview of Configuration File](configuration/Overview.md)
-* [Setting Up Guild Settings](configuration/Guild-Settings.md)
+* [Page 1](configuration\_v1/page-1.md)
 
 ## Plugins
 
-* [Admin](plugin/Admin.md)
+* [Admin](plugins/admin.md)
 * [Utilties](plugin/Utilties.md)
 
-## Self-Hosting
+## Configuration (Legacy)
 
-* [Read Me First](self-hosting/Read-First.md)
-* [Setting Up](self-hosting/Setting-Up.md)
+* [Overview of Configuration File](configuration-legacy/overview.md)
+* [Admin](configuration-legacy/admin.md)
+* [Setting Up Guild Settings](configuration-legacy/guild-settings.md)
