@@ -4,7 +4,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 module.exports = {
   name: "admin_server",
   enable: true,
-  permissions: 20,
+  permissions: 200,
   execute: async (message, client) => {
     const guildId = message.options.getString("guild");  
     const guild = client.guilds.cache.get(guildId)
