@@ -1,29 +1,15 @@
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item">
-      <h1>Exis</h1>
-    </a>
-  </div>
-
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item" href="http://localhost:53134">
-        Home
-      </a>
-      <a class="navbar-item" href="https://docs.draxxx.social">
-        Documentation
-      </a>
-      <a class="navbar-item" href="/billing">
-        Manage Billing
-      </a>
-    </div>
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <form action="/auth/logout">
-            <button class="button is-primary is-rounded  my-custom-button" type="submit">Logout</button>
-          </form>
-        </div>
+<nav class="navbar navbar-expand-lg bg-body-black" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Sailboat</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
+        <a class="nav-link" href="/docs">Documents</a>
+        <a class="nav-link" href="/billing">Manage Billing</a>
+        <a class="nav-link me-auto" href="/auth/logout">Logout</a>
       </div>
     </div>
   </div>
